@@ -1,0 +1,17 @@
+[
+    {
+        "userId": "admin",
+        "userPassword": "admin",
+        "role": "admin"
+    },
+    {
+        "userId": "doctor",
+        "userPassword": "doctor",
+        "role": "doctor"
+    },
+    {
+        "userId": "patient",
+        "userPassword": "patient",
+        "role": "patient"
+    }
+]
