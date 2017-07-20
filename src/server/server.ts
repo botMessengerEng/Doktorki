@@ -1,7 +1,15 @@
 import * as express from 'express';
 import * as _ from 'lodash';
-
 const app = express();
+
+
+app.use(function(req, res, next) { 
+       res.header('Access-Control-Allow-Origin', 'http://localhost:4200'); 
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE'); 
+        res.header('Access-Control-Allow-Headers', 'Content-Type'); next();
+});
+
+
 app.get('/doctors', (req: express.Request, res: express.Response) => {
     res.send(doctors);
 });
@@ -26,12 +34,8 @@ app.put('/doctors/:id', function(req, res){
     }
 });
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
-});
-
 var doctors: Array<any> = [
-    {
+    { 
         id: '1',
         name: 'Janek Cyjanek'
     },{
@@ -47,8 +51,18 @@ function getDocById(id){
 
 
 app.post('/log',(req, res) => {
-    if (req.body === 'admin')
+    console.log(req.body)
+    console.log(req.params)
+    if (req.body == 'admin') {
         res.send('zalogowany')
-    else
+          console.log('tak');
+    }
+    else{
         res.send('bledneHaslo');
+          console.log('nie');
+    }
+});
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!')
 });

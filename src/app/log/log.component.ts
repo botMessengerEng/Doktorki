@@ -29,6 +29,9 @@ export class LogComponent {
                 res => this.resMessage = res); // powinno dzialac
     }
 
+    refresh() {
+        console.log(this.resMessage);
+    }
 /*
     check () {
         this._logService.getUsers()
