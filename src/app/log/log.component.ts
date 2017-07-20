@@ -26,7 +26,7 @@ export class LogComponent {
     check() {
     this._logService.postQuery('admin')
             .subscribe(
-                res => this.resMessage = res);
+                res => this.resMessage = res); // powinno dzialac
     }
 
 /*
