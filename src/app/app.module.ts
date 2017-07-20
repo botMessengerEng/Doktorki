@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { LogComponent } from './log/log.component';
+import { LogService } from "./log/log.service";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { LogComponent } from './log/log.component';
     HttpModule
   ],
 
-  providers: [],
+  providers: [ LogService ],
 
   bootstrap: [LogComponent]
 })

@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
-import { LogService } from './log.service';
 import { User } from '../classes/user';
+import { LogService } from "./log.service";
+import { Http, Response } from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/catch';
+
 
 @Component({
     selector:       'app-log',
@@ -14,9 +19,15 @@ export class LogComponent {
     passwordInput: string;
     admin: string = 'admin';
     users: User[];
-    errorMessage = 'default error';
+    resMessage: any;
+    private _server = '/log';
 
     constructor(private _logService: LogService) {}
+    check() {
+    this._logService.postQuery('admin')
+            .subscribe(
+                res => this.resMessage = res);
+    }
 
 /*
     check () {
