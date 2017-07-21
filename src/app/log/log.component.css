@@ -20,7 +20,7 @@ input {
     border-radius: 5px;
     list-style-type: none;  
     min-width: 200px;
-
+    font-family: 'Quicksand', sans-serif;
 }
 
 .input-style:hover{
@@ -35,7 +35,7 @@ input {
     border-radius: 5px;
     font-size: 16px;
     color:white;
-        font-family: 'Quicksand', sans-serif;
+    font-family: 'Quicksand', sans-serif;
 
 }
 
