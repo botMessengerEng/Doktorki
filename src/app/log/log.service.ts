@@ -14,9 +14,9 @@ export class LogService {
     private _dataBaseUrl = 'http://localhost:3000/log';
     constructor (private _http: Http) {}
 
-    postQuery(message: string): Observable<string> {
+    postQuery(message: any): Observable<string> {
         return this._http.post(this._dataBaseUrl, message)
-            //.map((response: Response) => response.toString())
+            .map((response: Response) => response.json())
             .do(data => console.log('All: ' + JSON.stringify(data)))
             .catch(this.handlerError);
     }

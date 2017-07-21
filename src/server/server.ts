@@ -1,13 +1,20 @@
 import * as express from 'express';
 import * as _ from 'lodash';
+import * as bodyParser from 'body-parser';
+
 const app = express();
 
 
-app.use(function(req, res, next) { 
-       res.header('Access-Control-Allow-Origin', 'http://localhost:4200'); 
+app.use((req, res, next) => { 
+        res.header('Access-Control-Allow-Origin', 'http://localhost:4200'); 
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE'); 
-        res.header('Access-Control-Allow-Headers', 'Content-Type'); next();
+        res.header('Access-Control-Allow-Headers', 'Content-Type');
+        next();
 });
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 
 
 app.get('/doctors', (req: express.Request, res: express.Response) => {
@@ -34,8 +41,8 @@ app.put('/doctors/:id', function(req, res){
     }
 });
 
-var doctors: Array<any> = [
-    { 
+const doctors: Array<any> = [
+    {
         id: '1',
         name: 'Janek Cyjanek'
     },{
@@ -50,15 +57,14 @@ function getDocById(id){
 }
 
 
-app.post('/log',(req, res) => {
-    console.log(req.body)
-    console.log(req.params)
-    if (req.body == 'admin') {
-        res.send('zalogowany')
+app.post('/log',(req: express.Request, res: express.Response) => {
+    console.log(JSON.stringify(req.body));
+    if (req.body.login === 'admin') {
+        res.json('zalogowany')
           console.log('tak');
     }
     else{
-        res.send('bledneHaslo');
+        res.json('bledneHaslo');
           console.log('nie');
     }
 });

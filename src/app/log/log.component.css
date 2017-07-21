@@ -1,0 +1,63 @@
+.check-pass {
+    position: absolute;
+    margin: auto;
+    background-color: white;
+    color:  #003d66;
+    margin: 0;
+    position: absolute;
+    top: 20%;
+    left: 40%;
+    font-size: 40px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+input {
+    height: 40px;
+}
+
+.input-style {
+    border: 0.3px solid grey;
+    border-radius: 5px;
+    list-style-type: none;  
+    min-width: 200px;
+
+}
+
+.input-style:hover{
+    border: 0.3px solid   #002e4d;
+    border-radius: 5px;
+
+
+}
+.input-style:focus{
+    background-color:     #002e4d;
+    border: 0.3px solid   #002e4d;
+    border-radius: 5px;
+    font-size: 16px;
+    color:white;
+        font-family: 'Quicksand', sans-serif;
+
+}
+
+.check-button {
+    padding-top: 3%;
+    padding-bottom: 3%;
+    text-align: center;
+    background-color:  #003d66;
+    border: 1px solid white;
+    border-radius: 4px;
+    font-size: 15px;
+    color:white;
+    margin-left: 85%;
+    font-family: 'Quicksand', sans-serif;
+}
+.check-button:hover {
+    padding-top: 3%;
+    padding-bottom: 3%;
+    text-align: center;
+    background-color:   #002e4d;
+    border: 1px solid white;
+    border-radius: 4px;
+    font-size: 15px;
+    color:white;
+}

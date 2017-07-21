@@ -1,12 +1,18 @@
- <div>login
-    <input type='text'
-            [(ngModel)]='loginInput' />
-</div>
-<div>password
-    <input type='text'
+ <div class='check-pass'>
+ <div><table>
+         
+         
+         <tr>
+         <td>login</td>
+     <td><input class='input-style' type='text'
+            [(ngModel)]='loginInput' /> </td>
+</tr><tr><td>password</td>
+  <td><input class='input-style' type='text'
             [(ngModel)]='passwordInput' />
+</td></tr></table>
+
 </div>
 
-<div><button (click) = 'check()' >Press me</button></div>
+<div class='s'><button class='check-button' (click) = 'check()' >log in</button></div>
 <div><button (click) = 'refresh()' >refresh</button></div>
-
+</div>
