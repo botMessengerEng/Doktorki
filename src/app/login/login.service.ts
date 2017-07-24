@@ -10,7 +10,7 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 
-export class LogService {
+export class LoginService {
     private _dataBaseUrl = 'http://localhost:3000/log';
     constructor (private _http: Http) {}
 

@@ -4,26 +4,24 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
-import { AppComponent } from './app.component';
-import { LoginModule } from './login/login.module';
+import { LoginComponent } from './login.component';
+import { LoginService } from './login.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    LoginComponent
   ],
 
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot([
-      { path: '', redirectTo: 'log', pathMatch: 'full' },
-    ]),
-    LoginModule
+    RouterModule.forChild([
+      { path: 'log', component: LoginComponent },
+    ])
   ],
 
-  providers: [  ],
+  providers: [LoginService],
 
-  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class LoginModule { }

@@ -42,13 +42,15 @@ input {
 .check-button {
     padding-top: 3%;
     padding-bottom: 3%;
+    padding-left: 7%;
+    padding-right: 7%;
     text-align: center;
     background-color:  #003d66;
     border: 1px solid white;
     border-radius: 4px;
     font-size: 15px;
     color:white;
-    margin-left: 85%;
+    margin-left: 75%;
     font-family: 'Quicksand', sans-serif;
 }
 .check-button:hover {
