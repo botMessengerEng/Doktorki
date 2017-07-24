@@ -22,9 +22,10 @@ export class LoginComponent {
     users: User[];
     resMessage: string;
     private _server = '/log';
-    private router: Router;
+    
 
-    constructor(private _logService: LoginService) {}
+
+    constructor(private _logService: LoginService, private router: Router) {}
     check(): Promise<boolean> {
         this._logService.postQuery({
             login: 'admin'
@@ -39,7 +40,7 @@ export class LoginComponent {
 
     redirectAfterLogin () {
             if (this.resMessage == 'zalogowany'){
-                this.router.navigateByUrl('/errorPage');
+                this.router.navigate(['/errorPage']);
             }
             else {
                 alert('coTyChceszZłodziejuNiedobry');
@@ -48,7 +49,7 @@ export class LoginComponent {
 
     login() {
         this.check()
-            .then(() => this.redirectAfterLogin()
+            .then(() => setTimeout( ()=> this.redirectAfterLogin(), 10)
             );
     }
 
