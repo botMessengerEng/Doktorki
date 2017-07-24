@@ -17,7 +17,8 @@ import { LoginModule } from './login/login.module';
     FormsModule,
     HttpModule,
     RouterModule.forRoot([
-      { path: '', redirectTo: 'log', pathMatch: 'full' },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'errorPage', component: AppComponent}
     ]),
     LoginModule
   ],

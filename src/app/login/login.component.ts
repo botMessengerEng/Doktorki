@@ -5,10 +5,11 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/toPromise';
+import { Router } from '@angular/router';
 
 
 @Component({
-    selector:       'app-log',
     templateUrl:    'login.component.html',
     styleUrls:     ['login.component.css']
 })
@@ -21,15 +22,37 @@ export class LoginComponent {
     users: User[];
     resMessage: string;
     private _server = '/log';
+    private router: Router;
 
     constructor(private _logService: LoginService) {}
-    check() {
-    this._logService.postQuery({
-        login: 'admin'
-    })
-            .subscribe(
+    check(): Promise<boolean> {
+        this._logService.postQuery({
+            login: 'admin'
+        })
+        .subscribe(
                 res => this.resMessage = res); // powinno dzialac
+
+         return new Promise(resolve => {
+                    resolve(true)
+                });
     }
+
+    redirectAfterLogin () {
+            if (this.resMessage == 'zalogowany'){
+                this.router.navigateByUrl('/errorPage');
+            }
+            else {
+                alert('coTyChceszZłodziejuNiedobry');
+            }
+    }
+
+    login() {
+        this.check()
+            .then(() => this.redirectAfterLogin()
+            );
+    }
+
+
 
     refresh() {
         console.log(this.resMessage);
