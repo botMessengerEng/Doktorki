@@ -59,7 +59,7 @@ function getDocById(id){
 
 app.post('/log',(req: express.Request, res: express.Response) => {
     console.log(JSON.stringify(req.body));
-    if (req.body.login === 'admin') {
+    if (req.body.login === 'admin' && req.body.password === 'admin') {
         res.json('zalogowany')
           console.log('tak');
     }

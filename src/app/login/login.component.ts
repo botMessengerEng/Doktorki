@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
-import { Router } from '@angular/router';
+import { Router,  } from '@angular/router';
 
 
 @Component({
@@ -22,13 +22,12 @@ export class LoginComponent {
     users: User[];
     resMessage: string;
     private _server = '/log';
-    
 
-
-    constructor(private _logService: LoginService, private router: Router) {}
+    constructor(private loginService: LoginService, private router: Router) {}
     check(): Promise<boolean> {
-        this._logService.postQuery({
-            login: 'admin'
+        this.loginService.postQuery({
+            login: this.loginInput,
+            password: this.passwordInput
         })
         .subscribe(
                 res => this.resMessage = res); // powinno dzialac
@@ -40,7 +39,7 @@ export class LoginComponent {
 
     redirectAfterLogin () {
             if (this.resMessage == 'zalogowany'){
-                this.router.navigate(['/errorPage']);
+                this.router.navigate(['/admin']);
             }
             else {
                 alert('coTyChceszZłodziejuNiedobry');
@@ -49,7 +48,7 @@ export class LoginComponent {
 
     login() {
         this.check()
-            .then(() => setTimeout( ()=> this.redirectAfterLogin(), 10)
+            .then(() => setTimeout( ()=> this.redirectAfterLogin(), 200)
             );
     }
 

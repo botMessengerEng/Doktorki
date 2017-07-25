@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
+import { AdminModule } from 'app/admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -17,10 +18,10 @@ import { LoginModule } from './login/login.module';
     FormsModule,
     HttpModule,
     RouterModule.forRoot([
-      { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: 'errorPage', component: AppComponent}
+      { path: '', redirectTo: 'login', pathMatch: 'full' }
     ]),
-    LoginModule
+    LoginModule,
+    AdminModule
   ],
 
   providers: [  ],
