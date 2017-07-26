@@ -1,8 +1,23 @@
 import * as express from 'express';
 import * as _ from 'lodash';
 import * as bodyParser from 'body-parser';
+import { MongoCollection } from '../mongo/mongo';
+/*
+ "In general, the rule of thumb is: 
+ If you’re installing something that you want to use 
+ in your program, using require('whatever'), then install 
+ it locally, at the root of your project. If you’re installing 
+ something that you want to use in your shell, on the command 
+ line or something, install it globally, so that its binaries 
+ end up in your PATH environment variable" ~XiaoPeng
+*/
+// global.Promise = q.Promise;
+// (mongoose as any).Promise = global.Promise;
 
 const app = express();
+var collectionName = 'movie';
+var url = 'mongodb://localhost:27017/moviecDB';
+const mongo = new MongoCollection(url, collectionName);
 
 
 app.use((req, res, next) => { 
@@ -17,6 +32,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 
 
+
+app.get('/movies', (req, res: express.Response) => {
+    res.send(mongo.showElements());
+});
+
 app.get('/doctors', (req: express.Request, res: express.Response) => {
     res.send(doctors);
 });
@@ -24,13 +44,13 @@ app.get('/doctors', (req: express.Request, res: express.Response) => {
 app.get('/doctors/:id', function (req, res){
     var doctor = getDocById(req.params.id);
 
-    if(doctor)
+    if (doctor) 
         res.send(doctor);
     else
         res.send(400);
 });
 
-app.put('/doctors/:id', function(req, res){
+app.put('/doctors/:id', function (req, res){
     var doctor = getDocById(req.params.id);
 
     if(!doctor)
