@@ -1,23 +1,27 @@
 <div class='container'>
-<div class='logo'>Admin's Profile</div>
-<div class='content'>
-    List of Doctors:<br><br>
-
-    <div class='doctors-panel'><div class='doctor-panel'>
-<button class='doctor-button'>
-    <div class='button-divided'>
-       Hannah Baker
+    <div class='logo'>Admin's Profile</div>
+    <div class='content'>
+        List of Doctors:<br><br>
+        <table class='table-of-doctor' [ngStyle]='setBorderStyles()'>
+            <thead>
+                <tr>
+                    <button class='doctor-button' [ngStyle]='setButtonStyles()' (click)='toggleButton()'>
+    <td class='button-divided'>
+       {{doctors[0][0]}}
+    </td>
+    <td class='button-divided'>
+        {{doctors[0][1]}}
+    </td>
+    <td class='button-divided'>
+       {{doctors[0][2]}}
+    </td>
+</button></tr>
+            </thead>
+            <tbody>
+                <tr class="shortDetails" *ngIf='doctorId1'>
+                    coś
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <div class='button-divided'>
-        od ucha
-    </div>
-    <div class='button-divided'>
-        Ropczyce
-    </div>
-</button>
-<div class="shortDetails">
-    coś
-</div></div>
-</div>
-</div>
 </div>

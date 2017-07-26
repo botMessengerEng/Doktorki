@@ -1,18 +1,20 @@
- <div class='check-pass'>
- <div><table>
-         
-         
-         <tr>
-         <td>login</td>
-     <td><input class='input-style' type='text'
-            [(ngModel)]='loginInput' /> </td>
-</tr><tr><td>password</td>
-  <td><input class='input-style' type='text'
-            [(ngModel)]='passwordInput' />
-</td></tr></table>
+<div class='check-pass'>
+  <div>
+    <table>
+      <tr>
+        <td>login</td>
+        <td><input class='input-style' (keyup.enter)="login()" type='text' [(ngModel)]='loginInput' /> </td>
+      </tr>
+      <tr>
+        <td>password</td>
+        <td><input class='input-style' (keyup.enter)="login()" type='text' [(ngModel)]='passwordInput' />
+        </td>
 
-</div>
+      </tr>
+    </table>
 
-<div class='s'><button class='check-button' (click) = 'login()' >log in</button></div>
-<div><button (click) = 'refresh()' >refresh</button></div>
+  </div>
+
+  <div class='s'><button class='check-button' (click)='login()' ng-keydown="enter">log in</button></div>
+  <div><button (click)='refresh()'>refresh</button></div>
 </div>
