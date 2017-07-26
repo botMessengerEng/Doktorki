@@ -44,8 +44,8 @@
 }
 
 .table-of-doctor:hover{
-    border-color: #ffcc00;
-    background-color: #ffcc00;
+    border-color: #ffcc00 !important;
+    background-color: #ffcc00 !important;
 }
 
 .doctor-button{
@@ -65,7 +65,7 @@
 }
 
 .doctor-button:hover{
-     background-color:#ffcc00;
+     background-color:#ffcc00 !important ;
 }
 
 
