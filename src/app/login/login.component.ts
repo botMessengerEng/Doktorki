@@ -38,7 +38,7 @@ export class LoginComponent {
     }
 
     redirectAfterLogin () {
-            if (this.resMessage == 'zalogowany'){
+            if (this.resMessage == 'admin'){
                 this.router.navigate(['/admin']);
             }
             else {
@@ -48,8 +48,12 @@ export class LoginComponent {
 
     login() {
         this.check()
-            .then(() => setTimeout( ()=> this.redirectAfterLogin(), 200)
+            .then(() => setTimeout( () => {
+                this.redirectAfterLogin();
+                console.log('w lambdzie:  ' + this.resMessage);
+            }, 300)
             );
+        console.log('za lambda:  ' + this.resMessage);
     }
 
 

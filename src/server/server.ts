@@ -88,20 +88,20 @@ function getDocById(id){
 app.post('/log',(req: express.Request, res: express.Response) => {
     console.log(JSON.stringify(req.body));
     let user;
-    mongo.findElement({
+        mongo.findElement({
         login: req.body.login,
         password: req.body.password
-    }, (result) => user = result);
-
-    if (user) {
-        res.json(user.role)
-          console.log('tak');
-    }
-    else{
-        res.json('bledny login lub haslo');
-          console.log('nie');
-          console.log(user);
-    }
+    }, (result) => user = result)
+    .then(() => setTimeout(() => {
+            if (user.includes(user[0].role)) {
+                res.json('admin')
+                console.log('tak');
+            }
+            else{
+                res.json('bledny login lub haslo');
+                console.log('nie');
+                console.log(user);
+        }}, 100));
 });
 
 app.listen(3000, function () {
