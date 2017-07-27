@@ -16,8 +16,11 @@ import { MongoCollection } from '../mongo/mongo';
 
 const app = express();
 const collectionUsers = 'Users';
+const collectionUsersDetails = 'UsersDetails';
+
 const url = 'mongodb://localhost:27017/DoktorkiDB';
-const mongo = new MongoCollection(url, collectionUsers);
+const mongoUsers = new MongoCollection(url, collectionUsers);
+const mongoUsersDetails = new MongoCollection(url, collectionUsersDetails);
 
 
 app.use((req, res, next) => { 
@@ -32,68 +35,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 
 
-app.get('/up', (req, res: express.Response) => {
-    mongo.insertElements([{
-        login: 'doktorek',
-        password: 'prawilny',
-        role: 'doctor',
-    },
-    {
-        login: 'doktorBezUprawnien',
-        password: 'jakRowerzystaBezUprawnien',
-        role: 'doctor'
-    },
-    {
-        login: 'Brooke',
-        password: '1234',
-        role: 'doctor'
-    }] ,(result) => res.send(result));
-});
-
-app.get('/doctors', (req: express.Request, res: express.Response) => {
-    res.send(doctors);
-});
-
-app.get('/doctors/:id', function (req, res){
-    var doctor = getDocById(req.params.id);
-
-    if (doctor) 
-        res.send(doctor);
-    else
-        res.send(400);
-});
-
-app.put('/doctors/:id', function (req, res){
-    var doctor = getDocById(req.params.id);
-
-    if(!doctor)
-        res.send(400);
-    else{
-        doctor.name = req.body.name;
-        res.send(200);
-    }
-});
-
-const doctors: Array<any> = [
-    {
-        id: '1',
-        name: 'Janek Cyjanek'
-    },{
-        id: '2',
-        name: 'Mariusz Nowak'
-    }
-];
-
-function getDocById(id){
-    //return null;
-    return _.find(doctors, d => d.id === id);
-}
-
-
 app.post('/login',(req: express.Request, res: express.Response) => {
     console.log(JSON.stringify(req.body));
     let user;
-        mongo.findElement({
+        mongoUsers.findElement({
         login: req.body.login,
         password: req.body.password
     }, (result) => user = result)
@@ -109,9 +54,53 @@ app.post('/login',(req: express.Request, res: express.Response) => {
         }}, 100));
 });
 
+app.get('/detale',(req: express.Request, res: express.Response) => {
+    mongoUsersDetails.showElements((result)=> res.json(result));
+});
+
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 });
+
+
+// app.get('/up', (req, res: express.Response) => {
+//     mongo.insertElements([{
+//         login: 'doktorek',
+//         password: 'prawilny',
+//         role: 'doctor',
+//     },
+//     {
+//         login: 'doktorBezUprawnien',
+//         password: 'jakRowerzystaBezUprawnien',
+//         role: 'doctor'
+//     },
+//     {
+//         login: 'Brooke',
+//         password: '1234',
+//         role: 'doctor'
+//     }] ,(result) => res.send(result));
+// });
+
+
+// app.get('/up', (req, res: express.Response) => {
+//     mongo.insertElements([{
+//         login: 'doktorek',
+//         specialization: 'od uszów',
+//         city: 'Masecziuset'
+//     },
+//     {
+//         login: 'doktorBezUprawnien',
+//         specialization: 'kości',
+//         city: 'Miasto W'
+//     },
+//     {
+//         login: 'Brooke',
+//         specialization: 'internista',
+//         city: 'Caracas'
+//     }] , (result) => res.send(result));
+// });
+
+
 
 
 
@@ -130,6 +119,49 @@ app.listen(3000, function () {
 // });
 
 
-// app.get('/movies', (req, res: express.Response) => {
+// app.get('/detale', (req, res: express.Response) => {
 //     mongo.showElements((result) => res.send(result));
 // });
+
+
+
+
+
+// app.get('/doctors', (req: express.Request, res: express.Response) => {
+//     res.send(doctors);
+// });
+
+// app.get('/doctors/:id', function (req, res){
+//     var doctor = getDocById(req.params.id);
+
+//     if (doctor) 
+//         res.send(doctor);
+//     else
+//         res.send(400);
+// });
+
+// app.put('/doctors/:id', function (req, res){
+//     var doctor = getDocById(req.params.id);
+
+//     if(!doctor)
+//         res.send(400);
+//     else{
+//         doctor.name = req.body.name;
+//         res.send(200);
+//     }
+// });
+
+// const doctors: Array<any> = [
+//     {
+//         id: '1',
+//         name: 'Janek Cyjanek'
+//     },{
+//         id: '2',
+//         name: 'Mariusz Nowak'
+//     }
+// ];
+
+// function getDocById(id){
+//     //return null;
+//     return _.find(doctors, d => d.id === id);
+// }

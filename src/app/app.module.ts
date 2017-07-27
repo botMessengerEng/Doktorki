@@ -9,6 +9,7 @@ import { LoginModule } from './login/login.module';
 import { AdminModule } from 'app/admin/admin.module';
 import { PatientModule } from 'app/patient/patient.module';
 import { DoctorModule } from 'app/doctor/doctor.module';
+import { AppService } from "app/app.service";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { DoctorModule } from 'app/doctor/doctor.module';
     DoctorModule
   ],
 
-  providers: [  ],
+  providers: [ AppService ],
 
   bootstrap: [AppComponent]
 })

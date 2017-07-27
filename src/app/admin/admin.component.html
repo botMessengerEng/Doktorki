@@ -2,18 +2,20 @@
     <div class='logo'>Admin's Profile</div>
     <div class='content'>
         List of Doctors:<br><br>
-        <table class='table-of-doctor' [ngStyle]='setBorderStyles()'>
+             <div *ngFor='let doctor of doctors'>
+        <table class='table-of-doctor' [ngStyle]='setBorderStyles()' *ngIf='doctors && doctors.length'>
+      
             <thead>
                 <tr>
                     <button class='doctor-button' [ngStyle]='setButtonStyles()' (click)='toggleButton()'>
     <td class='button-divided'>
-       {{doctors[0][0]}}
+       {{doctor.login}}
     </td>
     <td class='button-divided'>
-        {{doctors[0][1]}}
+      {{doctor.specialization}}
     </td>
     <td class='button-divided'>
-       {{doctors[0][2]}}
+       {{doctor.city}}
     </td>
 </button></tr>
             </thead>
@@ -21,7 +23,12 @@
                 <tr class="shortDetails" *ngIf='doctorId1'>
                     coś
                 </tr>
+           
             </tbody>
+
         </table>
+            <br>
+            </div>
+        
     </div>
 </div>

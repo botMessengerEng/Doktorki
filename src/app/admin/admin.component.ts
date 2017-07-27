@@ -1,17 +1,44 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AppService } from 'app/app.service';
 
 @Component({
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent {
+
+export class AdminComponent implements OnInit {
+  errorMessage: any;
   doctorId1 = false;
   doctors: any;
 
-  constructor(){
-    this.doctors = [['Hannah Baker', 'od uchów', 'Ropczyce'], ['John Smith', 'kardiolog', 'Boston']];
-
+  constructor(private appService: AppService){
+  //  this.doctors = [['Hannah Baker', 'od uszów', 'Ropczyce'], ['John Smith', 'kardiolog', 'Boston']];
   }
+
+
+ 
+ ngOnInit(): void {
+        this.appService.getQuery()
+            .subscribe(kroliczki => this.doctors = kroliczki,
+             error => this.errorMessage = <any>error);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   toggleButton(){
     this.doctorId1 = !this.doctorId1;
@@ -34,6 +61,9 @@ export class AdminComponent {
   }
 
 }
+
+
+
 
 
 

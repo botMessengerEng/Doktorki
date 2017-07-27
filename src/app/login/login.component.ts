@@ -9,6 +9,8 @@ import 'rxjs/add/operator/toPromise';
 import { Router,  } from '@angular/router';
 
 
+export let USER;
+
 @Component({
     templateUrl:    'login.component.html',
     styleUrls:     ['login.component.css']
@@ -54,6 +56,7 @@ export class LoginComponent {
     login() {
         this.check()
             .then(() => setTimeout( () => {
+                USER = this.loginInput;
                 this.redirectAfterLogin();
                 console.log('w lambdzie:  ' + this.resMessage);
             }, 300)
@@ -62,8 +65,8 @@ export class LoginComponent {
     }
 
 
-
     refresh() {
         console.log(this.resMessage);
     }
 }
+

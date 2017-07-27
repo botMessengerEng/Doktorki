@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { LoginComponent } from 'app/login/login.component';
+import { Component, Input, HostListener } from '@angular/core';
+import { USER } from 'app/login/login.component';
 
 @Component({
     templateUrl:    'doctor.component.html',
@@ -7,6 +7,11 @@ import { LoginComponent } from 'app/login/login.component';
 })
 
 export class DoctorComponent {
-    constructor() { }
+    
+    constructor(){console.log(USER)
+    }
 
+    over(){
+    console.log("Mouseover called");
+  }
 }
