@@ -32,18 +32,23 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 
 
-// app.get('/up', (req, res: express.Response) => {
-//     mongo.insertElements([{
-//         login: 'admin',
-//         password: 'admin',
-//         role: 'admin'
-//     },
-//     {
-//         login: 'janekCyjanek',
-//         password: 'zdrowia',
-//         role: 'patient'
-//     }] ,(result) => res.send(result));
-// });
+app.get('/up', (req, res: express.Response) => {
+    mongo.insertElements([{
+        login: 'doktorek',
+        password: 'prawilny',
+        role: 'doctor',
+    },
+    {
+        login: 'doktorBezUprawnien',
+        password: 'jakRowerzystaBezUprawnien',
+        role: 'doctor'
+    },
+    {
+        login: 'Brooke',
+        password: '1234',
+        role: 'doctor'
+    }] ,(result) => res.send(result));
+});
 
 app.get('/doctors', (req: express.Request, res: express.Response) => {
     res.send(doctors);
@@ -85,7 +90,7 @@ function getDocById(id){
 }
 
 
-app.post('/log',(req: express.Request, res: express.Response) => {
+app.post('/login',(req: express.Request, res: express.Response) => {
     console.log(JSON.stringify(req.body));
     let user;
         mongo.findElement({
@@ -93,8 +98,8 @@ app.post('/log',(req: express.Request, res: express.Response) => {
         password: req.body.password
     }, (result) => user = result)
     .then(() => setTimeout(() => {
-            if (user.includes(user[0].role)) {
-                res.json('admin')
+            if (user[0]!= undefined) {
+                res.json(user[0].role)
                 console.log('tak');
             }
             else{

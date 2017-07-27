@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { User } from '../classes/user';
+import { User, Role } from '../classes/user';
 import { LoginService } from './login.service';
 import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -21,7 +21,6 @@ export class LoginComponent {
     admin: string = 'admin';
     users: User[];
     resMessage: string;
-    private _server = '/log';
 
     constructor(private loginService: LoginService, private router: Router) {}
     check(): Promise<boolean> {
@@ -38,8 +37,14 @@ export class LoginComponent {
     }
 
     redirectAfterLogin () {
-            if (this.resMessage == 'admin'){
+            if (this.resMessage === 'admin') {
                 this.router.navigate(['/admin']);
+            }
+            else if (this.resMessage === 'doctor') {
+                this.router.navigate(['/doctor']);
+            }
+            else if (this.resMessage === 'patient') {
+                this.router.navigate(['/patient']);
             }
             else {
                 alert('coTyChceszZłodziejuNiedobry');

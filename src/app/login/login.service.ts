@@ -11,7 +11,7 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 
 export class LoginService {
-    private _dataBaseUrl = 'http://localhost:3000/log';
+    private _dataBaseUrl = 'http://localhost:3000/login';
     constructor (private _http: Http) {}
 
     postQuery(message: any): Observable<string> {

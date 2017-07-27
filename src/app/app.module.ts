@@ -7,6 +7,8 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginModule } from './login/login.module';
 import { AdminModule } from 'app/admin/admin.module';
+import { PatientModule } from 'app/patient/patient.module';
+import { DoctorModule } from 'app/doctor/doctor.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { AdminModule } from 'app/admin/admin.module';
       { path: '', redirectTo: 'login', pathMatch: 'full' }
     ]),
     LoginModule,
-    AdminModule
+    AdminModule,
+    PatientModule,
+    DoctorModule
   ],
 
   providers: [  ],

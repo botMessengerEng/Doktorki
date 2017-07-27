@@ -6,9 +6,9 @@ export class User{
 
 
 export enum Role {
-    admin,
-    doctor,
-    patient
+    admin ='admin',
+    doctor = 'doctor',
+    patient = 'patient'
 }
 
 
