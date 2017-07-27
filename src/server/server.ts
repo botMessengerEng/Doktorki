@@ -15,14 +15,14 @@ import { MongoCollection } from '../mongo/mongo';
 // (mongoose as any).Promise = global.Promise;
 
 const app = express();
-var collectionName = 'movie';
-var url = 'mongodb://localhost:27017/moviecDB';
-const mongo = new MongoCollection(url, collectionName);
+const collectionUsers = 'Users';
+const url = 'mongodb://localhost:27017/DoktorkiDB';
+const mongo = new MongoCollection(url, collectionUsers);
 
 
 app.use((req, res, next) => { 
-        res.header('Access-Control-Allow-Origin', 'http://localhost:4200'); 
-        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE'); 
+        res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
         res.header('Access-Control-Allow-Headers', 'Content-Type');
         next();
 });
@@ -32,10 +32,18 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 
 
-
-app.get('/movies', (req, res: express.Response) => {
-    res.send(mongo.showElements());
-});
+// app.get('/up', (req, res: express.Response) => {
+//     mongo.insertElements([{
+//         login: 'admin',
+//         password: 'admin',
+//         role: 'admin'
+//     },
+//     {
+//         login: 'janekCyjanek',
+//         password: 'zdrowia',
+//         role: 'patient'
+//     }] ,(result) => res.send(result));
+// });
 
 app.get('/doctors', (req: express.Request, res: express.Response) => {
     res.send(doctors);
@@ -79,16 +87,44 @@ function getDocById(id){
 
 app.post('/log',(req: express.Request, res: express.Response) => {
     console.log(JSON.stringify(req.body));
-    if (req.body.login === 'admin' && req.body.password === 'admin') {
-        res.json('zalogowany')
+    let user;
+    mongo.findElement({
+        login: req.body.login,
+        password: req.body.password
+    }, (result) => user = result);
+
+    if (user) {
+        res.json(user.role)
           console.log('tak');
     }
     else{
-        res.json('bledneHaslo');
+        res.json('bledny login lub haslo');
           console.log('nie');
+          console.log(user);
     }
 });
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 });
+
+
+
+
+// app.get('/remove', (req, res) => {
+//     mongo.removeAllElements({imieniny: 'Ani'} ,(result) => res.send(result));
+// })
+
+
+// app.get('/up', (req, res: express.Response) => {
+//     mongo.insertElements([{
+//        imieniny: 'Ani',
+//        cokolwiek: 'true ale msieszne',
+//        kolejnyparam: 'taki super' 
+//     }] ,(result) => res.send(result));
+// });
+
+
+// app.get('/movies', (req, res: express.Response) => {
+//     mongo.showElements((result) => res.send(result));
+// });

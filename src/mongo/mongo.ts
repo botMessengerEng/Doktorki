@@ -20,15 +20,16 @@ export class MongoCollection {
       });
     }
 
-    showElements() {
-      this.collection.find({}).toArray((err, docs) => {
+    showElements(callback) {
+      this.collection.find({}).toArray((err, result) => {
         assert.equal(err, null);
         console.log('Showed all records');
-        console.log(docs);
+        console.log(result);
+        callback(result);
       });
     }
 
-    findElement(parameter: JSON, callback) {
+    findElement(parameter, callback) {
       this.collection.find(parameter).toArray((err, docs) => {
         assert.equal(err, null);
         console.log('Found the following records');
@@ -37,7 +38,7 @@ export class MongoCollection {
       });
     }
 
-    updateElement(parameter: JSON, data: JSON, callback) {
+    updateElement(parameter, data, callback) {
       this.collection.updateOne(parameter
         , { $set: data }, (err, result) => {
           assert.equal(err, null);
@@ -46,8 +47,8 @@ export class MongoCollection {
       });
     }
 
-    updateAllElements(parameter: JSON, data: JSON, callback) {
-      this.collection.update(parameter
+    updateAllElements(parameter, data, callback) {
+      this.collection.updateMany(parameter
         , { $set: data }, (err, result) => {
           assert.equal(err, null);
           console.log('Updated file');
@@ -55,8 +56,16 @@ export class MongoCollection {
       });
     }
 
-    removeElement(parameter: JSON, callback) {
+    removeElement(parameter, callback) {
       this.collection.deleteOne(parameter, (err, result) => {
+        assert.equal(err, null);
+        console.log('Removed file');
+        callback(result);
+      });
+    }
+
+    removeAllElements(parameter, callback) {
+      this.collection.deleteMany(parameter, (err, result) => {
         assert.equal(err, null);
         console.log('Removed file');
         callback(result);
