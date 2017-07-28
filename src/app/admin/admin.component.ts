@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AppService } from 'app/app.service';
 
 @Component({
@@ -16,28 +16,11 @@ export class AdminComponent implements OnInit {
   }
 
 
- 
  ngOnInit(): void {
         this.appService.getQuery()
             .subscribe(kroliczki => this.doctors = kroliczki,
              error => this.errorMessage = <any>error);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   toggleButton(){
