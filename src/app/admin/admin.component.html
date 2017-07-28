@@ -4,8 +4,8 @@
         List of Doctors:<br><br>
         <div *ngFor='let doctor of doctors'>
             <table class='table-of-doctor' *ngIf='doctors && doctors.length' 
-                    [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#ffcc00" : "#003d66",
-                                 "border-color": (doctor === selectedDoctor) ? "#ffcc00" : "#003d66"} '>
+                    [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#003d66" : "#262626",
+                                 "border-color": (doctor === selectedDoctor) ? "#003d66" : "#262626"} '>
                 <thead>
                     <tr>
                         <button class='doctor-button' [class.selected]='doctor === selectedDoctor' (click)='onSelect(doctor)'>
@@ -22,13 +22,24 @@
                 </thead>
                 <tbody>
                     <tr class="shortDetails" *ngIf='doctor === selectedDoctor'>
-                        coś
+                        <table class='show-details'><tr>
+                       <td class='details-of-doctor'> 
+                            <p>Gender:</p>
+                           <p>Age: </p>
+                           <p>Phone: </p>
+                           <p>Email</p>
+                           <p>Address</p>
+
+                            </td>
+                        <td class='doctor-edit'><button class='doctor-edit-button'>edit doctor</button></td>
+                         <td  class='doctor-edit'><button class='doctor-edit-button'>delete doctor</button></td>
+                         <td  class='doctor-edit'><button class='doctor-edit-button'>check schedule</button></td>
+                         </tr></table>
                     </tr>
 
                 </tbody>
 
             </table>
-            <br>
         </div>
 
     </div>

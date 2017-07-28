@@ -1,6 +1,7 @@
 .container{
     margin-left: 12%;
     margin-right: 12%;
+    
 }
 
 .logo{
@@ -17,7 +18,7 @@
 }
 
 .logo:hover {
-    background-color: #002e52;
+    background-color: #002e4d;
 }
 
 .content {
@@ -31,21 +32,22 @@
 
 .table-of-doctor{
     border-spacing:0;
-    margin:0px;
-    padding:0px;
-    width:100%;
+    margin-left:20%;
+    margin-right:20%;
+    margin-bottom:0.8%;
+    width:60%;
     border-width:1%;
     border-style: solid; 
     border-radius: 4px;
-    border-color: #003d66;
-    background-color: #003d66;
+    border-color: #262626;
+    background-color: #262626;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
 
 .table-of-doctor:hover{
-    border-color: #ffcc00 !important;
-    background-color: #ffcc00 !important;
+    border-color: #003d66 !important;
+    background-color: #003d66 !important;
 }
 
 .doctor-button{
@@ -53,7 +55,7 @@
     padding-top: 1%;
     padding-bottom: 1%;
     text-align: center;
-    background-color:  #003d66;
+    background-color:  #333333;
     border:none;
     font-size: 15px;
     color:white;
@@ -61,11 +63,14 @@
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
     width: 100%;
+    height: 100%;
     border-radius: 3px;   
+    cursor:pointer;
+
 }
 
 .doctor-button:hover{
-     background-color:#ffcc00 !important ;
+     background-color:#003d66 !important ;
 }
 
 
@@ -86,12 +91,48 @@
     text-align: center;
     background-color: white;
     font-size: 15px;
-    color:white;
+    color:#333333;
     font-family: 'Quicksand', sans-serif;
-    width: 89.5%;
+    width:100%;
 }
 
 .selected{
-      background-color: #ffcc00 !important;
+      background-color: #003d66 !important;
       border:none;
 }
+.doctor-edit{
+    width:20%;
+}
+
+.doctor-edit-button{
+    width:80px;
+    height: 50px; 
+    background-color: #005f9d;
+    border-radius: 3px;   
+    border: none;
+    color:white;
+    outline:0;
+    cursor:pointer;
+    font-family: 'Quicksand', sans-serif;
+    font-size:100%;
+
+}
+
+.doctor-edit-button:hover{
+    background-color: #006fad;
+}
+
+p{
+    text-align: left;
+    margin-left: 1%;
+}
+
+.details-of-doctor{
+    width:40%;
+}
+
+.show-details{
+    width:100%;
+    border-radius: 3px;    
+}
+
