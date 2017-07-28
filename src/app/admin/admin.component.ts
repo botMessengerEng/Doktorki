@@ -10,7 +10,7 @@ export class AdminComponent implements OnInit {
   errorMessage: any;
   doctorId1 = false;
   doctors: any;
-
+  selectedDoctor: any;
   constructor(private appService: AppService){
   //  this.doctors = [['Hannah Baker', 'od uszów', 'Ropczyce'], ['John Smith', 'kardiolog', 'Boston']];
   }
@@ -20,30 +20,17 @@ export class AdminComponent implements OnInit {
         this.appService.getQuery()
             .subscribe(kroliczki => this.doctors = kroliczki,
              error => this.errorMessage = <any>error);
+  }
+
+  onSelect(doctor: any): void {
+      if (doctor === this.selectedDoctor){
+        this.selectedDoctor = null;
+      }
+      else {
+        this.selectedDoctor = doctor;
+      }
     }
-
-
-  toggleButton(){
-    this.doctorId1 = !this.doctorId1;
-    console.log(this.doctorId1);
   }
-
-  setButtonStyles(){
-    let styles = {
-      'background-color': this.doctorId1 ? '#ffcc00'  : '#003d66',
-    };
-    return styles;
-  }
-
-  setBorderStyles(){
-    let styles = {
-      'border-color': this.doctorId1 ? '#ffcc00'  : '#003d66',
-      'background-color': this.doctorId1 ? '#ffcc00'  : '#003d66',
-    };
-    return styles;
-  }
-
-}
 
 
 

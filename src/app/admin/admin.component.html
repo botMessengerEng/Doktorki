@@ -2,14 +2,15 @@
     <div class='logo'>Admin's Profile</div>
     <div class='content'>
         List of Doctors:<br><br>
-             <div *ngFor='let doctor of doctors'>
-        <table class='table-of-doctor' [ngStyle]='setBorderStyles()' *ngIf='doctors && doctors.length' >
-      
-            <thead>
-                <tr>
-                    <button class='doctor-button' [ngStyle]='setButtonStyles()' (click)='toggleButton()'>
+        <div *ngFor='let doctor of doctors'>
+            <table class='table-of-doctor' *ngIf='doctors && doctors.length' 
+                    [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#ffcc00" : "#003d66",
+                                 "border-color": (doctor === selectedDoctor) ? "#ffcc00" : "#003d66"} '>
+                <thead>
+                    <tr>
+                        <button class='doctor-button' [class.selected]='doctor === selectedDoctor' (click)='onSelect(doctor)'>
     <td class='button-divided'>
-       {{doctor.login}}
+     {{doctor.login}}
     </td>
     <td class='button-divided'>
       {{doctor.specialization}}
@@ -18,17 +19,17 @@
        {{doctor.city}}
     </td>
 </button></tr>
-            </thead>
-            <tbody>
-                <tr class="shortDetails" *ngIf='doctorId1'>
-                    coś
-                </tr>
-           
-            </tbody>
+                </thead>
+                <tbody>
+                    <tr class="shortDetails" *ngIf='doctor === selectedDoctor'>
+                        coś
+                    </tr>
 
-        </table>
+                </tbody>
+
+            </table>
             <br>
-            </div>
-        
+        </div>
+
     </div>
 </div>

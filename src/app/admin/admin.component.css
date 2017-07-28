@@ -91,3 +91,7 @@
     width: 89.5%;
 }
 
+.selected{
+      background-color: #ffcc00 !important;
+      border:none;
+}
