@@ -19,6 +19,14 @@ export class AppService {
             .catch(this.handlerError);
     }
 
+
+    // getSingleElementQuery(_dataBaseUrl2): Observable<string> {
+    //     return this._http.get(_dataBaseUrl2)
+    //         .map((response: Response) => response.json())
+    //         .do(data => console.log('All: ' + JSON.stringify(data)))
+    //         .catch(this.handlerError);
+    // }
+
     private handlerError(error: Response) {
        console.error(error);
        return Observable.throw(error.json().error || 'Server error');

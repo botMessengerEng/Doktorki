@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppService } from 'app/app.service';
 import { trigger, style, transition, animate, group } from '@angular/core';
+import { Router } from '@angular/router';
+
+export let whichSelectedDoctor;
 
 @Component({
   templateUrl: './admin.component.html',
@@ -19,8 +22,7 @@ export class AdminComponent implements OnInit {
   errorMessage: any;
   doctors: any;
   selectedDoctor: any;
-  constructor(private appService: AppService){
-  //  this.doctors = [['Hannah Baker', 'od uszów', 'Ropczyce'], ['John Smith', 'kardiolog', 'Boston']];
+  constructor(private appService: AppService, private router: Router){
   }
 
 
@@ -36,9 +38,14 @@ export class AdminComponent implements OnInit {
       }
       else {
         this.selectedDoctor = doctor;
+        whichSelectedDoctor = this.selectedDoctor;
       }
     }
+
+  editDoctor(){
+    this.router.navigate(['admin/edit/doctor', this.selectedDoctor.name.replace(/ /g, '')/*.toLowerCase()*/]);
   }
+}
 
 
 

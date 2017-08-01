@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
+import { DoctorEditComponent } from './doctor-edit.component';
 
 
 @NgModule({
   declarations: [
-    AdminComponent
+    AdminComponent,
+    DoctorEditComponent
   ],
 
   imports: [
@@ -16,7 +18,8 @@ import { AdminComponent } from './admin.component';
     FormsModule,
     HttpModule,
     RouterModule.forChild([
-       { path: 'admin', component: AdminComponent}
+       { path: 'admin', component: AdminComponent},
+       { path: 'admin/edit/doctor/:name', component: DoctorEditComponent}
     ])
   ],
 
