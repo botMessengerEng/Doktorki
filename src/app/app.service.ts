@@ -9,7 +9,7 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 
 export class AppService {
-    private _dataBaseUrl = 'http://localhost:3000/detale';
+    private _dataBaseUrl = 'http://localhost:3000/users-details';
     constructor (private _http: Http) {}
 
     getQuery(): Observable<string> {

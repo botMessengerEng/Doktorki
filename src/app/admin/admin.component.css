@@ -1,7 +1,8 @@
 .container{
     margin-left: 12%;
     margin-right: 12%;
-    
+    border: 2px solid #002e4d;
+    height: fixed;
 }
 
 .logo{
@@ -28,6 +29,7 @@
     font-family: 'Quicksand', sans-serif;
     color:#002e4d;
     font-size:140%;
+  
 }
 
 .table-of-doctor{
@@ -39,8 +41,8 @@
     border-width:1%;
     border-style: solid; 
     border-radius: 4px;
-    border-color: #262626;
-    background-color: #262626;
+    border-color: #333333;
+    background-color: #333333;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
@@ -91,7 +93,7 @@
     text-align: center;
     background-color: white;
     font-size: 15px;
-    color:#333333;
+    color: #333333;
     font-family: 'Quicksand', sans-serif;
     width:100%;
 }
@@ -125,6 +127,7 @@
 p{
     text-align: left;
     margin-left: 1%;
+    line-height: 80%;
 }
 
 .details-of-doctor{

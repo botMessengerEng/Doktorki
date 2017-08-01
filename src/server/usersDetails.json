@@ -1,0 +1,182 @@
+[
+    {
+        "login": "doktorBezUprawnien",
+        "role": "doctor",
+        "name": "John Smith",
+        "gender": "male",
+        "age": 37,
+        "phone": "+48 123456789",
+        "email": "doktorBezUprawnien@gmail.com",
+        "address": {
+            "street": "Łąkowa 34",
+            "postcode": "39-111",
+            "city": "Miasto W"
+        },
+        "specialization": "kości"
+    },
+    {
+        "login": "doctor",
+        "role": "doctor",
+        "name": "James Lovelock",
+        "gender": "male",
+        "age": 55,
+        "phone": "+48 123465689",
+        "email": "jLovelock@gmail.com",
+        "address": {
+            "street": "Love 66",
+            "postcode": "595-223",
+            "city": "Paris"
+        },   
+        "specialization": "logopeda"
+    },
+    {
+        "login": "doktorek",
+        "role": "doctor",
+        "name": "Marcus Will",
+        "gender": "male",
+        "age": 32,
+        "phone": "+48 773456789",
+        "email": "doktorek@gmail.com",
+        "address": {
+            "street": "Green 123",
+            "postcode": "25-083",
+            "city": "Masecziuset"
+        },   
+        "specialization": "od uszów"
+    },
+    {
+        "login": "Brooke",
+        "role": "doctor",
+        "name": "Brooke Winchester",
+        "gender": "male",
+        "age": 81,
+        "phone": "+23 322567289",
+        "email": "BrookeDoctor@gmail.com",
+        "address": {
+            "street": "Piernikowa 33",
+            "postcode": "22-083",
+            "city": "Carcas"
+        },
+        "specialization": "internista"
+    },
+    {
+        "login": "elekarz",
+        "role": "doctor",
+        "name": "Tim Cole",
+        "gender": "male",
+        "age": 46,
+        "phone": "+11 773452289",
+        "email": "tim-cole@gmail.com",
+        "address": {
+            "street": "Lniana 76",
+            "postcode": "22-445",
+            "city": "Colorado"
+        },   
+        "specialization": "alergolog"
+    },
+    {
+        "login": "monicaC",
+        "role": "doctor",
+        "name": "Monica C",
+        "gender": "female",
+        "age": 27,
+        "phone": "+77 222116789",
+        "email": "monicaC@gmail.com",
+        "address": {
+            "street": "Lukrowa 66",
+            "postcode": "211-7783",
+            "city": "Toruń"
+        },   
+        "specialization": "pediatra"
+    },
+    {
+        "login": "eve63",
+        "role": "doctor",
+        "name": "Eva Limone",
+        "gender": "demale",
+        "age": 62,
+        "phone": "+48 773456789",
+        "email": "doktorek@gmail.com",
+        "address": {
+            "street": "Limonkowa 24",
+            "postcode": "35-083",
+            "city": "Floryda"
+        },   
+        "specialization": "ginekolog"
+    },
+    {
+        "login": "pawelKrakow",
+        "role": "doctor",
+        "name": "Pawel Kowalski",
+        "gender": "male",
+        "age": 37,
+        "phone": "+48 123454755",
+        "email": "pawelKrakow@gmail.com",
+        "address": {
+            "street": "Słowackiego 45",
+            "postcode": "30-083",
+            "city": "Kraków"
+        },   
+        "specialization": "kardiolog"
+    },
+    {
+        "login": "leo_z_tarnowa",
+        "role": "doctor",
+        "name": "Leopold Brzytwa",
+        "gender": "male",
+        "age": 31,
+        "phone": "+48 133456789",
+        "email": "leo@gmail.com",
+        "address": {
+            "street": "Ładna 11",
+            "postcode": "35-283",
+            "city": "Tarnów"
+        },   
+        "specialization": "kardiolog"
+    },
+    {
+        "login": "doktorro",
+        "role": "doctor",
+        "name": "Pedro El Gonzalez",
+        "gender": "male",
+        "age": 49,
+        "phone": "+18 773234789",
+        "email": "doktorro@gmail.com",
+        "address": {
+            "street": "Naczosów 23",
+            "postcode": "25-083",
+            "city": "Cancun"
+        },   
+        "specialization": "okulista"
+    },
+    {
+        "login": "medicziKasia",
+        "role": "doctor",
+        "name": "Katarzyna Medycejska",
+        "gender": "female",
+        "age": 39,
+        "phone": "+48 73131789",
+        "email": "mediczi@gmail.com",
+        "address": {
+            "street": "Paryska 55",
+            "postcode": "15-0443",
+            "city": "Florencja"
+        },   
+        "specialization": "stomatolog"
+    },
+        {
+        "login": "lolek",
+        "role": "doctor",
+        "name": "Leonidas Włodarczyk",
+        "gender": "male",
+        "age": 65,
+        "phone": "+18 973346789",
+        "email": "lolek@gmail.com",
+        "address": {
+            "street": "Fiołkowa 13",
+            "postcode": "45-033",
+            "city": "Gdańsk"
+        },   
+        "specialization": "chirurg"
+    }
+]

@@ -1,46 +1,45 @@
-<div class='container'>
+<div class='container' [@tableOfDoctors]>
     <div class='logo'>Admin's Profile</div>
     <div class='content'>
         List of Doctors:<br><br>
         <div *ngFor='let doctor of doctors'>
-            <table class='table-of-doctor' *ngIf='doctors && doctors.length' 
-                    [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#003d66" : "#262626",
-                                 "border-color": (doctor === selectedDoctor) ? "#003d66" : "#262626"} '>
+            <table class='table-of-doctor' *ngIf='doctors && doctors.length' [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#003d66" : "#333333",
+                                 "border-color": (doctor === selectedDoctor) ? "#003d66" : "#333333"} '>
                 <thead>
                     <tr>
                         <button class='doctor-button' [class.selected]='doctor === selectedDoctor' (click)='onSelect(doctor)'>
     <td class='button-divided'>
-     {{doctor.login}}
+     {{doctor.name}}
     </td>
     <td class='button-divided'>
       {{doctor.specialization}}
     </td>
     <td class='button-divided'>
-       {{doctor.city}}
+       {{doctor.address.city}}
     </td>
 </button></tr>
                 </thead>
                 <tbody>
                     <tr class="shortDetails" *ngIf='doctor === selectedDoctor'>
-                        <table class='show-details'><tr>
-                       <td class='details-of-doctor'> 
-                            <p>Gender:</p>
-                           <p>Age: </p>
-                           <p>Phone: </p>
-                           <p>Email</p>
-                           <p>Address</p>
+                        <table class='show-details'>
+                            <tr>
+                                <td class='details-of-doctor'>
+                                    <p><strong>Login: </strong>{{doctor.login}}</p>
+                                    <p><strong>Gender: </strong>{{doctor.gender}}</p>
+                                    <p><strong>Age: </strong>{{doctor.age}}</p>
+                                    <p><strong>Phone: </strong>{{doctor.phone}}</p>
+                                    <p><strong>Email: </strong>{{doctor.email}}</p>
+                                    <p><strong>Address: </strong>{{doctor.address.street}}, {{doctor.address.postcode}} {{doctor.address.city}}</p>
 
-                            </td>
-                        <td class='doctor-edit'><button class='doctor-edit-button'>edit doctor</button></td>
-                         <td  class='doctor-edit'><button class='doctor-edit-button'>delete doctor</button></td>
-                         <td  class='doctor-edit'><button class='doctor-edit-button'>check schedule</button></td>
-                         </tr></table>
+                                </td>
+                                <td class='doctor-edit'><button class='doctor-edit-button'>edit doctor</button></td>
+                                <td class='doctor-edit'><button class='doctor-edit-button'>delete doctor</button></td>
+                                <td class='doctor-edit'><button class='doctor-edit-button'>check schedule</button></td>
+                            </tr>
+                        </table>
                     </tr>
-
                 </tbody>
-
             </table>
         </div>
-
     </div>
 </div>

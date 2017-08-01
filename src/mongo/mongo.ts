@@ -36,7 +36,7 @@ export class MongoCollection {
         console.log(docs)
         callback(docs);
       });
-      return new Promise((resolve) => resolve(true));
+      return new Promise(resolve => resolve(true));
     }
 
     updateElement(parameter, data, callback) {

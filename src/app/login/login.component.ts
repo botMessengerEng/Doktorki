@@ -8,13 +8,13 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
 import { Router,  } from '@angular/router';
 
-
 export let USER;
 
 @Component({
     templateUrl:    'login.component.html',
-    styleUrls:     ['login.component.css']
+    styleUrls:     ['login.component.css'],
 })
+
 
 
 export class LoginComponent {

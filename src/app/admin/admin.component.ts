@@ -1,14 +1,22 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppService } from 'app/app.service';
+import { trigger, style, transition, animate, group } from '@angular/core';
 
 @Component({
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  styleUrls: ['./admin.component.css'],
+  animations: [
+  trigger('tableOfDoctors', [
+    transition(':enter', [
+      style({transform: 'translateY(-100%)'}),
+      animate(350)
+    ]),
+  ])
+]
 })
 
 export class AdminComponent implements OnInit {
   errorMessage: any;
-  doctorId1 = false;
   doctors: any;
   selectedDoctor: any;
   constructor(private appService: AppService){
@@ -40,30 +48,3 @@ export class AdminComponent implements OnInit {
 
 
 
-
-
-
-/*
-<div class='container'>
-<div class='logo'>Admin's Profile</div>
-<div class='content'>
-    List of Doctors:<br><br>
-
-    <div class='doctors-panel'><div class='doctor-panel'>
-<button class='doctor-button' (click)='toggleButton()'  >
-    <div class='button-divided'>
-       Hannah Baker
-    </div>
-    <div class='button-divided'>
-        od ucha
-    </div>
-    <div class='button-divided'>
-        Ropczyce
-    </div>
-</button>
-<div class="shortDetails" *ngIf='doctorId1' >
-    coś
-</div></div>
-</div>
-</div>
-</div>*/
