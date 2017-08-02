@@ -43,8 +43,19 @@ export class AdminComponent implements OnInit {
     }
 
   editDoctor(){
-    this.router.navigate(['admin/edit/doctor', this.selectedDoctor.name.replace(/ /g, '')/*.toLowerCase()*/]);
+    this.router.navigate(['admin/edit/doctor', this.selectedDoctor.login/*name.replace(/ /g, '').toLowerCase()*/]);
   }
+
+
+  //   deleteAndBackToAdminPage() {
+  //       this.appService.deleteQuery({ login: this.selectedDoctor.login } )
+  //       .subscribe(() => {
+  //         if(this.selectedDoctor !=null)
+  //         this.selectedDoctor=null},
+        
+  //        error => this.errorMessage = <any>error);
+  // }
+
 }
 
 

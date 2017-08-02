@@ -10,7 +10,9 @@ import 'rxjs/add/operator/catch';
 
 export class AppService {
     private _dataBaseUrl = 'http://localhost:3000/users-details';
+    private _dataBaseUrl2 = 'http://localhost:3000/delete-users';
     constructor (private _http: Http) {}
+
 
     getQuery(): Observable<string> {
         return this._http.get(this._dataBaseUrl)
@@ -19,13 +21,27 @@ export class AppService {
             .catch(this.handlerError);
     }
 
+    postQuery(param): Observable<string> {
+        return this._http.post(this._dataBaseUrl, param)
+            .map((response: Response) => response.json())
+            .do(data => console.log('All: ' + JSON.stringify(data)))
+            .catch(this.handlerError);
+    }
 
-    // getSingleElementQuery(_dataBaseUrl2): Observable<string> {
-    //     return this._http.get(_dataBaseUrl2)
-    //         .map((response: Response) => response.json())
-    //         .do(data => console.log('All: ' + JSON.stringify(data)))
-    //         .catch(this.handlerError);
-    // }
+
+    updateQuery(param): Observable<string> {
+        return this._http.put(this._dataBaseUrl, param)
+            .map((response: Response) => response.json())
+            .do(data => console.log('All: ' + JSON.stringify(data)))
+            .catch(this.handlerError);
+    }
+
+    deleteQuery(param): Observable<string> {
+        return this._http.delete(this._dataBaseUrl2, param)
+            .map((response: Response) => response.json())
+            .do(data => console.log('All: ' + JSON.stringify(data)))
+            .catch(this.handlerError);
+    }
 
     private handlerError(error: Response) {
        console.error(error);

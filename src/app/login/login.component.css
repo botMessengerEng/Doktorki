@@ -50,6 +50,7 @@ input {
     font-size: 15px;
     color:white;
     margin-left: 75%;
+    cursor: pointer;
     font-family: 'Quicksand', sans-serif;
 }
 .check-button:hover {

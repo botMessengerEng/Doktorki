@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 
 
-app.post('/login',(req: express.Request, res: express.Response) => {
+app.post('/login', (req: express.Request, res: express.Response) => {
     console.log(JSON.stringify(req.body));
     let user;
         mongoUsers.findElement({
@@ -57,6 +57,25 @@ app.post('/login',(req: express.Request, res: express.Response) => {
 app.get('/users-details', (req: express.Request, res: express.Response) => {
     mongoUsersDetails.findElement( {role: 'doctor'},
         (result) => res.json(result));
+});
+
+app.post('/users-details', (req: express.Request, res: express.Response) => {
+    mongoUsersDetails.findElement( {role: req.body.role, login: req.body.login},
+        (result) => res.json(result));
+});
+
+app.put('/users-details', (req: express.Request, res: express.Response) => {
+    mongoUsersDetails.updateElement( req.body,
+        (result) => res.json(result));
+});
+
+app.delete('/delete-users', (req: express.Request, res: express.Response) => {
+    mongoUsersDetails.removeElement( req.body.login,
+        (result) => res.json(result))
+        .then(() =>
+            mongoUsers.removeElement( req.body.login,
+                (result) => res.json(result))
+        );
 });
 
 app.listen(3000, function () {

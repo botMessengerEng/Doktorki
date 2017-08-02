@@ -19,7 +19,7 @@ import { DoctorEditComponent } from './doctor-edit.component';
     HttpModule,
     RouterModule.forChild([
        { path: 'admin', component: AdminComponent},
-       { path: 'admin/edit/doctor/:name', component: DoctorEditComponent}
+       { path: 'admin/edit/doctor/:login', component: DoctorEditComponent}
     ])
   ],
 

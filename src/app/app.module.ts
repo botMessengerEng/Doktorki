@@ -22,7 +22,8 @@ import { AppService } from "app/app.service";
     FormsModule,
     HttpModule,
     RouterModule.forRoot([
-      { path: '', redirectTo: 'login', pathMatch: 'full' }
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: '**', redirectTo: 'login', pathMatch: 'full' }
     ]),
     LoginModule,
     AdminModule,

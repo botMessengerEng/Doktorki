@@ -1,34 +1,39 @@
 <div class='container'>
     <div class='logo'>Admin's Profile</div>
-    <div class='content'>
-       name<br>
-        <div class='specialization'>spec</div><br>
-        <br><br>
-       
-       <div class='table-of-details'>
-         <div class='x'>name: </div>
-        <div> <input class='input-style' type='text' placeholder=""></div>
-         <div>login: </div>
-        <div> <input class='input-style' type='text'></div>
-            <div>gender:</div>
-        <div> <input class='input-style' type='text'></div>
-         <div>age:</div>
-        <div> <input class='input-style' type='text'></div>
-           <div>phone:</div>
-        <div> <input class='input-style' type='text'></div>
-           <div>email:</div>
-        <div> <input class='input-style' type='text'></div>
-           <div>street:</div>
-        <div> <input class='input-style' type='text'></div>
-           <div>postcode:</div>
-        <div> <input class='input-style' type='text'></div>
-           <div>city:</div>
-        <div> <input class='input-style' type='text'></div>
-           <div>specialization:</div>
-        <div> <input class='input-style' type='text'></div>
-       </div>
+    <div *ngIf='doctor!=undefined'>
+        <div class='content'>
+            {{doctor[0].name}}<br>
+            <div class='specialization'>{{doctor[0].specialization}}</div><br>
 
+            <div class='table-of-details'>
+                 <div>login: </div>
+                <div style= 'color:#4d1919'> {{doctor[0].login}} </div>
+                <div class='x '>name: </div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].name"></div>
+                <div>gender:</div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].gender"></div>
+                <div>age:</div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].age"></div>
+                <div>phone:</div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].phone"></div>
+                <div>email:</div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].email"></div>
+                <div>street:</div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].address.street"></div>
+                <div>postcode:</div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].address.postcode"></div>
+                <div>city:</div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].address.city"></div>
+                <div>specialization:</div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].specialization"></div>
+            </div>
 
-
+            <div class='buttons'>
+                <button class='option-button' (click)='saveChanges()'>save</button>
+                <button class='option-button'>delete</button>
+                <button class='option-button'>show schedule</button>
+                <button class='option-button' (click)='back()'>back</button>
+            </div>
+        </div>
     </div>
 </div>

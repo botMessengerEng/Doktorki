@@ -39,9 +39,9 @@ export class MongoCollection {
       return new Promise(resolve => resolve(true));
     }
 
-    updateElement(parameter, data, callback) {
-      this.collection.updateOne(parameter
-        , { $set: data }, (err, result) => {
+    updateElement(parameter, callback) {
+      this.collection.updateOne(parameter.login
+        , { $set: parameter }, (err, result) => {
           assert.equal(err, null);
           console.log('Updated file');
           callback(result);
@@ -63,6 +63,7 @@ export class MongoCollection {
         console.log('Removed file');
         callback(result);
       });
+      return new Promise(resolve => resolve(true));
     }
 
     removeAllElements(parameter, callback) {

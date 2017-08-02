@@ -1,37 +1,78 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AppService } from 'app/app.service';
-import {  whichSelectedDoctor } from './admin.component';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Observable } from "rxjs/Observable";
 
 @Component({
   templateUrl: './doctor-edit.component.html',
   styleUrls: ['./admin.component.css', './doctor-edit.component.css'],
 })
 
-export class DoctorEditComponent{
-  login: number;
+export class DoctorEditComponent implements OnInit {
+  login: string;
   errorMessage: any;
-  doctor= whichSelectedDoctor;
+  doctor: any;
+
+
   constructor(private router: Router,
-              private userService: AppService,
-              private route: ActivatedRoute)
-      {
-            this.route.params.subscribe(params => {
-            this.login = params['name'];
-          });
-          
-          console.log(this.login);
-      }
+    private appService: AppService,
+    private route: ActivatedRoute) {
+  }
+
+  ngOnInit(): void {
+    this.getLoginFromUrl().then(() => this.getDoctor());
+  }
+
+  getDoctor() {
+    return new Promise(resolve => {
+      this.appService.postQuery({ role: 'doctor', login: this.login })
+        .subscribe((doctor) => this.doctor = doctor);
+      resolve(true);
+    });
+  }
+
+  getLoginFromUrl() {
+    this.login = this.route.snapshot.params['login'];
+    return new Promise(resolve => {
+      resolve(true);
+    });
+  }
+
+  saveChanges() {
+    this.appService.updateQuery({ login: this.doctor[0].login,
+                                  name: this.doctor[0].name,
+                                  gender: this.doctor[0].gender,
+                                  age: this.doctor[0].age,
+                                  phone: this.doctor[0].phone,
+                                  email: this.doctor[0].email,
+                                  address: {
+                                    street: this.doctor[0].address.street,
+                                    postcode: this.doctor[0].address.postcode,
+                                    city: this.doctor[0].address.city
+                                  },
+                                  specialization: this.doctor[0].specialization })
+        .subscribe(() => null,
+         error => this.errorMessage = <any>error);
+  }
 
 
+  // delete() {
+  //    return new Promise(resolve => {
+  //       this.appService.deleteQuery({ login: this.login } )
+  //       .subscribe(() => null,
+  //        error => this.errorMessage = <any>error);
+  //       resolve(true);
+  //     });
+  // }
+
+  // deleteAndBackToAdminPage() {
+  //       this.appService.deleteQuery({ login: this.doctor[0].login } )
+  //       .subscribe(() => this.back(),
+  //        error => this.errorMessage = <any>error);
+  // }
+
+   back() {
+    this.router.navigate(['admin']);
+  }
 
 }
-
-
-
-
-
-
-
-
-
