@@ -58,7 +58,8 @@ export class MongoCollection {
     }
 
     removeElement(parameter, callback) {
-      this.collection.deleteOne(parameter, (err, result) => {
+      this.collection.deleteOne({login: parameter.login}, 
+        (err, result) => {
         assert.equal(err, null);
         console.log('Removed file');
         callback(result);

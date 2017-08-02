@@ -71,6 +71,13 @@ export class DoctorEditComponent implements OnInit {
   //        error => this.errorMessage = <any>error);
   // }
 
+
+    deleteAndBackToAdminPage() {
+        this.appService.deleteQuery({login: this.doctor[0].login} )
+        .subscribe(() => this.back(),
+         error => this.errorMessage = <any>error);
+  }
+
    back() {
     this.router.navigate(['admin']);
   }

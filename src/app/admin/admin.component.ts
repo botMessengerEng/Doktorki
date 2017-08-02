@@ -9,60 +9,53 @@ export let whichSelectedDoctor;
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
   animations: [
-  trigger('tableOfDoctors', [
-    transition(':enter', [
-      style({transform: 'translateY(-100%)'}),
-      animate(350)
-    ]),
-  ])
-]
+    trigger('tableOfDoctors', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100%)' }),
+        animate(350)
+      ]),
+    ])
+  ]
 })
 
 export class AdminComponent implements OnInit {
   errorMessage: any;
   doctors: any;
   selectedDoctor: any;
-  constructor(private appService: AppService, private router: Router){
+  constructor(private appService: AppService, private router: Router) {
   }
 
 
- ngOnInit(): void {
-        this.appService.getQuery()
-            .subscribe(kroliczki => this.doctors = kroliczki,
-             error => this.errorMessage = <any>error);
+  ngOnInit(): void {
+    this.getDoctors();
+  }
+
+  getDoctors() {
+    this.appService.getQuery()
+      .subscribe(kroliczki => this.doctors = kroliczki,
+      error => this.errorMessage = <any>error);
   }
 
   onSelect(doctor: any): void {
-      if (doctor === this.selectedDoctor){
-        this.selectedDoctor = null;
-      }
-      else {
-        this.selectedDoctor = doctor;
-        whichSelectedDoctor = this.selectedDoctor;
-      }
+    if (doctor === this.selectedDoctor) {
+      this.selectedDoctor = null;
     }
+    else {
+      this.selectedDoctor = doctor;
+      whichSelectedDoctor = this.selectedDoctor;
+    }
+  }
 
-  editDoctor(){
+  editDoctor() {
     this.router.navigate(['admin/edit/doctor', this.selectedDoctor.login/*name.replace(/ /g, '').toLowerCase()*/]);
   }
 
+  deleteAndBackToAdminPage() {
+    this.appService.deleteQuery({ login: this.selectedDoctor.login })
+      .subscribe(() => this.getDoctors(),
+      error => this.errorMessage = <any>error);
+  }
 
-  //   deleteAndBackToAdminPage() {
-  //       this.appService.deleteQuery({ login: this.selectedDoctor.login } )
-  //       .subscribe(() => {
-  //         if(this.selectedDoctor !=null)
-  //         this.selectedDoctor=null},
-        
-  //        error => this.errorMessage = <any>error);
-  // }
 
 }
-
-
-
-
-
-
-
-
 

@@ -69,13 +69,16 @@ app.put('/users-details', (req: express.Request, res: express.Response) => {
         (result) => res.json(result));
 });
 
-app.delete('/delete-users', (req: express.Request, res: express.Response) => {
-    mongoUsersDetails.removeElement( req.body.login,
-        (result) => res.json(result))
+
+app.put('/delete-users', (req: express.Request, res: express.Response) => {
+    var x=req.body;
+    mongoUsersDetails.removeElement( req.body,
+        () => null)
         .then(() =>
-            mongoUsers.removeElement( req.body.login,
+            mongoUsers.removeElement( x,
                 (result) => res.json(result))
         );
+       
 });
 
 app.listen(3000, function () {

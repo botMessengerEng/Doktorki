@@ -37,7 +37,7 @@ export class AppService {
     }
 
     deleteQuery(param): Observable<string> {
-        return this._http.delete(this._dataBaseUrl2, param)
+        return this._http.put(this._dataBaseUrl2, param)
             .map((response: Response) => response.json())
             .do(data => console.log('All: ' + JSON.stringify(data)))
             .catch(this.handlerError);
