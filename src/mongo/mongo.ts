@@ -39,8 +39,8 @@ export class MongoCollection {
       return new Promise(resolve => resolve(true));
     }
 
-    updateElement(parameter, callback) {
-      this.collection.updateOne(parameter.login
+     updateElement(parameter, callback) {
+      this.collection.updateOne({login: parameter.login}
         , { $set: parameter }, (err, result) => {
           assert.equal(err, null);
           console.log('Updated file');
