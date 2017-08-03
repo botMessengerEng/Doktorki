@@ -18,6 +18,7 @@ import 'rxjs/add/operator/catch';
 export class AppService {
     private _dataBaseUrl = 'http://localhost:3000/users-details';
     private _dataBaseUrl2 = 'http://localhost:3000/delete-users';
+    private _dataBaseUrl3 = 'http://localhost:3000/insert-user';
     constructor (private _http: Http) {}
 
 
@@ -45,6 +46,14 @@ export class AppService {
 
     deleteQuery(param): Observable<string> {
         return this._http.put(this._dataBaseUrl2, param)
+            .map((response: Response) => response.json())
+            .do(data => console.log('All: ' + JSON.stringify(data)))
+            .catch(this.handlerError);
+    }
+
+
+    addNewDoctor(param): Observable<string> {
+        return this._http.post(this._dataBaseUrl, param)
             .map((response: Response) => response.json())
             .do(data => console.log('All: ' + JSON.stringify(data)))
             .catch(this.handlerError);

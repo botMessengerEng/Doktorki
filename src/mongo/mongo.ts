@@ -18,6 +18,7 @@ export class MongoCollection {
         console.log(`Inserted ${data.length} documents into the collection`);
         callback(result);
       });
+      return new Promise(resolve => resolve(true));
     }
 
     showElements(callback) {

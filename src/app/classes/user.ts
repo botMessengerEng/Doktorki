@@ -20,9 +20,12 @@ export class Doctor {
     age: number;
     phone: string;
     email: string;
-    street: string;
-    postcode: string;
-    city: string;
+    address = {
+        street: '',
+        postcode: '',
+        city: ''
+    }
+
     specialization: string;
 
     constructor(login,password,name,gender,age,phone,email,street,postcode,city,specialization) {
@@ -33,8 +36,9 @@ export class Doctor {
         this.age = age;
         this.phone = phone;
         this.email = email;
-        this.street = street;
-        this.postcode = postcode;
+        this.address.street = street;
+        this.address.postcode = postcode;
+        this.address.city = city;
         this.specialization =specialization;
     }
 

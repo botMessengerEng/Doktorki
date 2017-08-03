@@ -71,14 +71,32 @@ app.put('/users-details', (req: express.Request, res: express.Response) => {
 
 
 app.put('/delete-users', (req: express.Request, res: express.Response) => {
-    var x=req.body;
     mongoUsersDetails.removeElement( req.body,
         () => null)
         .then(() =>
-            mongoUsers.removeElement( x,
+            mongoUsers.removeElement( req.body,
                 (result) => res.json(result))
         );
+});
 
+app.post('/insert-user', (req: express.Request, res: express.Response) => {
+
+    mongoUsers.findElement({ login: req.body.login }, (result) => {
+        //console.log(result);
+        if (result!=undefined) {
+            res.json(`Login ${req.body.login} is in use!`)
+        }
+        // else {
+        //     mongoUsers.insertElements([{login: req.body.login,
+        //                                 password: req.body.password,
+        //                                 role: 'doctor'}],
+        //                                 () => null)
+        //         .then(() =>
+        //         mongoUsersDetails.insertElements([req.body],
+        //             result => res.json('OK') )
+        //     )
+        // }
+    });
 });
 
 app.listen(3000, function () {
