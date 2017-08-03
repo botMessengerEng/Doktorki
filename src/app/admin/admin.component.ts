@@ -3,8 +3,6 @@ import { AppService } from 'app/app.service';
 import { trigger, style, transition, animate, group } from '@angular/core';
 import { Router } from '@angular/router';
 
-export let whichSelectedDoctor;
-
 @Component({
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
@@ -22,6 +20,7 @@ export class AdminComponent implements OnInit {
   errorMessage: any;
   doctors: any;
   selectedDoctor: any;
+  
   constructor(private appService: AppService, private router: Router) {
   }
 
@@ -42,8 +41,7 @@ export class AdminComponent implements OnInit {
     }
     else {
       this.selectedDoctor = doctor;
-      whichSelectedDoctor = this.selectedDoctor;
-    }
+        }
   }
 
   editDoctor() {
@@ -55,7 +53,10 @@ export class AdminComponent implements OnInit {
       .subscribe(() => this.getDoctors(),
       error => this.errorMessage = <any>error);
   }
-
+  
+  addDoctor() {
+    this.router.navigate(['admin/add/doctor']);
+  }
 
 }
 

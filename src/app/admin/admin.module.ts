@@ -5,12 +5,14 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { DoctorEditComponent } from './doctor-edit.component';
+import { DoctorAddComponent } from './doctor-add.component';
 
 
 @NgModule({
   declarations: [
     AdminComponent,
-    DoctorEditComponent
+    DoctorEditComponent,
+    DoctorAddComponent
   ],
 
   imports: [
@@ -19,7 +21,8 @@ import { DoctorEditComponent } from './doctor-edit.component';
     HttpModule,
     RouterModule.forChild([
        { path: 'admin', component: AdminComponent},
-       { path: 'admin/edit/doctor/:login', component: DoctorEditComponent}
+       { path: 'admin/edit/doctor/:login', component: DoctorEditComponent},
+       { path: 'admin/add/doctor', component: DoctorAddComponent}
     ])
   ],
 

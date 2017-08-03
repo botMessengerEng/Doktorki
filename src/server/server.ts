@@ -78,7 +78,7 @@ app.put('/delete-users', (req: express.Request, res: express.Response) => {
             mongoUsers.removeElement( x,
                 (result) => res.json(result))
         );
-       
+
 });
 
 app.listen(3000, function () {

@@ -5,6 +5,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 
+// class InsertDocDto {
+//     name: string;
+// }
+
+// const req: InsertDocDto = {
+//     name: 'jjfdklsf'
+// }
 
 @Injectable()
 

@@ -11,4 +11,17 @@ export enum Role {
     patient 
 }
 
-
+export class Doctor {
+    login: string
+    password: string;
+    role = 'doctor';
+    name: string;
+    gender: string;
+    age: number;
+    phone: string;
+    email: string;
+    street: string;
+    postcode: string;
+    city: string;
+    specialization: string;
+}

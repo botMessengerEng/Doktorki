@@ -2,6 +2,7 @@
     <div class='logo'>Admin's Profile</div>
     <div class='content'>
         List of Doctors:<br><br>
+                        <button (click)='addDoctor()'>add</button>
         <div *ngFor='let doctor of doctors'>
             <table class='table-of-doctor' *ngIf='doctors && doctors.length' [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#003d66" : "#333333",
                                  "border-color": (doctor === selectedDoctor) ? "#003d66" : "#333333"} '>

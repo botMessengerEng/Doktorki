@@ -56,22 +56,6 @@ export class DoctorEditComponent implements OnInit {
   }
 
 
-  // delete() {
-  //    return new Promise(resolve => {
-  //       this.appService.deleteQuery({ login: this.login } )
-  //       .subscribe(() => null,
-  //        error => this.errorMessage = <any>error);
-  //       resolve(true);
-  //     });
-  // }
-
-  // deleteAndBackToAdminPage() {
-  //       this.appService.deleteQuery({ login: this.doctor[0].login } )
-  //       .subscribe(() => this.back(),
-  //        error => this.errorMessage = <any>error);
-  // }
-
-
     deleteAndBackToAdminPage() {
         this.appService.deleteQuery({login: this.doctor[0].login} )
         .subscribe(() => this.back(),
