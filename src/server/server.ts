@@ -80,23 +80,37 @@ app.put('/delete-users', (req: express.Request, res: express.Response) => {
 });
 
 app.post('/insert-user', (req: express.Request, res: express.Response) => {
+    console.log('otrzymane' + JSON.stringify(req.body));
+    let user;
 
-    mongoUsers.findElement({ login: req.body.login }, (result) => {
-        //console.log(result);
-        if (result!=undefined) {
+    mongoUsers.findElement({ login: req.body.login }, (result) => user = result).then(() => setTimeout(() => {
+        console.log(user);
+        if (user[0]!==undefined) {
             res.json(`Login ${req.body.login} is in use!`)
         }
-        // else {
-        //     mongoUsers.insertElements([{login: req.body.login,
-        //                                 password: req.body.password,
-        //                                 role: 'doctor'}],
-        //                                 () => null)
-        //         .then(() =>
-        //         mongoUsersDetails.insertElements([req.body],
-        //             result => res.json('OK') )
-        //     )
-        // }
-    });
+        else {
+            mongoUsers.insertElements([{login: req.body.login,
+                                        password: req.body.password,
+                                        role: 'doctor'}],
+                                        () => null)
+                .then(() =>
+                mongoUsersDetails.insertElements([{ login: req.body.login,
+                                        name: req.body.name,
+                                        role: 'doctor',
+                                        gender: req.body.gender,
+                                        age: req.body.age,
+                                        phone: req.body.phone,
+                                        email: req.body.email,
+                                        address: {
+                                            street: req.body.address.street,
+                                            postcode: req.body.address.postcode,
+                                            city: req.body.address.city
+                                        },
+                                        specialization: req.body.specialization }],
+                    result => res.json('OK') )
+            )
+        }
+    },500));
 });
 
 app.listen(3000, function () {

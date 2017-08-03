@@ -53,7 +53,7 @@ export class AppService {
 
 
     addNewDoctor(param): Observable<string> {
-        return this._http.post(this._dataBaseUrl, param)
+        return this._http.post(this._dataBaseUrl3, param)
             .map((response: Response) => response.json())
             .do(data => console.log('All: ' + JSON.stringify(data)))
             .catch(this.handlerError);
