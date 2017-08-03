@@ -14,7 +14,7 @@ export class DoctorAddComponent  {
 
         constructor(private appService: AppService, private router: Router)
         {
-            this.doctor = new Doctor();
+            this.doctor = new Doctor('', '', '', '', undefined , '', '', '', '', '', '');
         }
 
 

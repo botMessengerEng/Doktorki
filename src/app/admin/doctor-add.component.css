@@ -1,3 +1,4 @@
+
 .table-of-details {
     display: grid;
     grid-template-columns: 15% 250px; 
@@ -72,6 +73,11 @@
     outline:0;
 }
 
+.option-button:disabled {
+    outline:0;
+    background-color: #d9d9d9;
+}
+
 select {
     height: 44px;
     font-size: 16px;
@@ -92,9 +98,52 @@ select {
     padding-bottom: 2%;
     text-align: left !important;
     color:  #660000;
-    font-size: 80%;
+    font-size: 50%;
 }
 
 
 
 
+.scrollbar
+{
+	margin-left: 30px;
+	float: left;
+	height: 300px;
+	width: 65px;
+	background: #F5F5F5;
+	overflow-y: scroll;
+	margin-bottom: 25px;
+}
+
+.force-overflow
+{
+	min-height: 450px;
+}
+
+#wrapper
+{
+	text-align: center;
+	width: 500px;
+	margin: auto;
+}
+
+/*
+ *  STYLE 1
+ */
+
+#style-3::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+#style-3::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+#style-3::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+}

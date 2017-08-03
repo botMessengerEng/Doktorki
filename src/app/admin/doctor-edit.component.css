@@ -73,6 +73,11 @@
     font-family: 'Quicksand', sans-serif;
     cursor: pointer;
 }
+
+.option-button:disabled {
+background-color: red;
+}
+
 .option-button:hover {
     background-color:   #002e4d;
 }
