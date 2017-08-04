@@ -35,7 +35,7 @@
 
                     <div><label for="gender">gender: </label></div>
 
-                    <div><select [(ngModel)]="doctor.gender" name="gender">
+                    <div><select [(ngModel)]="doctor[0].gender" name="gender">
                   <option *ngFor="let gen of genders" [value]="gen">{{gen}}</option>
                   </select></div>
 
