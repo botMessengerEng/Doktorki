@@ -45,7 +45,7 @@ app.post('/login', (req: express.Request, res: express.Response) => {
     }, (result) => user = result)
     .then(() => setTimeout(() => {
             if (user[0] !== undefined) {
-                res.json(user[0].role)
+                res.json(user[0])
                 console.log('tak');
             }
             else{

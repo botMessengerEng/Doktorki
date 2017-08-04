@@ -22,7 +22,7 @@ export class LoginComponent {
     passwordInput: string;
     admin: string = 'admin';
     users: User[];
-    resMessage: string;
+    resMessage: any;
     invalid: boolean;
 
     constructor(private loginService: LoginService, private router: Router) {this.invalid = false; console.log(this.invalid)}
@@ -40,13 +40,13 @@ export class LoginComponent {
     }
 
     redirectAfterLogin () {
-            if (this.resMessage === 'admin') {
+            if (this.resMessage.role === 'admin') {
                 this.router.navigate(['/admin']);
             }
-            else if (this.resMessage === 'doctor') {
-                this.router.navigate(['/doctor']);
+            else if (this.resMessage.role === 'doctor') {
+                this.router.navigate(['/doctor', this.resMessage.login]);
             }
-            else if (this.resMessage === 'patient') {
+            else if (this.resMessage.role === 'patient') {
                 this.router.navigate(['/patient']);
             }
             else {

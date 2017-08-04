@@ -1,21 +1,5 @@
-<div class='container'>
-    <div *ngIf='doctor!=undefined'>
-    <div class='logo'>Dr <span>{{doctor[0].firstName}} {{doctor[0].lastName}}'s</span> Profile</div>
-        <div class='content'>
-<div class='edit-and-content'>
-           <div class='edit'>    <span style='font-size:20px;color:#005c99; margin-bottom:3%'>edit profile</span> 
-               <div class='table-of-details' style='margin-bottom:20px'>
-                <div>login: </div>
-
-                <div style='color:#4d1919'> {{doctor[0].login}} </div>
-            </div>
-
-
-            <form #doctorEditForm="ngForm" (ngSubmit)="onSubmit()">
+   <form #doctorEditForm="ngForm" (ngSubmit)="onSubmit()">
                 <div class='table-of-details'>
-
-
-
                     <div><label for="firstName">first name: </label></div>
                     <div><input class='input-style' type='text' [(ngModel)]="doctor[0].firstName" id='firstName' name='firstName'
                             required #firstName="ngModel">
@@ -65,14 +49,3 @@
                     <div><button type="submit" class='option-button' [disabled]="!doctorEditForm.form.valid">save</button> </div>
                 </div>
             </form>
-
-</div>
-<div> COS</div>
-
-
-        </div>
-
-        <div>sdkadkoa</div>
-    </div>
-    </div>
-</div>

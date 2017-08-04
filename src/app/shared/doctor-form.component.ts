@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppService } from 'app/app.service';
-import { DoctorFormComponent} from '../shared/doctor-form.component';
 
 @Component({
-    templateUrl:    'doctor.component.html',
-    styleUrls:      [ 'doctor.component.css']
+    selector: 'app-doctor-form',
+    templateUrl:    'doctor-form.component.html',
+    styleUrls:      [ 'doctor-form.component.css']
 })
 
-export class DoctorComponent implements OnInit{
+export class DoctorFormComponent implements OnInit{
   login: string;
   errorMessage: any;
   doctor: any;
