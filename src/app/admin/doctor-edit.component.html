@@ -59,19 +59,17 @@
 
                     <div><label for="specialization">specialization: </label></div>
                     <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].specialization" name='specialization'></div>
-                 
- </div>
+
+                </div>
+
+                <div class='buttons'>
+                    <div><button type="submit" class='option-button' [disabled]="!doctorEditForm.form.valid">save</button> </div>
 
 
+                    <div><button class='option-button' (click)='deleteAndBackToAdminPage()'>delete</button></div>
 
- <div class='buttons'>
-                <div ><button type="submit" class='option-button' [disabled]="!doctorEditForm.form.valid">save</button> </div>
-
-
-                <div ><button class='option-button' (click)='deleteAndBackToAdminPage()'>delete</button></div>
-
-                                <div ><button class='option-button'>show schedule</button></div>
-                <div ><button class='option-button' (click)='back()'>back</button></div>
+                    <div><button class='option-button'>show schedule</button></div>
+                    <div><button class='option-button' (click)='back()'>back</button></div>
                 </div>
             </form>
 

@@ -22,7 +22,7 @@ export class MongoCollection {
     }
 
     showElements(callback) {
-      this.collection.find({}).toArray((err, result) => {
+      this.collection.find({}).sort({lastName: 1, firstName: 1}).toArray((err, result) => {
         assert.equal(err, null);
         console.log('Showed all records');
         console.log(result);

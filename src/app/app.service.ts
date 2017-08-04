@@ -16,9 +16,9 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 
 export class AppService {
-    private _dataBaseUrl = 'http://localhost:3000/users-details';
-    private _dataBaseUrl2 = 'http://localhost:3000/delete-users';
-    private _dataBaseUrl3 = 'http://localhost:3000/insert-user';
+    private _dataBaseUrl = 'http://localhost:3000/doctor-details';
+    private _dataBaseUrl2 = 'http://localhost:3000//delete-doctor';
+    private _dataBaseUrl3 = 'http://localhost:3000/insert-doctor';
     constructor (private _http: Http) {}
 
 

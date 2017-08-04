@@ -3,12 +3,12 @@ import * as _ from 'lodash';
 import * as bodyParser from 'body-parser';
 import { MongoCollection } from '../mongo/mongo';
 /*
- "In general, the rule of thumb is: 
- If you’re installing something that you want to use 
- in your program, using require('whatever'), then install 
- it locally, at the root of your project. If you’re installing 
- something that you want to use in your shell, on the command 
- line or something, install it globally, so that its binaries 
+ "In general, the rule of thumb is:
+ If you’re installing something that you want to use
+ in your program, using require('whatever'), then install
+ it locally, at the root of your project. If you’re installing
+ something that you want to use in your shell, on the command
+ line or something, install it globally, so that its binaries
  end up in your PATH environment variable" ~XiaoPeng
 */
 // global.Promise = q.Promise;
@@ -16,14 +16,15 @@ import { MongoCollection } from '../mongo/mongo';
 
 const app = express();
 const collectionUsers = 'Users';
-const collectionUsersDetails = 'UsersDetails';
+const collectionDoctorDetails = 'DoctorDetails';
+const collectionPatientDetails = 'PatientDetails';
 
 const url = 'mongodb://localhost:27017/DoktorkiDB';
 const mongoUsers = new MongoCollection(url, collectionUsers);
-const mongoUsersDetails = new MongoCollection(url, collectionUsersDetails);
+const mongoDoctorDetails = new MongoCollection(url, collectionDoctorDetails);
+const mongoPatientDetails = new MongoCollection(url, collectionPatientDetails);
 
-
-app.use((req, res, next) => { 
+app.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
         res.header('Access-Control-Allow-Headers', 'Content-Type');
@@ -34,7 +35,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 
-
+// ------------- login   ------------------------------------------------------------------------////////////////////////
 app.post('/login', (req: express.Request, res: express.Response) => {
     console.log(JSON.stringify(req.body));
     let user;
@@ -43,7 +44,7 @@ app.post('/login', (req: express.Request, res: express.Response) => {
         password: req.body.password
     }, (result) => user = result)
     .then(() => setTimeout(() => {
-            if (user[0]!= undefined) {
+            if (user[0] !== undefined) {
                 res.json(user[0].role)
                 console.log('tak');
             }
@@ -54,24 +55,25 @@ app.post('/login', (req: express.Request, res: express.Response) => {
         }}, 100));
 });
 
-app.get('/users-details', (req: express.Request, res: express.Response) => {
-    mongoUsersDetails.findElement( {role: 'doctor'},
+// ------------- doctor  ------------------------------------------------------------------------////////////////////////
+
+app.get('/doctor-details', (req: express.Request, res: express.Response) => {
+    mongoDoctorDetails.findElement( {role: 'doctor'},
         (result) => res.json(result));
 });
 
-app.post('/users-details', (req: express.Request, res: express.Response) => {
-    mongoUsersDetails.findElement( {role: req.body.role, login: req.body.login},
+app.post('/doctor-details', (req: express.Request, res: express.Response) => {
+    mongoDoctorDetails.findElement( {role: req.body.role, login: req.body.login},
         (result) => res.json(result));
 });
 
-app.put('/users-details', (req: express.Request, res: express.Response) => {
-    mongoUsersDetails.updateElement( req.body,
+app.put('/doctor-details', (req: express.Request, res: express.Response) => {
+    mongoDoctorDetails.updateElement( req.body,
         (result) => res.json(result));
 });
 
-
-app.put('/delete-users', (req: express.Request, res: express.Response) => {
-    mongoUsersDetails.removeElement( req.body,
+app.put('/delete-doctor', (req: express.Request, res: express.Response) => {
+    mongoDoctorDetails.removeElement( req.body,
         () => null)
         .then(() =>
             mongoUsers.removeElement( req.body,
@@ -79,7 +81,7 @@ app.put('/delete-users', (req: express.Request, res: express.Response) => {
         );
 });
 
-app.post('/insert-user', (req: express.Request, res: express.Response) => {
+app.post('/insert-doctor', (req: express.Request, res: express.Response) => {
     console.log('otrzymane' + JSON.stringify(req.body));
     let user;
 
@@ -94,7 +96,7 @@ app.post('/insert-user', (req: express.Request, res: express.Response) => {
                                         role: 'doctor'}],
                                         () => null)
                 .then(() =>
-                mongoUsersDetails.insertElements([{ login: req.body.login,
+                mongoDoctorDetails.insertElements([{ login: req.body.login,
                                         firstName: req.body.firstName,
                                         lastName: req.body.lastName,
                                         role: 'doctor',
@@ -111,8 +113,20 @@ app.post('/insert-user', (req: express.Request, res: express.Response) => {
                     result => res.json('OK') )
             )
         }
-    },500));
+    }, 500));
 });
+
+// ------------- patient ------------------------------------------------------------------------////////////////////////
+app.post('patient-details', (req:express.Request, res: express.Response) => {
+    mongoPatientDetails.findElement( {role: req.body.role, login: req.body.login},
+    (result) => res.json(result));
+});
+
+app.put('/patient-details', (req: express.Request, res: express.Response) => {
+    mongoPatientDetails.updateElement(req.body,
+        (result) => res.json(result));
+});
+
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
@@ -196,9 +210,9 @@ app.get('/users-add', (req, res: express.Response) => {
 
 
 
-app.get('/users-details-add', (req, res: express.Response) => {
-    mongoUsersDetails.insertElements([
-    {
+app.get('/doctor-details-add', (req, res: express.Response) => {
+    mongoDoctorDetails.insertElements([
+{
         'login': 'doktorBezUprawnien',
         'role': 'doctor',
         'firstName': 'John',

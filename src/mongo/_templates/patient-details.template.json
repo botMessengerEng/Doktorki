@@ -1,0 +1,77 @@
+[
+    {
+        "login": "patient",
+        "firstName": "Leopold",
+        "lastName": "Staff",
+        "gender": "male",
+        "phone": "+48 666253442",
+        "email": "b.f.staff@yahoo.lol",
+        "dateOfBirth": {
+            "year": 1977,
+            "month": "Aug",
+            "day": 24
+        },
+        "PESEL": "77082410610"
+    },
+    {
+        "login": "wpiszLogin",
+        "firstName": "Zygfryd",
+        "lastName": "Siwonogi",
+        "gender": "male",
+        "phone": "124324235",
+        "email": "mail@mainNa5minut.pl",
+        "dateOfBirth": {
+            "year": 1902,
+            "month": "Dec",
+            "day": 31
+        },
+        "PESEL": "02123102319"
+    },
+    {
+        "login": "synJacka",
+        "firstName": "Skalbimierz",
+        "lastName": "Uważny",
+        "gender": "male",
+        "phone": "124524887",
+        "email": "skalbimerz.uwazy@gmial.com",
+        "dateOfBirth": {
+            "year": 1982,
+            "month": "Mar",
+            "day": 11
+        },
+        "PESEL": "82031118433"
+    },
+    {
+        "login": "Hulk",
+        "firstName": "Bruce",
+        "lastName": "Banner",
+        "gender": "male",
+        "phone": "102988372",
+        "email": "hugeandgreen@stark.industries.com",
+        "dateOfBirth": {
+            "year": 1962,
+            "month": "May",
+            "day": 2
+        },
+        "PESEL": "62050211094"
+    },
+    {
+        "login": "SpeedyGonzales",
+        "firstName": "Wacław",
+        "lastName": "Pośpieszny",
+        "gender": "male",
+        "phone": "382910928",
+        "email": "hjgfs@interia.eu",
+        "dateOfBirth": {
+            "year": 1983,
+            "month": "Feb",
+            "day": 21
+        },
+        "PESEL": "83022114618"
+    }
+]
+
+
+
+
+

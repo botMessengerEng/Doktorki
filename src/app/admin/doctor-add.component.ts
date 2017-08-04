@@ -17,10 +17,6 @@ export class DoctorAddComponent {
         this.doctor = new Doctor('', '','', '', '', undefined, '', '', '', '', '', '');
     }
 
-
-
-
-
     onSubmit() {
         this.appService.addNewDoctor({ login: this.doctor.login,
                                         firstName: this.doctor.firstName,

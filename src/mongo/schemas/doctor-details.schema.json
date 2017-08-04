@@ -1,0 +1,16 @@
+{
+        "login": "",
+        "role": "",
+        "firstName": "",
+        "lastName": "",
+        "gender": "",
+        "age": 0,
+        "phone": "",
+        "email": "",
+        "address": {
+            "street": "",
+            "postcode": "",
+            "city": ""
+        },
+        "specialization": ""
+    }

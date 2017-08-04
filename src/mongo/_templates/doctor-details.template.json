@@ -2,7 +2,8 @@
     {
         "login": "doktorBezUprawnien",
         "role": "doctor",
-        "name": "John Smith",
+        "firstName": "John",
+        "lastName": "Smith",
         "gender": "male",
         "age": 37,
         "phone": "+48 123456789",
@@ -17,7 +18,8 @@
     {
         "login": "doctor",
         "role": "doctor",
-        "name": "James Lovelock",
+        "firstName": "James",
+        "lastName": "Lovelock",
         "gender": "male",
         "age": 55,
         "phone": "+48 123465689",
@@ -32,7 +34,8 @@
     {
         "login": "doktorek",
         "role": "doctor",
-        "name": "Marcus Will",
+        "firstName": "Marcus",
+        "lastName": "Will",
         "gender": "male",
         "age": 32,
         "phone": "+48 773456789",
@@ -47,7 +50,8 @@
     {
         "login": "Brooke",
         "role": "doctor",
-        "name": "Brooke Winchester",
+        "firstName": "Brooke",
+        "lastName": "Winchester",
         "gender": "male",
         "age": 81,
         "phone": "+23 322567289",
@@ -62,7 +66,8 @@
     {
         "login": "elekarz",
         "role": "doctor",
-        "name": "Tim Cole",
+        "firstName": "Tim",
+        "lastName": "Cole",
         "gender": "male",
         "age": 46,
         "phone": "+11 773452289",
@@ -77,7 +82,8 @@
     {
         "login": "monicaC",
         "role": "doctor",
-        "name": "Monica C",
+        "firstName": "Monica",
+        "lastName": "C",
         "gender": "female",
         "age": 27,
         "phone": "+77 222116789",
@@ -92,7 +98,8 @@
     {
         "login": "eve63",
         "role": "doctor",
-        "name": "Eva Limone",
+        "firstName": "Eva",
+        "lastName": "Limone",
         "gender": "demale",
         "age": 62,
         "phone": "+48 773456789",
@@ -107,7 +114,8 @@
     {
         "login": "pawelKrakow",
         "role": "doctor",
-        "name": "Pawel Kowalski",
+        "firstName": "Pawel",
+        "lastName": "Kowalski",
         "gender": "male",
         "age": 37,
         "phone": "+48 123454755",
@@ -122,7 +130,8 @@
     {
         "login": "leo_z_tarnowa",
         "role": "doctor",
-        "name": "Leopold Brzytwa",
+        "firstName": "Leopold",
+        "lastName": "Brzytwa",
         "gender": "male",
         "age": 31,
         "phone": "+48 133456789",
@@ -137,7 +146,8 @@
     {
         "login": "doktorro",
         "role": "doctor",
-        "name": "Pedro El Gonzalez",
+        "firstName": "Pedro",
+        "lastName": "El Gonzalez",
         "gender": "male",
         "age": 49,
         "phone": "+18 773234789",
@@ -152,7 +162,8 @@
     {
         "login": "medicziKasia",
         "role": "doctor",
-        "name": "Katarzyna Medycejska",
+        "firstName": "Katarzyna",
+        "lastName": "Medycejska",
         "gender": "female",
         "age": 39,
         "phone": "+48 73131789",
@@ -167,7 +178,8 @@
         {
         "login": "lolek",
         "role": "doctor",
-        "name": "Leonidas Włodarczyk",
+        "firstName": "Leonidas",
+        "lastName": "Włodarczyk",        
         "gender": "male",
         "age": 65,
         "phone": "+18 973346789",
@@ -180,3 +192,4 @@
         "specialization": "chirurg"
     }
 ]
+

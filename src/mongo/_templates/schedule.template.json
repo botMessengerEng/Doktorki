@@ -1,0 +1,77 @@
+[
+    {
+        "login": "doctor",
+        "date": {
+            "year":2017,
+            "month": "Aug",
+            "day": 8,
+            "hour": "8:00"
+        },
+        "patient": {
+            "login": "patient",
+            "firstName": "Leopold",
+            "lastName": "Staff",
+            "description": "strzała w kolano"  
+        }
+    },
+    {
+        "login": "doctor",
+        "date": {
+            "year":2017,
+            "month": "Aug",
+            "day": 8,
+            "hour": "10:00"
+        },
+        "patient": {
+            "login": "wpiszLogin",
+            "firstName": "Zygfryd",
+            "lastName": "Siwonogi",
+            "description": "L4"  
+        }
+    },
+    {
+        "login": "doctor",
+        "date": {
+            "year":2017,
+            "month": "Aug",
+            "day": 9,
+            "hour": "17:00"
+        },
+        "patient": {
+            "login": "synJacka",
+            "firstName": "Skalbimierz",
+            "lastName": "Uważny",
+            "description": "złamałem nogę przez nie uwagę"  
+        }
+    },
+    {
+        "login": "doctor",
+        "date": {
+            "year":2017,
+            "month": "Aug",
+            "day": 14,
+            "hour": "12:00"
+        },
+        "patient": {
+            "login": "Hulk",
+            "firstName": "Bruce",
+            "lastName": "Banner",
+            "description": "napromieniowało mnie"  
+        }
+    },
+    {
+        "login": "doctor",
+        "date": {
+            "year":2017,
+            "month": "Aug",
+            "day": 17,
+            "hour": "16:00"
+        },
+        "patient": {
+            "login": "SpeedyGonzales",
+            "firstName": "Wacław",
+            "lastName": "Pośpieszny",
+            "description": "koncza się speed-tabsy doktorze"  
+        }
+    } 
+]
