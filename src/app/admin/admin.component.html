@@ -10,7 +10,7 @@
                     <tr>
                         <button class='doctor-button' [class.selected]='doctor === selectedDoctor' (click)='onSelect(doctor)'>
     <td class='button-divided'>
-     {{doctor.name}}
+     {{doctor.firstName}} {{doctor.lastName}}
     </td>
     <td class='button-divided'>
       {{doctor.specialization}}

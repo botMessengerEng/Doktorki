@@ -15,7 +15,8 @@ export class Doctor {
     login: string;
     password: string;
     role = 'doctor';
-    name: string;
+    firstName: string;
+    lastName: string;
     gender: string;
     age: number;
     phone: string;
@@ -28,10 +29,11 @@ export class Doctor {
 
     specialization: string;
 
-    constructor(login,password,name,gender,age,phone,email,street,postcode,city,specialization) {
+    constructor(login,password,firstName,lastName,gender,age,phone,email,street,postcode,city,specialization) {
         this.login = login;
         this.password = password;
-        this.name = name;
+        this.firstName = name;
+        this.lastName = name;
         this.gender = gender;
         this.age = age;
         this.phone = phone;

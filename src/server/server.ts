@@ -95,7 +95,8 @@ app.post('/insert-user', (req: express.Request, res: express.Response) => {
                                         () => null)
                 .then(() =>
                 mongoUsersDetails.insertElements([{ login: req.body.login,
-                                        name: req.body.name,
+                                        firstName: req.body.firstName,
+                                        lastName: req.body.lastName,
                                         role: 'doctor',
                                         gender: req.body.gender,
                                         age: req.body.age,
@@ -200,7 +201,8 @@ app.get('/users-details-add', (req, res: express.Response) => {
     {
         'login': 'doktorBezUprawnien',
         'role': 'doctor',
-        'name': 'John Smith',
+        'firstName': 'John',
+        'lastName': 'Smith',
         'gender': 'male',
         'age': 37,
         'phone': '+48 123456789',
@@ -215,7 +217,8 @@ app.get('/users-details-add', (req, res: express.Response) => {
     {
         'login': 'doctor',
         'role': 'doctor',
-        'name': 'James Lovelock',
+        'firstName': 'James',
+        'lastName': 'Lovelock',
         'gender': 'male',
         'age': 55,
         'phone': '+48 123465689',
@@ -230,7 +233,8 @@ app.get('/users-details-add', (req, res: express.Response) => {
     {
         'login': 'doktorek',
         'role': 'doctor',
-        'name': 'Marcus Will',
+        'firstName': 'Marcus',
+        'lastName': 'Will',
         'gender': 'male',
         'age': 32,
         'phone': '+48 773456789',
@@ -245,7 +249,8 @@ app.get('/users-details-add', (req, res: express.Response) => {
     {
         'login': 'Brooke',
         'role': 'doctor',
-        'name': 'Brooke Winchester',
+        'firstName': 'Brooke',
+        'lastName': 'Winchester',
         'gender': 'male',
         'age': 81,
         'phone': '+23 322567289',
@@ -260,7 +265,8 @@ app.get('/users-details-add', (req, res: express.Response) => {
     {
         'login': 'elekarz',
         'role': 'doctor',
-        'name': 'Tim Cole',
+        'firstName': 'Tim',
+        'lastName': 'Cole',
         'gender': 'male',
         'age': 46,
         'phone': '+11 773452289',
@@ -275,7 +281,8 @@ app.get('/users-details-add', (req, res: express.Response) => {
     {
         'login': 'monicaC',
         'role': 'doctor',
-        'name': 'Monica C',
+        'firstName': 'Monica',
+        'lastName': 'C',
         'gender': 'female',
         'age': 27,
         'phone': '+77 222116789',
@@ -290,8 +297,9 @@ app.get('/users-details-add', (req, res: express.Response) => {
     {
         'login': 'eve63',
         'role': 'doctor',
-        'name': 'Eva Limone',
-        'gender': 'demale',
+        'firstName': 'Eva',
+        'lastName': 'Limone',
+        'gender': 'female',
         'age': 62,
         'phone': '+48 773456789',
         'email': 'doktorek@gmail.com',
@@ -305,7 +313,8 @@ app.get('/users-details-add', (req, res: express.Response) => {
     {
         'login': 'pawelKrakow',
         'role': 'doctor',
-        'name': 'Pawel Kowalski',
+        'firstName': 'Pawel',
+        'lastName': 'Kowalski',
         'gender': 'male',
         'age': 37,
         'phone': '+48 123454755',
@@ -320,7 +329,8 @@ app.get('/users-details-add', (req, res: express.Response) => {
     {
         'login': 'leo_z_tarnowa',
         'role': 'doctor',
-        'name': 'Leopold Brzytwa',
+        'firstName': 'Leopold',
+        'lastName': 'Brzytwa',
         'gender': 'male',
         'age': 31,
         'phone': '+48 133456789',
@@ -335,7 +345,8 @@ app.get('/users-details-add', (req, res: express.Response) => {
     {
         'login': 'doktorro',
         'role': 'doctor',
-        'name': 'Pedro El Gonzalez',
+        'firstName': 'Pedro',
+        'lastName': 'El Gonzalez',
         'gender': 'male',
         'age': 49,
         'phone': '+18 773234789',
@@ -350,7 +361,8 @@ app.get('/users-details-add', (req, res: express.Response) => {
     {
         'login': 'medicziKasia',
         'role': 'doctor',
-        'name': 'Katarzyna Medycejska',
+        'firstName': 'Katarzyna',
+        'lastName': 'Medycejska',
         'gender': 'female',
         'age': 39,
         'phone': '+48 73131789',
@@ -365,7 +377,8 @@ app.get('/users-details-add', (req, res: express.Response) => {
         {
         'login': 'lolek',
         'role': 'doctor',
-        'name': 'Leonidas Włodarczyk',
+        'firstName': 'Leonidas',
+        'lastName': 'Włodarczyk',
         'gender': 'male',
         'age': 65,
         'phone': '+18 973346789',

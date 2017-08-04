@@ -11,19 +11,20 @@ import { Doctor } from '../classes/user';
 export class DoctorAddComponent {
     errorMessage: any;
     doctor: Doctor;
-    
+    genders = ['male', 'female'];
+
     constructor(private appService: AppService, private router: Router) {
-        this.doctor = new Doctor('', '', '', '', undefined, '', '', '', '', '', '');
+        this.doctor = new Doctor('', '','', '', '', undefined, '', '', '', '', '', '');
     }
 
 
-    genders = ['male', 'female'];
 
 
 
     onSubmit() {
         this.appService.addNewDoctor({ login: this.doctor.login,
-                                        name: this.doctor.name,
+                                        firstName: this.doctor.firstName,
+                                        lastName: this.doctor.lastName,
                                         password: this.doctor.password,
                                         gender: this.doctor.gender,
                                         age: this.doctor.age,

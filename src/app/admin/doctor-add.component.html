@@ -1,18 +1,25 @@
 <div class='container'>
     <div class='logo'>Admin's Profile</div>
     <div class='content'>
-        {{doctor.name}}<br>
+        {{doctor.firstName}} {{doctor.lastName}}<br>
 
         <div class='specialization'>{{doctor.specialization}}</div><br>
         <form #doctorForm="ngForm" (ngSubmit)="onSubmit()">
             <div class='table-of-details'>
 
-                <div><label for="name">name: </label></div>
-                <div><input class='input-style' type='text' [(ngModel)]="doctor.name" id='name' name='name' required pattern="^((\b[a-zA-Z]{2,40}\b)\s*){2,5}$"
-                        #name="ngModel">
-                    <div class='info' *ngIf='name.errors && (name.touched || name.dirty)'>
-                        <div class='to-fill' [hidden]="!name.errors.required">Name is required </div>
-                        <div class='to-fill' [hidden]="!name.errors.pattern">Full name is required</div>
+                <div><label for="firstName">first name: </label></div>
+                <div><input class='input-style' type='text' [(ngModel)]="doctor.firstName" id='firstName' name='firstName' required
+                        #firstName="ngModel">
+                    <div class='info' *ngIf='firstName.errors && (firstName.touched || firstName.dirty)'>
+                        <div class='to-fill' [hidden]="!firstName.errors.required">First name is required </div>
+                    </div>
+                </div>
+
+                <div><label for="lastName">last name: </label></div>
+                <div><input class='input-style' type='text' [(ngModel)]="doctor.lastName" id='lastName' name='lastName' required
+                        #lastName="ngModel">
+                    <div class='info' *ngIf='lastName.errors && (lastName.touched || lastName.dirty)'>
+                        <div class='to-fill' [hidden]="!lastName.errors.required">Last name is required </div>
                     </div>
                 </div>
 
@@ -60,14 +67,17 @@
 
                 <div><label for="specialization">specialization: </label></div>
                 <div> <input class='input-style' type='text' [(ngModel)]="doctor.specialization" name='specialization'></div>
- <div> </div>
-       
+                <div> </div>
 
-            <div style="text-align: right">
-                <button type="submit" class='option-button' [disabled]="!doctorForm.form.valid">Submit</button>
-            </div>
+
+                <div style="text-align: right">
+                    <button type="submit" class='option-button' [disabled]="!doctorForm.form.valid">Submit</button>
+                </div>
 
             </div>
         </form>
     </div>
 </div>
+
+
+<!--pattern="^((\b[a-zA-Z]{2,40}\b)\s*){2,5}$"-->

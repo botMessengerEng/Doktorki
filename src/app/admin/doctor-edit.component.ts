@@ -12,7 +12,7 @@ export class DoctorEditComponent implements OnInit {
   login: string;
   errorMessage: any;
   doctor: any;
-
+  genders = ['male', 'female'];
 
   constructor(private router: Router,
     private appService: AppService,
@@ -38,9 +38,10 @@ export class DoctorEditComponent implements OnInit {
     });
   }
 
-  saveChanges() {
+  onSubmit() {
     this.appService.updateQuery({ login: this.doctor[0].login,
-                                  name: this.doctor[0].name,
+                                  firstName: this.doctor[0].firstName,
+                                  lastName: this.doctor[0].lastName,
                                   gender: this.doctor[0].gender,
                                   age: this.doctor[0].age,
                                   phone: this.doctor[0].phone,

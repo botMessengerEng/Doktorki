@@ -31,7 +31,7 @@ export class MongoCollection {
     }
 
     findElement(parameter, callback) {
-      this.collection.find(parameter).toArray((err, docs) => {
+      this.collection.find(parameter).sort({ lastName: 1, firstName: 1}).toArray((err, docs) => {
         assert.equal(err, null);
         console.log('Found the following records');
         console.log(docs)

@@ -23,8 +23,9 @@ export class LoginComponent {
     admin: string = 'admin';
     users: User[];
     resMessage: string;
+    invalid: boolean;
 
-    constructor(private loginService: LoginService, private router: Router) {}
+    constructor(private loginService: LoginService, private router: Router) {this.invalid = false; console.log(this.invalid)}
     check(): Promise<boolean> {
         this.loginService.postQuery({
             login: this.loginInput,
@@ -49,11 +50,11 @@ export class LoginComponent {
                 this.router.navigate(['/patient']);
             }
             else {
-                alert('coTyChceszZłodziejuNiedobry');
+                this.invalid = true;
             }
     }
 
-    login() {
+    onSubmit() {
         this.check()
             .then(() => setTimeout( () => {
                 USER = this.loginInput;
