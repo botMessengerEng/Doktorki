@@ -7,12 +7,10 @@ import { RouterModule } from '@angular/router';
 import { DoctorComponent } from 'app/doctor/doctor.component';
 import { DoctorService } from 'app/doctor/doctor.service';
 import { AppService } from 'app/app.service';
-import { DoctorFormComponent} from '../shared/doctor-form.component';
 
 @NgModule({
   declarations: [
     DoctorComponent,
-    DoctorFormComponent
   ],
 
   imports: [

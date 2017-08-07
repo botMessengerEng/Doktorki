@@ -25,6 +25,6 @@
   <div><button type="submit" class='check-button' [disabled]="!loginForm.form.valid" >log in</button></div>
   </form>
     <div *ngIf='invalid' class='invalid'>Wrong login or password!</div>
-
+Don't have account yet? <a [routerLink]="['/register']" >Sign up </a>
 </div>
 </div>
