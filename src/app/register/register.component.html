@@ -1,0 +1,83 @@
+<div class='container'>
+    <div class='logo'>Admin's Profile</div>
+    <div class='content'>
+        {{doctor.firstName}} {{doctor.lastName}}<br>
+
+        <div class='specialization'>{{doctor.specialization}}</div><br>
+        <form #doctorForm="ngForm" (ngSubmit)="onSubmit()">
+            <div class='table-of-details'>
+
+                <div><label for="firstName">first name: </label></div>
+                <div><input class='input-style' type='text' [(ngModel)]="doctor.firstName" id='firstName' name='firstName' required
+                        #firstName="ngModel">
+                    <div class='info' *ngIf='firstName.errors && (firstName.touched || firstName.dirty)'>
+                        <div class='to-fill' [hidden]="!firstName.errors.required">First name is required </div>
+                    </div>
+                </div>
+
+                <div><label for="lastName">last name: </label></div>
+                <div><input class='input-style' type='text' [(ngModel)]="doctor.lastName" id='lastName' name='lastName' required
+                        #lastName="ngModel">
+                    <div class='info' *ngIf='lastName.errors && (lastName.touched || lastName.dirty)'>
+                        <div class='to-fill' [hidden]="!lastName.errors.required">Last name is required </div>
+                    </div>
+                </div>
+
+                <div><label for="login">login: </label></div>
+                <div><input class='input-style' type='text' [(ngModel)]="doctor.login" id='loginInput' name='login' required minlength="3"
+                        #login="ngModel">
+                    <div class='info' *ngIf='login.errors && (login.touched || login.dirty)'>
+                        <div class='to-fill' [hidden]="!login.errors.required">Login is required </div>
+                        <div class='to-fill' [hidden]="!login.errors.minlength">At least 3 characters required </div>
+                    </div>
+                </div>
+
+                <div><label for="password">password: </label></div>
+                <div><input class='input-style' type='text' [(ngModel)]="doctor.password" id='passInput' name='password' required
+                        minlength="8" #password="ngModel">
+                    <div class='info' *ngIf='password.errors && (password.touched || password.dirty)'>
+                        <div class='to-fill' [hidden]="!password.errors.required">Password is required </div>
+                        <div class='to-fill' [hidden]="!password.errors.minlength">At least 8 characters required </div>
+                    </div>
+                </div>
+
+
+                <div><label for="gender">gender: </label></div>
+                <div><select [(ngModel)]="doctor.gender" name="gender">
+                  <option *ngFor="let gen of genders" [value]="gen">{{gen}}</option>
+                  </select></div>
+
+                <div><label for="age">age: </label></div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor.age" name='age'></div>
+
+                <div><label for="phone">phone: </label></div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor.phone" name='phone'></div>
+
+                <div><label for="email">email: </label></div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor.email" name='email'></div>
+
+                <div><label for="street">street: </label></div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor.address.street" name='street'></div>
+
+                <div><label for="postcode">postcode: </label></div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor.address.postcode" name='postcode'></div>
+
+                <div><label for="city">city: </label></div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor.address.city" name='city'></div>
+
+                <div><label for="specialization">specialization: </label></div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor.specialization" name='specialization'></div>
+                <div> </div>
+
+
+                <div style="text-align: right">
+                    <button type="submit" class='option-button' [disabled]="!doctorForm.form.valid">Submit</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!--pattern="^((\b[a-zA-Z]{2,40}\b)\s*){2,5}$"-->

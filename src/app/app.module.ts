@@ -10,7 +10,8 @@ import { LoginModule } from './login/login.module';
 import { AdminModule } from 'app/admin/admin.module';
 import { PatientModule } from 'app/patient/patient.module';
 import { DoctorModule } from 'app/doctor/doctor.module';
-import { AppService } from "app/app.service";
+import { AppService } from 'app/app.service';
+import { RegisterModule } from 'app/register/register.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AppService } from "app/app.service";
     LoginModule,
     AdminModule,
     PatientModule,
-    DoctorModule
+    DoctorModule,
+    RegisterModule
   ],
 
   providers: [ AppService ],

@@ -76,5 +76,10 @@ export class MongoCollection {
       });
     }
 
+    drop() {
+      this.collection.drop();
+      return new Promise(resolve => resolve(true));
+    }
+
 
 }

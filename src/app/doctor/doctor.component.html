@@ -1,2 +1,78 @@
-<div on-mouseover='over()' style="height:100px; width:100px; background:#e2e2e2">hello mouseover</div>
+<div class='container'>
+    <div *ngIf='doctor!=undefined'>
+    <div class='logo'>Dr <span>{{doctor[0].firstName}} {{doctor[0].lastName}}'s</span> Profile</div>
+        <div class='content'>
+<div class='edit-and-content'>
+           <div class='edit'>    <span style='font-size:20px;color:#005c99; margin-bottom:3%'>edit profile</span> 
+               <div class='table-of-details' style='margin-bottom:20px'>
+                <div>login: </div>
 
+                <div style='color:#4d1919'> {{doctor[0].login}} </div>
+            </div>
+
+
+            <form #doctorEditForm="ngForm" (ngSubmit)="onSubmit()">
+                <div class='table-of-details'>
+
+
+
+                    <div><label for="firstName">first name: </label></div>
+                    <div><input class='input-style' type='text' [(ngModel)]="doctor[0].firstName" id='firstName' name='firstName'
+                            required #firstName="ngModel">
+                        <div class='info' *ngIf='firstName.errors && (firstName.touched || firstName.dirty)'>
+                            <div class='to-fill' [hidden]="!firstName.errors.required">First name is required </div>
+                        </div>
+                    </div>
+
+                    <div><label for="lastName">last name: </label></div>
+                    <div><input class='input-style' type='text' [(ngModel)]="doctor[0].lastName" id='lastName' name='lastName'
+                            required #lastName="ngModel">
+                        <div class='info' *ngIf='lastName.errors && (lastName.touched || lastName.dirty)'>
+                            <div class='to-fill' [hidden]="!lastName.errors.required">Last name is required </div>
+                        </div>
+                    </div>
+
+                    <div><label for="gender">gender: </label></div>
+
+                    <div><select [(ngModel)]="doctor[0].gender" name="gender">
+                  <option *ngFor="let gen of genders" [value]="gen">{{gen}}</option>
+                  </select></div>
+
+                    <div><label for="age">age: </label></div>
+                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].age" name='age'></div>
+
+                    <div><label for="phone">phone: </label></div>
+                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].phone" name='phone'></div>
+
+                    <div><label for="email">email: </label></div>
+                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].email" name='email'></div>
+
+                    <div><label for="street">street: </label></div>
+                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].address.street" name='street'></div>
+
+                    <div><label for="postcode">postcode: </label></div>
+                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].address.postcode" name='postcode'></div>
+
+                    <div><label for="city">city: </label></div>
+                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].address.city" name='city'></div>
+
+                    <div><label for="specialization">specialization: </label></div>
+                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].specialization" name='specialization'></div>
+
+                </div>
+
+                <div>
+                    <div><button type="submit" class='option-button' [disabled]="!doctorEditForm.form.valid">save</button> </div>
+                </div>
+            </form>
+
+</div>
+<div> COS</div>
+
+
+        </div>
+
+        <div>sdkadkoa</div>
+    </div>
+    </div>
+</div>

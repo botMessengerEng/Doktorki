@@ -68,5 +68,30 @@
         "login": "lolek",
         "password": "bolek",
         "role": "doctor"
+    },
+    {
+        "login": "patient",
+        "password": "admin",
+        "role": "patient"
+    },
+    {
+        "login": "wpiszLogin",
+        "password": "admin",
+        "role": "patient"
+    },
+    {
+        "login": "synJacka",
+        "password": "admin",
+        "role": "patient"
+    },
+    {
+        "login": "Hulk",
+        "password": "admin",
+        "role": "patient"
+    },
+    {
+        "login": "SpeedyGonzales",
+        "password": "admin",
+        "role": "patient"
     }
 ]

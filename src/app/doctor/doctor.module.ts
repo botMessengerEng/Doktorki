@@ -8,8 +8,6 @@ import { DoctorComponent } from 'app/doctor/doctor.component';
 import { DoctorService } from 'app/doctor/doctor.service';
 import { AppService } from 'app/app.service';
 
-
-
 @NgModule({
   declarations: [
     DoctorComponent,
@@ -20,7 +18,7 @@ import { AppService } from 'app/app.service';
     FormsModule,
     HttpModule,
     RouterModule.forChild([
-      { path: 'doctor', component: DoctorComponent },
+      { path: 'doctor/:login', component: DoctorComponent },
     ])
   ],
 

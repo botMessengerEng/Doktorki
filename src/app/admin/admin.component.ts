@@ -20,7 +20,7 @@ export class AdminComponent implements OnInit {
   errorMessage: any;
   doctors: any;
   selectedDoctor: any;
-  
+
   constructor(private appService: AppService, private router: Router) {
   }
 

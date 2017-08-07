@@ -18,7 +18,6 @@ import { DoctorAddComponent } from './doctor-add.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
     RouterModule.forChild([
        { path: 'admin', component: AdminComponent},
        { path: 'admin/edit/doctor/:login', component: DoctorEditComponent},

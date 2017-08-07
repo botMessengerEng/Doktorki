@@ -17,7 +17,7 @@ import { LoginService } from './login.service';
     FormsModule,
     HttpModule,
     RouterModule.forChild([
-      { path: 'login', component: LoginComponent },
+      { path: 'login', component: LoginComponent }
     ])
   ],
 

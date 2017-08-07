@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AppService } from 'app/app.service';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   templateUrl: './doctor-edit.component.html',
