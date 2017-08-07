@@ -4,91 +4,112 @@
         {{patient.firstName}} {{patient.lastName}}<br>
 
         <div class='specialization'>{{patient.PESEL}}</div><br>
-        <form #doctorForm="ngForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
             <div class='table-of-details'>
 
                 <div><label for="firstName">first name: </label></div>
-                <div><input class='input-style' type='text' [(ngModel)]="patient.firstName" id='firstName' name='firstName' required
-                        #firstName="ngModel">
-                    <div class='info' *ngIf='firstName.errors && (firstName.touched || firstName.dirty)'>
-                        <div class='to-fill' [hidden]="!firstName.errors.required">First name is required </div>
+                <div><input class='input-style' type='text' [(ngModel)]="patient.firstName" formControlName="firstName" placeholder="first name">
+                    <div class='info' *ngIf='patientForm.get("firstName").errors && (patientForm.get("firstName").touched || patientForm.get("firstName").dirty)'>
+                        <div class='to-fill' [hidden]="!patientForm.get('firstName').errors.required">First name is required </div>
                     </div>
                 </div>
 
                 <div><label for="lastName">last name: </label></div>
-                <div><input class='input-style' type='text' [(ngModel)]="patient.lastName" id='lastName' name='lastName' required
-                        #lastName="ngModel">
-                    <div class='info' *ngIf='lastName.errors && (lastName.touched || lastName.dirty)'>
-                        <div class='to-fill' [hidden]="!lastName.errors.required">Last name is required </div>
+                <div><input class='input-style' type='text' [(ngModel)]="patient.lastName" formControlName="lastName" placeholder="last name">
+                    <div class='info' *ngIf='patientForm.get("lastName").errors && (patientForm.get("lastName").touched || patientForm.get("lastName").dirty)'>
+                        <div class='to-fill' [hidden]="!patientForm.get('lastName').errors.required">Last name is required </div>
                     </div>
                 </div>
 
                 <div><label for="login">login: </label></div>
-                <div><input class='input-style' type='text' [(ngModel)]="patient.login" id='loginInput' name='login' required minlength="3"
-                        #login="ngModel">
-                    <div class='info' *ngIf='login.errors && (login.touched || login.dirty)'>
-                        <div class='to-fill' [hidden]="!login.errors.required">Login is required </div>
-                        <div class='to-fill' [hidden]="!login.errors.minlength">At least 3 characters required </div>
+                <div><input class='input-style' type='text' [(ngModel)]="patient.login" formControlName="login" placeholder="login">
+                    <div class='info' *ngIf='patientForm.get("lastName").errors && (patientForm.get("lastName").touched || patientForm.get("lastName").dirty)'>
+                        <div class='to-fill' [hidden]="!patientForm.get('login').errors.required">Login is required </div>
+                        <div class='to-fill' [hidden]="!patientForm.get('login').errors.minlength">At least 3 characters required </div>
                     </div>
                 </div>
 
                 <div><label for="password">password: </label></div>
-                <div><input class='input-style' type='text' [(ngModel)]="patient.password" id='passInput' name='password' required
-                        minlength="8" #password="ngModel">
-                    <div class='info' *ngIf='password.errors && (password.touched || password.dirty)'>
-                        <div class='to-fill' [hidden]="!password.errors.required">Password is required </div>
-                        <div class='to-fill' [hidden]="!password.errors.minlength">At least 8 characters required </div>
+                <div><input class='input-style' type='text' [(ngModel)]="patient.password" formControlName="password" placeholder="password">
+                    <div class='info' *ngIf='patientForm.get("password").errors && (patientForm.get("password").touched || patientForm.get("password").dirty)'>
+                        <div class='to-fill' [hidden]="!patientForm.get('password').errors.required">Password is required </div>
+                        <div class='to-fill' [hidden]="!patientForm.get('password').errors.minlength">At least 8 characters required </div>
                     </div>
                 </div>
-
 
                 <div><label for="gender">gender: </label></div>
-                <div><select [(ngModel)]="patient.gender" name="gender">
+                <div><select [(ngModel)]="patient.gender" formControlName="gender" placeholder="gender">
                   <option *ngFor="let gen of genders" [value]="gen">{{gen}}</option>
-                  </select></div>
-
-                <div><label for="age">age: </label></div>
-                <div> <input class='input-style' type='text' [(ngModel)]="patient.age" name='age'></div>
-
-                <div><label for="phone">phone: </label></div>
-                <div> <input class='input-style' type='text' [(ngModel)]="patient.phone" name='phone'></div>
-
-                <div><label for="email">email: </label></div>
-                <div> <input class='input-style' type='text' [(ngModel)]="patient.email" name='email' required #email="ngModel">
-                <div class='info' *ngIf='email.errors && (email.touched || email.dirty)'>
-                        <div class='to-fill' [hidden]="!email.errors.required">Email is required </div>
+                  </select>
+                    <div class='info' *ngIf='patientForm.get("gender").errors && (patientForm.get("gender").touched || patientForm.get("password").dirty)'>
+                        <div class='to-fill' [hidden]="!patientForm.get('gender').errors.required">Gender is required </div>
                     </div>
                 </div>
 
+                <div><label for="age">age: </label></div>
+                <div> <input class='input-style' type='text' [(ngModel)]="patient.age" formControlName="age" placeholder="sge">
+                    <div class='info' *ngIf='patientForm.get("age").errors && (patientForm.get("age").touched || patientForm.get("age").dirty)'>
+                        <div class='to-fill' [hidden]="!patientForm.get('age').errors.required">Age is required </div>
+                        <div class='to-fill' [hidden]="!patientForm.get('age').errors.pattern">Age must be a number </div>
+                    </div>
+                </div>
+
+                <div><label for="phone">phone: </label></div>
+                <div> <input class='input-style' type='text' [(ngModel)]="patient.phone" formControlName="phone" placeholder="phone">
+                    <div class='info' *ngIf='patientForm.get("phone").errors && (patientForm.get("phone").touched || patientForm.get("phone").dirty)'>
+                        <div class='to-fill' [hidden]="!patientForm.get('phone').errors.required">Phone is required </div>
+                    </div>
+                </div>
+
+                <div><label for="email">email: </label></div>
+                <div> <input class='input-style' type='text' [(ngModel)]="patient.email" formControlName="email" placeholder="email">
+                    <div class='info' *ngIf='patientForm.get("email").errors && (patientForm.get("email").touched || patientForm.get("email").dirty)'>
+                        <div class='to-fill' [hidden]="!patientForm.get('email').errors.pattern">Email is not valid</div>
+                        <div class='to-fill' [hidden]="!patientForm.get('email').errors.required">Email is required </div>
+                    </div>
+                </div></div>
 
                 <div><label for="year">year: </label></div>
-                <div><select [(ngModel)]="patient.dateOfBirth.year" name="year">
+                <div><select [(ngModel)]="patient.dateOfBirth.year" formControlName="year" placeholder="year" >
                   <option *ngFor="let year of yearsArray" [value]="year">{{year}}</option>
                   </select></div>
-
-                <!--<div> <input class='input-style' type='text' [(ngModel)]="patient.dateOfBirth.year" name='year'></div>-->
-            
-                <div ><label for="month">month: </label></div>
-                <div><select [(ngModel)]="patient.dateOfBirth.month" name="month">
+            <div formGroupName="dayMonthGroup">
+                <div><label for="month">month: </label></div>
+                <div><select [(ngModel)]="patient.dateOfBirth.month" formControlName="month" placeholder="month" >
                   <option *ngFor="let month of monthsArray" [value]="month">{{month}}</option>
                   </select></div>
 
-            
-                <div><label for="day">day: </label></div>
-                <div><select [(ngModel)]="patient.dateOfBirth.day" name="day">
-                  <option *ngFor="let day of daysArray" [value]="day">{{day}}</option>
-                  </select></div>
 
-                <div><label for="specialization">specialization: </label></div>
-                <div> <input class='input-style' type='text' [(ngModel)]="patient.PESEL" name='specialization'></div>
+                <div><label for="day">day: </label></div>
+                <div><select [(ngModel)]="patient.dateOfBirth.day" formControlName="day" placeholder="day">
+                <option *ngFor="let day of daysArray" [value]="day">{{day}}</option>
+                  </select>
+                  
+                     <div class='info' *ngIf='patientForm.get("dayMonthGroup").errors && (patientForm.get("dayMonthGroup").touched || patientForm.get("dayMonthGroup").dirty)'>
+                        <div class='to-fill' [hidden]="!patientForm.get('email').errors?.months">Bad</div>                    
+                        </div>
+                </div>
+
+</div>
+<div></div>
+            <div class='table-of-details'>
+
+                <div><label for="PESEL">PESEL: </label></div>
+                <div> <input class='input-style' type='text' [(ngModel)]="patient.PESEL" formControlName="PESEL" placeholder="PESEL">
+                    <div class='info' *ngIf='patientForm.get("PESEL").errors && (patientForm.get("email").touched || patientForm.get("PESEL").dirty)'>
+                        <div class='to-fill' [hidden]="!patientForm.get('PESEL').errors.maxlength">PESEL is too long</div>
+                        <div class='to-fill' [hidden]="!patientForm.get('PESEL').errors.minlength">PESEL is too short</div>
+                        <div class='to-fill' [hidden]="!patientForm.get('PESEL').errors.required">PESEL is required </div>
+                        <div class='to-fill' [hidden]="!patientForm.get('PESEL').errors.pattern">PESEL must be a number </div>
+                    </div>
+                </div>
                 <div> </div>
 
 
                 <div style="text-align: right">
-                    <button type="submit" class='option-button' [disabled]="!doctorForm.form.valid">Submit</button>
+                    <button type="submit" class='option-button' [disabled]="!patientForm.valid">Submit</button>
                 </div>
-
-            </div>
+</div>
         </form>
     </div>
 </div>

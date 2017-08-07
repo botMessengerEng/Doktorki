@@ -17,9 +17,11 @@ export class DateValidator implements Validator {
         let e = c.root.get(this.validateEqual);
 
         // value not equal
-        if (e && v !== e.value) return {
+        if (e.value=='February' && v.value>29) 
+        return {
             validateEqual: false
         }
+
         return null;
     }
 }
