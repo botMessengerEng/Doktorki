@@ -10,9 +10,9 @@ import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from
 function dayMonthCheck(c: AbstractControl): {[key: string]: boolean} | null {
     let monthControl = c.get('month');
     let dayControl = c.get('day');
-    
+    let yearControl = c.get('year');
    
-    if (monthControl.value === 'February' && dayControl.value <= 29) {
+    if (monthControl.value === 'February' && dayControl.value <= 29 && yearControl.value % 4===0) {
       return null;
     }
   
@@ -50,27 +50,20 @@ export class RegisterComponent implements OnInit {
             age: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
             phone: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+')]],
-            year: [''],
+            // year: [''],
             // month: [''],
             // day: [''],
             PESEL: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]+$')]],
             dayMonthGroup: this.fb.group({
                 month: [''],
                 day: [''],
+                year: ['']
             }, {validator: dayMonthCheck}),
         }
 
         )
 
     }
-
-    
-        // if(this.patient.dateOfBirth.month==='February'){
-        //     for (let i = 0; i <= 28; i++) {
-        //         this.daysArray[i] = i + 1;
-        //     }
-        // }
-        
 
 
     onSubmit(user) {

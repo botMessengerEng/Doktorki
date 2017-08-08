@@ -23,7 +23,7 @@
 
                 <div><label for="login">login: </label></div>
                 <div><input class='input-style' type='text' [(ngModel)]="patient.login" formControlName="login" placeholder="login">
-                    <div class='info' *ngIf='patientForm.get("lastName").errors && (patientForm.get("lastName").touched || patientForm.get("lastName").dirty)'>
+                    <div class='info' *ngIf='patientForm.get("login").errors && (patientForm.get("login").touched || patientForm.get("login").dirty)'>
                         <div class='to-fill' [hidden]="!patientForm.get('login').errors.required">Login is required </div>
                         <div class='to-fill' [hidden]="!patientForm.get('login').errors.minlength">At least 3 characters required </div>
                     </div>
@@ -41,7 +41,7 @@
                 <div><select [(ngModel)]="patient.gender" formControlName="gender" placeholder="gender">
                   <option *ngFor="let gen of genders" [value]="gen">{{gen}}</option>
                   </select>
-                    <div class='info' *ngIf='patientForm.get("gender").errors && (patientForm.get("gender").touched || patientForm.get("password").dirty)'>
+                    <div class='info' *ngIf='patientForm.get("gender").errors && (patientForm.get("gender").touched || patientForm.get("gender").dirty)'>
                         <div class='to-fill' [hidden]="!patientForm.get('gender').errors.required">Gender is required </div>
                     </div>
                 </div>
@@ -67,15 +67,18 @@
                         <div class='to-fill' [hidden]="!patientForm.get('email').errors.pattern">Email is not valid</div>
                         <div class='to-fill' [hidden]="!patientForm.get('email').errors.required">Email is required </div>
                     </div>
-                </div></div>
+                </div>
+            </div>
 
-                <div><label for="year">year: </label></div>
-                <div><select [(ngModel)]="patient.dateOfBirth.year" formControlName="year" placeholder="year" >
+
+            <div formGroupName="dayMonthGroup">
+
+            <div><label for="year">year: </label></div>
+            <div><select [(ngModel)]="patient.dateOfBirth.year" formControlName="year" placeholder="year">
                   <option *ngFor="let year of yearsArray" [value]="year">{{year}}</option>
                   </select></div>
-            <div formGroupName="dayMonthGroup">
                 <div><label for="month">month: </label></div>
-                <div><select [(ngModel)]="patient.dateOfBirth.month" formControlName="month" placeholder="month" >
+                <div><select [(ngModel)]="patient.dateOfBirth.month" formControlName="month" placeholder="month">
                   <option *ngFor="let month of monthsArray" [value]="month">{{month}}</option>
                   </select></div>
 
@@ -84,14 +87,13 @@
                 <div><select [(ngModel)]="patient.dateOfBirth.day" formControlName="day" placeholder="day">
                 <option *ngFor="let day of daysArray" [value]="day">{{day}}</option>
                   </select>
-                  
-                     <div class='info' *ngIf='patientForm.get("dayMonthGroup").errors && (patientForm.get("dayMonthGroup").touched || patientForm.get("dayMonthGroup").dirty)'>
-                        <div class='to-fill' [hidden]="!patientForm.get('email').errors?.months">Bad</div>                    
-                        </div>
+                    <div class='info' *ngIf='patientForm.get("dayMonthGroup").errors && (patientForm.get("dayMonthGroup").touched || patientForm.get("dayMonthGroup").dirty)'>
+                        <div class='to-fill' [hidden]="!patientForm.get('email').errors?.months">Bad</div>
+                    </div>
                 </div>
 
-</div>
-<div></div>
+            </div>
+            <div></div>
             <div class='table-of-details'>
 
                 <div><label for="PESEL">PESEL: </label></div>
@@ -109,7 +111,7 @@
                 <div style="text-align: right">
                     <button type="submit" class='option-button' [disabled]="!patientForm.valid">Submit</button>
                 </div>
-</div>
+            </div>
         </form>
     </div>
 </div>
