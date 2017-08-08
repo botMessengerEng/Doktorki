@@ -2,46 +2,58 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AppService } from 'app/app.service';
 import { Router } from '@angular/router';
 import { Doctor } from '../classes/user';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     templateUrl: './doctor-add.component.html',
     styleUrls: ['./admin.component.css', './doctor-add.component.css'],
 })
 
-export class DoctorAddComponent {
+export class DoctorAddComponent implements OnInit {
     errorMessage: any;
     doctor: Doctor;
     genders = ['male', 'female'];
+    doctorAddForm: FormGroup;
 
-    constructor(private appService: AppService, private router: Router) {
-        this.doctor = new Doctor('', '','', '', '', undefined, '', '', '', '', '', '');
+    constructor(
+        private appService: AppService,
+        private router: Router,
+        private fb: FormBuilder) {
+
+        this.doctor = new Doctor('', '', '', '', '', undefined, '', '', '', '', '', '');
     }
 
+    ngOnInit(): void {
+        this.doctorAddForm = this.fb.group({
+            firstName: ['', Validators.required],
+            lastName: ['', Validators.required],
+            login: ['', [Validators.required, Validators.minLength(3)]],
+            password: ['', [Validators.required, Validators.minLength(8)]],
+            gender: [],
+            age: [],
+            phone: [],
+            email: [],
+            street: [],
+            postcode: [],
+            city: [],
+            specialization: [],
+        });
+    }
+
+
+
     onSubmit() {
-        this.appService.addNewDoctor({ login: this.doctor.login,
-                                        firstName: this.doctor.firstName,
-                                        lastName: this.doctor.lastName,
-                                        password: this.doctor.password,
-                                        gender: this.doctor.gender,
-                                        age: this.doctor.age,
-                                        phone: this.doctor.phone,
-                                        email: this.doctor.email,
-                                        address: {
-                                            street: this.doctor.address.street,
-                                            postcode: this.doctor.address.postcode,
-                                            city: this.doctor.address.city
-                                        },
-                                        specialization: this.doctor.specialization })
+        this.appService.addNewDoctor(this.doctor)
             .subscribe(result => {
                 if (result === 'OK')
                     this.back()
-                else 
+                else
                     alert("juz istnieje taki ktosiek");
             },
             error => this.errorMessage = <any>error);
     }
 
-   back() {
-    this.router.navigate(['admin']);
-  }
+    back() {
+        this.router.navigate(['admin']);
+    }
 }

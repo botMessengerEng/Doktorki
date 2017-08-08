@@ -12,58 +12,55 @@
             </div>
 
 
-            <form #doctorEditForm="ngForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="doctorEditForm" (ngSubmit)="onSubmit()">
                 <div class='table-of-details'>
 
 
 
                     <div><label for="firstName">first name: </label></div>
-                    <div><input class='input-style' type='text' [(ngModel)]="doctor[0].firstName" id='firstName' name='firstName'
-                            required #firstName="ngModel">
-                        <div class='info' *ngIf='firstName.errors && (firstName.touched || firstName.dirty)'>
-                            <div class='to-fill' [hidden]="!firstName.errors.required">First name is required </div>
+                    <div><input class='input-style' type='text' [(ngModel)]="doctor[0].firstName" formControlName="firstName">
+                        <div class='info' *ngIf='doctorEditForm.get("firstName").errors && (doctorEditForm.get("firstName").touched || doctorEditForm.get("firstName").dirty)'>
+                            <div class='to-fill' [hidden]="!doctorEditForm.get('firstName').errors.required">First name is required </div>
                         </div>
                     </div>
 
                     <div><label for="lastName">last name: </label></div>
-                    <div><input class='input-style' type='text' [(ngModel)]="doctor[0].lastName" id='lastName' name='lastName'
-                            required #lastName="ngModel">
-                        <div class='info' *ngIf='lastName.errors && (lastName.touched || lastName.dirty)'>
-                            <div class='to-fill' [hidden]="!lastName.errors.required">Last name is required </div>
+                    <div><input class='input-style' type='text' [(ngModel)]="doctor[0].lastName" formControlName="lastName">
+                        <div class='info' *ngIf='doctorEditForm.get("lastName").errors && (doctorEditForm.get("lastName").touched || doctorEditForm.get("lastName").dirty)'>
+                            <div class='to-fill' [hidden]="!doctorEditForm.get('lastName').errors.required">Last name is required </div>
                         </div>
                     </div>
 
-                    <div><label for="gender">gender: </label></div>
-
-                    <div><select [(ngModel)]="doctor[0].gender" name="gender">
+                   <div><label for="gender">gender: </label></div>
+                    <div><select [(ngModel)]="doctor[0].gender" formControlName="gender">
                   <option *ngFor="let gen of genders" [value]="gen">{{gen}}</option>
                   </select></div>
 
-                    <div><label for="age">age: </label></div>
-                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].age" name='age'></div>
+                     <div><label for="age">age: </label></div>
+                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].age" formControlName='age'></div>
 
                     <div><label for="phone">phone: </label></div>
-                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].phone" name='phone'></div>
+                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].phone" formControlName='phone'></div>
 
                     <div><label for="email">email: </label></div>
-                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].email" name='email'></div>
+                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].email" formControlName='email'></div>
 
                     <div><label for="street">street: </label></div>
-                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].address.street" name='street'></div>
+                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].address.street" formControlName='street'></div>
 
                     <div><label for="postcode">postcode: </label></div>
-                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].address.postcode" name='postcode'></div>
+                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].address.postcode" formControlName='postcode'></div>
 
                     <div><label for="city">city: </label></div>
-                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].address.city" name='city'></div>
+                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].address.city" formControlName='city'></div>
 
                     <div><label for="specialization">specialization: </label></div>
-                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].specialization" name='specialization'></div>
+                    <div> <input class='input-style' type='text' [(ngModel)]="doctor[0].specialization" formControlName='specialization'></div>
 
                 </div>
 
                 <div class='buttons'>
-                    <div><button type="submit" class='option-button' [disabled]="!doctorEditForm.form.valid">save</button> </div>
+                    <div><button type="submit" class='option-button' [disabled]="!doctorEditForm.valid">save</button> </div>
 
 
                     <div><button class='option-button' (click)='deleteAndBackToAdminPage()'>delete</button></div>

@@ -47,7 +47,7 @@
                 </div>
 
                 <div><label for="age">age: </label></div>
-                <div> <input class='input-style' type='text' [(ngModel)]="patient.age" formControlName="age" placeholder="sge">
+                <div> <input class='input-style' type='text' [(ngModel)]="patient.age" formControlName="age" placeholder="age">
                     <div class='info' *ngIf='patientForm.get("age").errors && (patientForm.get("age").touched || patientForm.get("age").dirty)'>
                         <div class='to-fill' [hidden]="!patientForm.get('age').errors.required">Age is required </div>
                         <div class='to-fill' [hidden]="!patientForm.get('age').errors.pattern">Age must be a number </div>
@@ -61,19 +61,20 @@
                     </div>
                 </div>
 
-                <div><label for="email">email: </label></div>
-                <div> <input class='input-style' type='text' [(ngModel)]="patient.email" formControlName="email" placeholder="email">
+                <div style='margin-bottom:20px'><label for="email">email: </label></div>
+                <div style='margin-bottom:20px'> <input class='input-style' type='text' [(ngModel)]="patient.email" formControlName="email" placeholder="email">
                     <div class='info' *ngIf='patientForm.get("email").errors && (patientForm.get("email").touched || patientForm.get("email").dirty)'>
                         <div class='to-fill' [hidden]="!patientForm.get('email').errors.pattern">Email is not valid</div>
                         <div class='to-fill' [hidden]="!patientForm.get('email').errors.required">Email is required </div>
                     </div>
                 </div>
-            </div>
+            </div>            
+
 
 
             <div formGroupName="dayMonthGroup">
-
-            <div><label for="year">year: </label></div>
+                            <div class='table-of-details'>
+            <div ><label for="year">year: </label></div>
             <div><select [(ngModel)]="patient.dateOfBirth.year" formControlName="year" placeholder="year">
                   <option *ngFor="let year of yearsArray" [value]="year">{{year}}</option>
                   </select></div>
@@ -83,8 +84,8 @@
                   </select></div>
 
 
-                <div><label for="day">day: </label></div>
-                <div><select [(ngModel)]="patient.dateOfBirth.day" formControlName="day" placeholder="day">
+                <div style='margin-bottom:20px'><label for="day">day: </label></div>
+                <div><select [(ngModel)]="patient.dateOfBirth.day" formControlName="day" placeholder="day" style='margin-bottom:20px'>
                 <option *ngFor="let day of daysArray" [value]="day">{{day}}</option>
                   </select>
                     <div class='info' *ngIf='patientForm.get("dayMonthGroup").errors && (patientForm.get("dayMonthGroup").touched || patientForm.get("dayMonthGroup").dirty)'>
@@ -93,12 +94,13 @@
                 </div>
 
             </div>
-            <div></div>
+                        </div>
+
             <div class='table-of-details'>
 
                 <div><label for="PESEL">PESEL: </label></div>
                 <div> <input class='input-style' type='text' [(ngModel)]="patient.PESEL" formControlName="PESEL" placeholder="PESEL">
-                    <div class='info' *ngIf='patientForm.get("PESEL").errors && (patientForm.get("email").touched || patientForm.get("PESEL").dirty)'>
+                    <div class='info' *ngIf='patientForm.get("PESEL").errors && (patientForm.get("PESEL").touched || patientForm.get("PESEL").dirty)'>
                         <div class='to-fill' [hidden]="!patientForm.get('PESEL').errors.maxlength">PESEL is too long</div>
                         <div class='to-fill' [hidden]="!patientForm.get('PESEL').errors.minlength">PESEL is too short</div>
                         <div class='to-fill' [hidden]="!patientForm.get('PESEL').errors.required">PESEL is required </div>
@@ -113,6 +115,7 @@
                 </div>
             </div>
         </form>
+                <div *ngIf='invalid' class='invalid'>Login is taken</div>
     </div>
 </div>
 

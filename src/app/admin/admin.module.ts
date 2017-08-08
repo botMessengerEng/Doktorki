@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
@@ -12,12 +12,13 @@ import { DoctorAddComponent } from './doctor-add.component';
   declarations: [
     AdminComponent,
     DoctorEditComponent,
-    DoctorAddComponent
+    DoctorAddComponent,
   ],
 
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
        { path: 'admin', component: AdminComponent},
        { path: 'admin/edit/doctor/:login', component: DoctorEditComponent},

@@ -17,7 +17,7 @@ import 'rxjs/add/operator/catch';
 
 export class AppService {
     private _dataBaseUrl = 'http://localhost:3000/doctor-details';
-    private _dataBaseUrl2 = 'http://localhost:3000//delete-doctor';
+    private _dataBaseUrl2 = 'http://localhost:3000/delete-doctor';
     private _dataBaseUrl3 = 'http://localhost:3000/insert-doctor';
     private _dataBaseUrlRegister = 'http://localhost:3000/register';
     constructor (private _http: Http) {}

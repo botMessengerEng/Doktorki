@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AppService } from 'app/app.service';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   templateUrl: './doctor-edit.component.html',
@@ -13,14 +14,29 @@ export class DoctorEditComponent implements OnInit {
   errorMessage: any;
   doctor: any;
   genders = ['male', 'female'];
+  doctorEditForm: FormGroup;
 
   constructor(private router: Router,
     private appService: AppService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.getLoginFromUrl().then(() => this.getDoctor());
+    this.doctorEditForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      gender: [],
+      age: [],
+      phone: [],
+      email: [],
+      street: [],
+      postcode: [],
+      city: [],
+
+      specialization: [],
+    });
   }
 
   getDoctor() {
@@ -39,31 +55,20 @@ export class DoctorEditComponent implements OnInit {
   }
 
   onSubmit() {
-    this.appService.updateQuery({ login: this.doctor[0].login,
-                                  firstName: this.doctor[0].firstName,
-                                  lastName: this.doctor[0].lastName,
-                                  gender: this.doctor[0].gender,
-                                  age: this.doctor[0].age,
-                                  phone: this.doctor[0].phone,
-                                  email: this.doctor[0].email,
-                                  address: {
-                                    street: this.doctor[0].address.street,
-                                    postcode: this.doctor[0].address.postcode,
-                                    city: this.doctor[0].address.city
-                                  },
-                                  specialization: this.doctor[0].specialization })
-        .subscribe(() => null,
-         error => this.errorMessage = <any>error);
+    this.appService.updateQuery(this.doctor[0]
+    )
+      .subscribe(() => null,
+      error => this.errorMessage = <any>error);
   }
 
 
-    deleteAndBackToAdminPage() {
-        this.appService.deleteQuery({login: this.doctor[0].login} )
-        .subscribe(() => this.back(),
-         error => this.errorMessage = <any>error);
+  deleteAndBackToAdminPage() {
+    this.appService.deleteQuery({ login: this.doctor[0].login })
+      .subscribe(() => this.back(),
+      error => this.errorMessage = <any>error);
   }
 
-   back() {
+  back() {
     this.router.navigate(['admin']);
   }
 

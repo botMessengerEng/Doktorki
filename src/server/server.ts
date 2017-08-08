@@ -71,7 +71,19 @@ app.post('/doctor-details', (req: express.Request, res: express.Response) => {
 });
 
 app.put('/doctor-details', (req: express.Request, res: express.Response) => {
-    mongoDoctorDetails.updateElement( req.body,
+    mongoDoctorDetails.updateElement( {login: req.body.login,
+                                                    firstName: req.body.firstName,
+                                                    lastName: req.body.lastName,
+                                                    gender: req.body.gender,
+                                                    age: req.body.age,
+                                                    phone: req.body.phone,
+                                                    email: req.body.email,
+                                                    address: {
+                                                        street: req.body.address.street,
+                                                        postcode: req.body.address.postcode,
+                                                        city: req.body.address.city
+                                                    },
+                                                    specialization: req.body.specialization},
         (result) => res.json(result));
 });
 
@@ -143,30 +155,28 @@ app.post('/register', (req: express.Request, res: express.Response) => {
         else {
             mongoUsers.insertElements([{login: req.body.login,
                                         password: req.body.password,
-                                        role: req.body.role}],
+                                        role: 'patient'}],
                                         () => null)
                 .then(() =>
-                mongoPatientDetails.insertElements([{    login: req.body.login,
-                                        firstName: req.body.firstName,
-                                        lastName: req.body.lastName,
-                                        role: req.body.role,
-                                        gender: req.body.gender,
-                                        age: req.body.age,
-                                        phone: req.body.phone,
-                                        email: req.body.email,
-                                        address: {
-                                            street: req.body.address.street,
-                                            postcode: req.body.address.postcode,
-                                            city: req.body.address.city
-                                        },
-                                        specialization: req.body.specialization }],
+                mongoPatientDetails.insertElements([{   login: req.body.login,
+                                                        role: 'patient',
+                                                        firstName: req.body.firstName,
+                                                        lastName: req.body.lastName,
+                                                        gender: req.body.gender,
+                                                        age: req.body.age,
+                                                        phone: req.body.phone,
+                                                        email: req.body.email,
+                                                        dateOfBirth: {
+                                                                year: req.body.dateOfBirth.year,
+                                                                month: req.body.dateOfBirth.month,
+                                                                day: req.body.dateOfBirth.day
+                                                        },
+                                                        PESEL: req.body.PESEL }],
                     result => res.json('OK') )
             )
         }
     }, 500));
 });
-
-
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
