@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppService } from 'app/app.service';
-import { DoctorFormComponent} from '../shared/doctor-form.component';
+import { SharedModule } from '../shared/shared.module';
 
 @Component({
     templateUrl:    'doctor.component.html',

@@ -9,7 +9,7 @@ import 'rxjs/add/operator/toPromise';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-export let USER;
+
 
 @Component({
     templateUrl: 'login.component.html',
@@ -55,13 +55,13 @@ export class LoginComponent implements OnInit {
 
     redirectAfterLogin() {
         if (this.resMessage.role === 'admin') {
-            this.router.navigate(['/admin']);
+            this.router.navigate(['/admin/manage/doctors']);
         }
         else if (this.resMessage.role === 'doctor') {
             this.router.navigate(['/doctor', this.resMessage.login]);
         }
         else if (this.resMessage.role === 'patient') {
-            this.router.navigate(['/patient']);
+            this.router.navigate(['/patient', this.resMessage.login]);
         }
         else {
             this.invalid = true;
@@ -71,7 +71,6 @@ export class LoginComponent implements OnInit {
     onSubmit() {
         this.check()
             .then(() => setTimeout(() => {
-                USER = this.loginInput;
                 this.redirectAfterLogin();
                 console.log('w lambdzie:  ' + this.resMessage);
             }, 300)

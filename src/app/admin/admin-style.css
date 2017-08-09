@@ -5,6 +5,15 @@
     height: fixed;
 }
 
+.content {
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+    font-family: 'Quicksand', sans-serif;
+    color:#002e4d;
+    font-size:26px;
+}
+
 .logo{
     background-color: #002e4d;
     color:white;
@@ -15,21 +24,70 @@
     font-size: 40px;
     font-weight: bold;
     font-family: 'Quicksand', sans-serif;
-
 }
 
-.logo:hover {
-    background-color: #002e4d;
-}
 
-.content {
-    margin-top: 2%;
-    margin-left: 2%;
-    margin-right: 2%;
+.menu{
+    display: grid;
+    grid-template-columns: 20% 15% 15% 15% 15% 15%;
+    grid-gap: 10px;
+    justify-content: center; 
+    grid-row-gap: 20px;
     font-family: 'Quicksand', sans-serif;
-    color:#002e4d;
-    font-size:140%;
-  
+    text-decoration: none;
+    background-color: #002e4d;
+    color:white;
+    padding:1%;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    text-align: right;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.menu div{
+ text-align: center;
+ font-weight: bold;
+ align-self: center;
+ 
+}
+
+
+.menu div:hover{
+ color: #002e4d;
+ text-align: center;
+ font-weight: bold;
+ align-self: center;
+ 
+}
+
+
+.menu div a{
+    text-decoration: none;
+    color:white;
+    font-size: 20px;;
+    cursor:pointer;
+}
+
+.menu div a:hover{
+    text-decoration: none;
+    color:  #007ed2;
+    letter-spacing: 3px;
+}
+
+.menu div .set{
+    color:  #007ed2 !important;
+    padding: 1%;
+    border-bottom: 2px solid #007ed2;
+    font-size: 26px !important;
+}
+
+.menu div .set:hover{
+    color:  #007ed2 !important;
+    padding: 1%;
+    border-bottom: 2px solid #007ed2;
+    font-size: 26px !important;
+    letter-spacing: 0px !important;
 }
 
 .table-of-doctor{
@@ -68,7 +126,6 @@
     height: 100%;
     border-radius: 3px;   
     cursor:pointer;
-
 }
 
 .doctor-button:hover{
@@ -102,6 +159,7 @@
       background-color: #003d66 !important;
       border:none;
 }
+
 .doctor-edit{
     width:20%;
 }
@@ -138,4 +196,3 @@ p{
     width:100%;
     border-radius: 3px;    
 }
-

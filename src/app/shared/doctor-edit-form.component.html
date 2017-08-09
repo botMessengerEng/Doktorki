@@ -1,0 +1,70 @@
+<div class='content'>
+    {{doctor.firstName}} {{doctor.lastName}}<br>
+    <div class='specialization'>{{doctor.specialization}}</div><br>
+
+    <div class='table-of-details' style='margin-bottom:20px'>
+        <div>login: </div>
+
+        <div style='color:#4d1919'> {{doctor.login}} </div>
+    </div>
+
+
+    <form [formGroup]="doctorEditForm" (ngSubmit)="onSubmit()">
+        <div class='table-of-details'>
+
+            <div><label for="firstName">first name: </label></div>
+            <div><input class='input-style' type='text' [(ngModel)]="doctor.firstName" formControlName="firstName">
+                <div class='info' *ngIf='doctorEditForm.get("firstName").errors && (doctorEditForm.get("firstName").touched || doctorEditForm.get("firstName").dirty)'>
+                    <div class='to-fill' [hidden]="!doctorEditForm.get('firstName').errors.required">First name is required </div>
+                </div>
+            </div>
+
+            <div><label for="lastName">last name: </label></div>
+            <div><input class='input-style' type='text' [(ngModel)]="doctor.lastName" formControlName="lastName">
+                <div class='info' *ngIf='doctorEditForm.get("lastName").errors && (doctorEditForm.get("lastName").touched || doctorEditForm.get("lastName").dirty)'>
+                    <div class='to-fill' [hidden]="!doctorEditForm.get('lastName').errors.required">Last name is required </div>
+                </div>
+            </div>
+
+            <div><label for="gender">gender: </label></div>
+            <div><select [(ngModel)]="doctor.gender" formControlName="gender">
+                  <option *ngFor="let gen of genders" [value]="gen">{{gen}}</option>
+                  </select></div>
+
+            <div><label for="age">age: </label></div>
+            <div> <input class='input-style' type='text' [(ngModel)]="doctor.age" formControlName='age'></div>
+
+            <div><label for="phone">phone: </label></div>
+            <div> <input class='input-style' type='text' [(ngModel)]="doctor.phone" formControlName='phone'></div>
+
+            <div><label for="email">email: </label></div>
+            <div> <input class='input-style' type='text' [(ngModel)]="doctor.email" formControlName='email'></div>
+
+            <div><label for="street">street: </label></div>
+            <div> <input class='input-style' type='text' [(ngModel)]="doctor.address.street" formControlName='street'></div>
+
+            <div><label for="postcode">postcode: </label></div>
+            <div> <input class='input-style' type='text' [(ngModel)]="doctor.address.postcode" formControlName='postcode'></div>
+
+            <div><label for="city">city: </label></div>
+            <div> <input class='input-style' type='text' [(ngModel)]="doctor.address.city" formControlName='city'></div>
+
+            <div><label for="specialization">specialization: </label></div>
+            <div> <input class='input-style' type='text' [(ngModel)]="doctor.specialization" formControlName='specialization'></div>
+
+        </div>
+
+        <div *ngIf="admin" class='buttons'>
+            <div><button type="submit" class='option-button' [disabled]="!doctorEditForm.valid">save</button> </div>
+            <div><button class='option-button' (click)='deleteAndBackToAdminPage()'>delete</button></div>
+            <div><button class='option-button'>show schedule</button></div>
+            <div><button class='option-button' (click)='back()'>back</button></div>
+        </div>
+
+        <div *ngIf="!admin">
+            <div style="justify-content:center; display:flex; margin-top:2%"><button type="submit" class='option-button' [disabled]="!doctorEditForm.valid">save</button> </div>
+        </div>
+
+    </form>
+
+</div>

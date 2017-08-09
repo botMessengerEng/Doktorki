@@ -3,23 +3,24 @@ import { AppService } from 'app/app.service';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 @Component({
-  template: `<div class='container'>
+  template: `   <div class='container'>
                   <nav class='menu'>
-                     <div> Doktorki </div>
-                     <div> <a routerLink="/admin/add/doctor">add doctor</a> </div>
-                     <div><a routerLink="/admin/manage/doctors" class='set'>manage doctors</a> </div>
-                     <div> <a routerLink="/admin/add/patient">add patient</a> </div>
-                     <div> <a routerLink="/login">manage patients</a> </div>
-                     <div><a routerLink="/login">log out</a> </div>
+                    <div> Doktorki </div>
+                    <div><a routerLink="/login">schedule</a> </div>
+                    <div> <a routerLink="/login">find patient</a> </div>
+                    <div> <a [routerLink]="['/doctor', login, 'edit']">edit profile</a> </div>
+                    <div><a routerLink="/login">log out</a> </div>
                 </nav>
 
               <div class='content'>
-                <div *ngIf="doctor!=undefined"><app-doctor-edit-form [doctor]="doctor[0]" [admin]="true"></app-doctor-edit-form>
+                <div *ngIf="doctor!=undefined"><app-doctor-edit-form [doctor]="doctor[0]" [admin]="false"></app-doctor-edit-form>
               </div> `,
 
-    styleUrls: ['./admin-style.css', '../shared/forms-style.css']
+  styleUrls: ['../doctor/doctor.component.css']
+
 })
 
 export class DoctorEditComponent implements OnInit {
@@ -28,6 +29,7 @@ export class DoctorEditComponent implements OnInit {
   doctor: any;
   genders = ['male', 'female'];
   doctorEditForm: FormGroup;
+  x:any;
 
   constructor(private router: Router,
     private appService: AppService,
@@ -35,21 +37,8 @@ export class DoctorEditComponent implements OnInit {
     private fb: FormBuilder) {
   }
 
-  ngOnInit(): void {
+   ngOnInit(): void {
     this.getLoginFromUrl().then(() => this.getDoctor());
-    this.doctorEditForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      gender: [],
-      age: [],
-      phone: [],
-      email: [],
-      street: [],
-      postcode: [],
-      city: [],
-
-      specialization: [],
-    });
   }
 
   getDoctor() {
@@ -64,16 +53,12 @@ export class DoctorEditComponent implements OnInit {
     this.login = this.route.snapshot.params['login'];
     return new Promise(resolve => {
       resolve(true);
+              console.log(this.doctor[0].age);
     });
   }
 
-  onSubmit() {
-    this.appService.updateQuery(this.doctor[0]
-    )
-      .subscribe(() => null,
-      error => this.errorMessage = <any>error);
-  }
-
-
-
+a(){
+    console.log(this.doctor[0].age);
 }
+}
+

@@ -5,22 +5,6 @@
     height: fixed;
 }
 
-.logo{
-    background-color: #002e4d;
-    color:white;
-    padding:1%;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    text-align: right;
-    font-size: 40px;
-    font-weight: bold;
-    font-family: 'Quicksand', sans-serif;
-}
-
-.logo:hover {
-    background-color: #002e4d;
-}
-
 .content {
     margin-top: 2%;
     margin-left: 2%;
@@ -30,14 +14,13 @@
     font-size:90%;
 }
 
-
-.x{
+.menu{
     display: grid;
     grid-template-columns: 35% 15% 15% 15% 15%;
     grid-gap: 20px;
     justify-content: center; 
     grid-row-gap: 20px;
-        font-family: 'Quicksand', sans-serif;
+    font-family: 'Quicksand', sans-serif;
     text-decoration: none;
     background-color: #002e4d;
      color:white;
@@ -49,33 +32,30 @@
     font-weight: bold;
 }
 
-.x div{
- text-align: center;
- font-weight: bold;
- align-self: center;
- 
+.menu div{
+    text-align: center;
+    font-weight: bold;
+    align-self: center;
+
 }
 
 
-.x div:hover{
- color: #002e4d;
- text-align: center;
- font-weight: bold;
- align-self: center;
- 
+.menu div:hover{
+    color: #002e4d;
+    text-align: center;
+    font-weight: bold;
+    align-self: center;
 }
 
 
-.x div a{
+.menu div a{
     text-decoration: none;
-     color:white;
+    color:white;
     font-size: 20px;;
-
 }
 
-.x div a:hover{
+.menu div a:hover{
     text-decoration: none;
     color:  #007ed2;
     letter-spacing: 3px;
-
 }

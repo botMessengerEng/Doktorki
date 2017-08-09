@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppService } from 'app/app.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Doctor } from '../classes/user';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     templateUrl: './doctor-add.component.html',
-    styleUrls: ['./admin.component.css', './doctor-add.component.css'],
+    styleUrls: ['./admin-style.css', '../shared/forms-style.css'],
 })
 
 export class DoctorAddComponent implements OnInit {
@@ -17,6 +17,7 @@ export class DoctorAddComponent implements OnInit {
 
     constructor(
         private appService: AppService,
+        private route: ActivatedRoute,
         private router: Router,
         private fb: FormBuilder) {
 
@@ -38,8 +39,8 @@ export class DoctorAddComponent implements OnInit {
             city: [],
             specialization: [],
         });
-    }
 
+    }
 
 
     onSubmit() {
@@ -56,4 +57,14 @@ export class DoctorAddComponent implements OnInit {
     back() {
         this.router.navigate(['admin']);
     }
+
+
+    highlight() {
+        let styles = {
+            'color': this.route.snapshot.routeConfig.path == 'admin/add/doctor' ? ' #007ed2' : 'yellow',
+            'text-decoration:': this.route.snapshot.routeConfig.path == 'admin/add/doctor' ? 'underline !important' : 'underline'
+        }
+        return styles;
+    }
+
 }

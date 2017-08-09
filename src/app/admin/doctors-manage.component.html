@@ -1,8 +1,17 @@
-<div class='container' [@tableOfDoctors]>
-    <div class='logo'>Admin's Profile</div>
-    <div class='content'>
+<!--<div class='container' [@tableOfDoctors]>-->
+<div class='container'>
+
+ <nav class='menu'>
+             <div> Doktorki </div>
+            <div> <a routerLink="/admin/add/doctor">add doctor</a> </div>
+            <div><a routerLink="/admin/manage/doctors" class='set'>manage doctors</a> </div>
+             <div> <a routerLink="/admin/add/patient">add patient</a> </div>
+            <div> <a routerLink="/login">manage patients</a> </div>
+            <div><a routerLink="/login">log out</a> </div>
+        </nav>
+
+        <div class='content'>
         List of Doctors:<br><br>
-                        <button (click)='addDoctor()'>add</button>
         <div *ngFor='let doctor of doctors'>
             <table class='table-of-doctor' *ngIf='doctors && doctors.length' [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#003d66" : "#333333",
                                  "border-color": (doctor === selectedDoctor) ? "#003d66" : "#333333"} '>

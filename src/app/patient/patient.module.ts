@@ -6,12 +6,12 @@ import { RouterModule } from '@angular/router';
 
 import { PatientComponent } from 'app/patient/patient.component';
 import { PatientService } from 'app/patient/patient.service';
-
+import { AppService } from 'app/app.service';
 
 
 @NgModule({
   declarations: [
-    PatientComponent
+    PatientComponent,   
   ],
 
   imports: [
@@ -19,7 +19,7 @@ import { PatientService } from 'app/patient/patient.service';
     FormsModule,
     HttpModule,
     RouterModule.forChild([
-      { path: 'patient', component: PatientComponent },
+      { path: 'patient/:login', component: PatientComponent },
     ])
   ],
 

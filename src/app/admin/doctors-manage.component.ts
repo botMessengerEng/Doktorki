@@ -4,8 +4,8 @@ import { trigger, style, transition, animate, group } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css'],
+  templateUrl: './doctors-manage.component.html',
+  styleUrls: ['./admin-style.css'],
   animations: [
     trigger('tableOfDoctors', [
       transition(':enter', [
@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   ]
 })
 
-export class AdminComponent implements OnInit {
+export class DoctorsManageComponent implements OnInit {
   errorMessage: any;
   doctors: any;
   selectedDoctor: any;

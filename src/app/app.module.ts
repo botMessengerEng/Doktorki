@@ -30,7 +30,7 @@ import { RegisterModule } from 'app/register/register.module';
     AdminModule,
     PatientModule,
     DoctorModule,
-    RegisterModule
+    RegisterModule,
   ],
 
   providers: [ AppService ],
