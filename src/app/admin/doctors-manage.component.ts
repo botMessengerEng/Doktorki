@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AppService } from 'app/app.service';
 import { trigger, style, transition, animate, group } from '@angular/core';
 import { Router } from '@angular/router';
+import { NameFilterPipe } from '../shared/name-filter.pipe';
 
 @Component({
   templateUrl: './doctors-manage.component.html',
@@ -13,13 +14,14 @@ import { Router } from '@angular/router';
         animate(350)
       ]),
     ])
-  ]
+  ],
 })
 
 export class DoctorsManageComponent implements OnInit {
   errorMessage: any;
   doctors: any;
   selectedDoctor: any;
+  doctorFilter: string = '';
 
   constructor(private appService: AppService, private router: Router) {
   }

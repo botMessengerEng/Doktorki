@@ -6,13 +6,15 @@ import { RouterModule } from '@angular/router';
 import { PatientAddFormComponent } from './patient-add-form.component';
 import { DoctorEditFormComponent } from './doctor-edit-form.component';
 import { PatientEditFormComponent } from './patient-edit-form.component';
+import { NameFilterPipe } from './name-filter.pipe';
 
 
 @NgModule({
   declarations: [
       PatientAddFormComponent,
       DoctorEditFormComponent,
-      PatientEditFormComponent
+      PatientEditFormComponent,
+      NameFilterPipe
   ],
 
   imports: [
@@ -25,7 +27,8 @@ import { PatientEditFormComponent } from './patient-edit-form.component';
     exports: [
       PatientAddFormComponent,
       DoctorEditFormComponent,
-      PatientEditFormComponent
+      PatientEditFormComponent,
+      NameFilterPipe
     ]
 
 

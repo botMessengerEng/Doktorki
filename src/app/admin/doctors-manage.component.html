@@ -1,18 +1,24 @@
 <!--<div class='container' [@tableOfDoctors]>-->
 <div class='container'>
 
- <nav class='menu'>
-             <div> Doktorki </div>
-            <div> <a routerLink="/admin/add/doctor">add doctor</a> </div>
-            <div><a routerLink="/admin/manage/doctors" class='set'>manage doctors</a> </div>
-             <div> <a routerLink="/admin/add/patient">add patient</a> </div>
-            <div> <a routerLink="/login">manage patients</a> </div>
-            <div><a routerLink="/login">log out</a> </div>
-        </nav>
+    <nav class='menu'>
+        <div> Doktorki </div>
+        <div> <a routerLink="/admin/add/doctor">add doctor</a> </div>
+        <div><a routerLink="/admin/manage/doctors" class='set'>manage doctors</a> </div>
+        <div> <a routerLink="/admin/add/patient">add patient</a> </div>
+        <div> <a routerLink="/login">manage patients</a> </div>
+        <div><a routerLink="/login">log out</a> </div>
+    </nav>
 
-        <div class='content'>
-        List of Doctors:<br><br>
-        <div *ngFor='let doctor of doctors'>
+    <div class='content'>
+        <div style="margin-bottom:1%"> List of Doctors:</div>
+
+<div class='search-style'>
+         <div>search: </div>
+         <div><input type='text' class='search' [(ngModel)]='doctorFilter' placeholder="doctor's name"/>
+</div></div>
+
+        <div *ngFor='let doctor of doctors | firstlastNameFilter:doctorFilter'>
             <table class='table-of-doctor' *ngIf='doctors && doctors.length' [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#003d66" : "#333333",
                                  "border-color": (doctor === selectedDoctor) ? "#003d66" : "#333333"} '>
                 <thead>

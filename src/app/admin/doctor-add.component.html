@@ -1,12 +1,12 @@
 <div class='container'>
-     <nav class='menu'>
-             <div> Doktorki </div>
-            <div> <a routerLink="/admin/add/doctor" class='set'>add doctor</a> </div>
-            <div><a routerLink="/admin/manage/doctors">manage doctors</a> </div>
-             <div> <a routerLink="/admin/add/patient">add patient</a> </div>
-            <div> <a routerLink="/login">manage patients</a> </div>
-            <div><a routerLink="/login">log out</a> </div>
-        </nav>
+    <nav class='menu'>
+        <div> Doktorki </div>
+        <div> <a routerLink="/admin/add/doctor" class='set'>add doctor</a> </div>
+        <div><a routerLink="/admin/manage/doctors">manage doctors</a> </div>
+        <div> <a routerLink="/admin/add/patient">add patient</a> </div>
+        <div> <a routerLink="/login">manage patients</a> </div>
+        <div><a routerLink="/login">log out</a> </div>
+    </nav>
 
     <div class='content'>
         <div class='names'>{{doctor.firstName}} {{doctor.lastName}}</div>
@@ -22,7 +22,6 @@
                     </div>
                 </div>
 
-
                 <div><label for="lastName">last name: </label></div>
                 <div><input class='input-style' type='text' [(ngModel)]="doctor.lastName" formControlName="lastName" placeholder="last name">
                     <div class='info' *ngIf='doctorAddForm.get("lastName").errors && (doctorAddForm.get("lastName").touched || doctorAddForm.get("lastName").dirty)'>
@@ -37,15 +36,15 @@
                         <div class='to-fill' [hidden]="!doctorAddForm.get('login').errors.minlength">At least 3 characters required </div>
                     </div>
                 </div>
-             
+
                 <div><label for="password">password: </label></div>
-                <div><input class='input-style' type='text' [(ngModel)]="doctor.password" name='password' formControlName="password" placeholder="password">
+                <div><input class='input-style' type='text' [(ngModel)]="doctor.password" name='password' formControlName="password"
+                        placeholder="password">
                     <div class='info' *ngIf='doctorAddForm.get("password").errors && (doctorAddForm.get("password").touched || doctorAddForm.get("password").dirty)'>
                         <div class='to-fill' [hidden]="!doctorAddForm.get('password').errors.required">Password is required </div>
                         <div class='to-fill' [hidden]="!doctorAddForm.get('password').errors.minlength">At least 8 characters required </div>
                     </div>
                 </div>
-
 
                 <div><label for="gender">gender: </label></div>
                 <div><select [(ngModel)]="doctor.gender" formControlName="gender" placeholder="gender">
@@ -53,13 +52,21 @@
                   </select></div>
 
                 <div><label for="age">age: </label></div>
-                <div> <input class='input-style' type='text' [(ngModel)]="doctor.age" formControlName="age" placeholder="age"></div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor.age" formControlName="age" placeholder="age">
+                    <div class='info' *ngIf='doctorAddForm.get("age").errors && (doctorAddForm.get("age").touched || doctorAddForm.get("age").dirty)'>
+                        <div class='to-fill' [hidden]="!doctorAddForm.get('age').errors.pattern">Age must be a number </div>
+                    </div>
+                </div>
 
                 <div><label for="phone">phone: </label></div>
                 <div> <input class='input-style' type='text' [(ngModel)]="doctor.phone" formControlName="phone" placeholder="phone"></div>
-  
+
                 <div><label for="email">email: </label></div>
-                <div> <input class='input-style' type='text' [(ngModel)]="doctor.email" formControlName="email" placeholder="email"></div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor.email" formControlName="email" placeholder="email">
+                    <div class='info' *ngIf='doctorAddForm.get("email").errors && (doctorAddForm.get("email").touched || doctorAddForm.get("email").dirty)'>
+                        <div class='to-fill' [hidden]="!doctorAddForm.get('email').errors.pattern">Email is not valid </div>
+                    </div>
+                </div>
 
                 <div><label for="street">street: </label></div>
                 <div> <input class='input-style' type='text' [(ngModel)]="doctor.address.street" formControlName="street" placeholder="street"></div>
@@ -71,7 +78,8 @@
                 <div> <input class='input-style' type='text' [(ngModel)]="doctor.address.city" formControlName="city" placeholder="city"></div>
 
                 <div><label for="specialization">specialization: </label></div>
-                <div> <input class='input-style' type='text' [(ngModel)]="doctor.specialization" formControlName="specialization" placeholder="specialization"></div>
+                <div> <input class='input-style' type='text' [(ngModel)]="doctor.specialization" formControlName="specialization"
+                        placeholder="specialization"></div>
                 <div> </div>
 
 
