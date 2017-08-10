@@ -5,7 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 
 @Component({
     templateUrl:    'doctor.component.html',
-    styleUrls:      [ 'doctor.component.css']
+  styleUrls: ['./doctor-style.css', '../shared/layout.css']
 })
 
 export class DoctorComponent implements OnInit{
@@ -20,40 +20,8 @@ export class DoctorComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getLoginFromUrl().then(() => this.getDoctor());
+   this.login = this.route.snapshot.params['login'];
   }
 
-  getDoctor() {
-    return new Promise(resolve => {
-      this.appService.postQuery({ role: 'doctor', login: this.login })
-        .subscribe((doctor) => this.doctor = doctor);
-      resolve(true);
-    });
-  }
-
-  getLoginFromUrl() {
-    this.login = this.route.snapshot.params['login'];
-    return new Promise(resolve => {
-      resolve(true);
-    });
-  }
-
-  onSubmit() {
-    this.appService.updateQuery({ login: this.doctor[0].login,
-                                  firstName: this.doctor[0].firstName,
-                                  lastName: this.doctor[0].lastName,
-                                  gender: this.doctor[0].gender,
-                                  age: this.doctor[0].age,
-                                  phone: this.doctor[0].phone,
-                                  email: this.doctor[0].email,
-                                  address: {
-                                    street: this.doctor[0].address.street,
-                                    postcode: this.doctor[0].address.postcode,
-                                    city: this.doctor[0].address.city
-                                  },
-                                  specialization: this.doctor[0].specialization })
-        .subscribe(() => null,
-         error => this.errorMessage = <any>error);
-  }
 
 }

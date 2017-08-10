@@ -4,9 +4,10 @@ import { Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } f
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { Patient } from "app/classes/user";
 
 @Component({
-  template: `   <div class='container'>
+  template: `<div class='container'>
                   <nav class='menu'>
                     <div> Doktorki </div>
                     <div><a routerLink="/login">schedule</a> </div>
@@ -14,19 +15,18 @@ import { SharedModule } from '../shared/shared.module';
                     <div> <a [routerLink]="['/doctor', login, 'edit']" class='set'>edit profile</a> </div>
                     <div><a routerLink="/login">log out</a> </div>
                 </nav>
-
               <div class='content'>
-                <div *ngIf="doctor!=undefined"><app-doctor-edit-form [doctor]="doctor[0]" [admin]="false"></app-doctor-edit-form>
-              </div> `,
-
-  styleUrls: ['./doctor-style.css', '../shared/layout.css']
-
+                <div *ngIf="patient!=undefined"><app-patient-edit-form [patient]="patient[0]" [admin]="false"></app-patient-edit-form></div>
+            </div>
+            </div> `,
+  styleUrls: ['./patient-style.css', '../shared/layout.css']
 })
 
-export class DoctorEditComponent implements OnInit {
+export class PatientEditComponent implements OnInit{
+  
+  patient: any;
   login: string;
   errorMessage: any;
-  doctor: any;
   genders = ['male', 'female'];
   doctorEditForm: FormGroup;
   x:any;
@@ -37,21 +37,22 @@ export class DoctorEditComponent implements OnInit {
     private fb: FormBuilder) {
   }
 
-   ngOnInit(): void {
-    this.getLoginFromUrl().then(() => this.getDoctor());
+ngOnInit(): void {
+    this.getLoginFromUrl().then(() => this.getPatient());
   }
 
-  getDoctor() {
-      this.appService.postQuery({ role: 'doctor', login: this.login })
-        .subscribe((doctor) => this.doctor = doctor);
-  }
+  getPatient() {
+        this.appService.findPatient({ login: this.login })
+            .subscribe((patient) => this.patient = patient);
+    }
 
-  getLoginFromUrl() {
-    this.login = this.route.snapshot.params['login'];
-    return new Promise(resolve => {
+    getLoginFromUrl() {
+        this.login = this.route.snapshot.params['login'];
+        return new Promise(resolve => {
       resolve(true);
     });
-  }
+    }
+
 
 }
 

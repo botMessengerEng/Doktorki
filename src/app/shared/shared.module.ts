@@ -5,11 +5,14 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { PatientAddFormComponent } from './patient-add-form.component';
 import { DoctorEditFormComponent } from './doctor-edit-form.component';
+import { PatientEditFormComponent } from './patient-edit-form.component';
+
 
 @NgModule({
   declarations: [
       PatientAddFormComponent,
-      DoctorEditFormComponent
+      DoctorEditFormComponent,
+      PatientEditFormComponent
   ],
 
   imports: [
@@ -18,13 +21,12 @@ import { DoctorEditFormComponent } from './doctor-edit-form.component';
     ReactiveFormsModule,
     HttpModule,
   ],
-  
 
     exports: [
       PatientAddFormComponent,
-      DoctorEditFormComponent
+      DoctorEditFormComponent,
+      PatientEditFormComponent
     ]
-
 
 
 })

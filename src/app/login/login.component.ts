@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/doctor', this.resMessage.login]);
         }
         else if (this.resMessage.role === 'patient') {
-            this.router.navigate(['/patient', this.resMessage.login]);
+            this.router.navigate(['/patient', this.resMessage.login, 'edit']);
         }
         else {
             this.invalid = true;

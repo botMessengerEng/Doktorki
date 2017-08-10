@@ -15,7 +15,7 @@ import { SharedModule } from '../shared/shared.module';
                     <app-patient-add-form [admin]="true"></app-patient-add-form>
                 </div>`,
 
-    styleUrls: ['./admin-style.css'],
+    styleUrls: ['./admin-style.css', '../shared/forms-style.css', '../shared/layout.css']
 })
 
 export class PatientAddComponent {

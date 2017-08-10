@@ -16,10 +16,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
                 </nav>
 
               <div class='content'>
-                <div *ngIf="doctor!=undefined"><app-doctor-edit-form [doctor]="doctor[0]" [admin]="true"></app-doctor-edit-form>
-              </div> `,
+                <div *ngIf="doctor!=undefined"><app-doctor-edit-form [doctor]="doctor[0]" [admin]="true"></app-doctor-edit-form></div>
+              </div>
+            </div> `,
 
-    styleUrls: ['./admin-style.css', '../shared/forms-style.css']
+    styleUrls: ['./admin-style.css', '../shared/forms-style.css', '../shared/layout.css']
 })
 
 export class DoctorEditComponent implements OnInit {
@@ -31,33 +32,16 @@ export class DoctorEditComponent implements OnInit {
 
   constructor(private router: Router,
     private appService: AppService,
-    private route: ActivatedRoute,
-    private fb: FormBuilder) {
+    private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.getLoginFromUrl().then(() => this.getDoctor());
-    this.doctorEditForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      gender: [],
-      age: [],
-      phone: [],
-      email: [],
-      street: [],
-      postcode: [],
-      city: [],
-
-      specialization: [],
-    });
   }
 
   getDoctor() {
-    return new Promise(resolve => {
       this.appService.postQuery({ role: 'doctor', login: this.login })
         .subscribe((doctor) => this.doctor = doctor);
-      resolve(true);
-    });
   }
 
   getLoginFromUrl() {
@@ -66,14 +50,5 @@ export class DoctorEditComponent implements OnInit {
       resolve(true);
     });
   }
-
-  onSubmit() {
-    this.appService.updateQuery(this.doctor[0]
-    )
-      .subscribe(() => null,
-      error => this.errorMessage = <any>error);
-  }
-
-
 
 }

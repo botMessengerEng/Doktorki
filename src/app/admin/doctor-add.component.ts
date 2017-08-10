@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     templateUrl: './doctor-add.component.html',
-    styleUrls: ['./admin-style.css', '../shared/forms-style.css'],
+    styleUrls: ['./admin-style.css', '../shared/forms-style.css', '../shared/layout.css']
 })
 
 export class DoctorAddComponent implements OnInit {

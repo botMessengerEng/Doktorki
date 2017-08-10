@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './doctors-manage.component.html',
-  styleUrls: ['./admin-style.css'],
+  styleUrls: ['./admin-style.css', '../shared/layout.css'],
   animations: [
     trigger('tableOfDoctors', [
       transition(':enter', [

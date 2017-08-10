@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input, DoCheck } from '@angular/core';
 
 import { AppService } from 'app/app.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Patient } from '../classes/user';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 
@@ -36,13 +36,15 @@ function dayMonthCheck(c: AbstractControl): { [key: string]: boolean } | null {
 }
 
 @Component({
-    selector: 'app-patient-add-form',
-    templateUrl: './patient-add-form.component.html',
+    selector: 'app-patient-edit-form',
+    templateUrl: './patient-edit-form.component.html',
     styleUrls: ['./forms-style.css',  '../admin/admin-style.css', './layout.css'],
 })
 
-export class PatientAddFormComponent implements OnInit {
+export class PatientEditFormComponent implements OnInit {
+    errorMessage: any;
     @Input() admin: boolean;
+    @Input() patient: any;
     patientForm: FormGroup;
     yearsArray = new Array(107);
     daysArray = new Array(31);
@@ -50,10 +52,12 @@ export class PatientAddFormComponent implements OnInit {
     invalid: boolean;
 
     errMessage: any;
-    patient: Patient;
     genders = ['male', 'female'];
-    constructor(private appService: AppService, private router: Router, private fb: FormBuilder) {
-        this.patient = new Patient('', '', '', '', '', undefined, '', '', undefined, undefined, undefined, '');
+    
+    constructor(private router: Router,
+        private appService: AppService,
+        private route: ActivatedRoute,
+        private fb: FormBuilder) {
     }
 
     ngOnInit() {
@@ -65,9 +69,7 @@ export class PatientAddFormComponent implements OnInit {
             firstName: ['', [Validators.required]],
             lastName: ['', [Validators.required]],
             login: ['', [Validators.required, Validators.minLength(3)]],
-            password: ['', [Validators.required, Validators.minLength(8)]],
             gender: ['', [Validators.required]],
-            age: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
             phone: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+')]],
             PESEL: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]+$')]],
@@ -82,14 +84,9 @@ export class PatientAddFormComponent implements OnInit {
     }
 
     onSubmit() {
-        this.appService.addNewUser(this.patient)
-            .subscribe((result) => {
-                if (result === 'OK')
-                    this.back();
-                else
-                    this.invalid = true;
-            }
-            , err => this.errMessage = err)
+        this.appService.updateQuery(this.patient)
+      .subscribe(() => null,
+      error => this.errorMessage = <any>error);
     }
 
 

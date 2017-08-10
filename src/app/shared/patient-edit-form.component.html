@@ -1,11 +1,18 @@
 <div class='content'>
     <div class='names'>{{patient.firstName}} {{patient.lastName}}</div>
-
     <div class='specialization'>{{patient.PESEL}}</div><br>
+
+    <div class='table-of-details' style='margin-bottom:20px'>
+        <div>login: </div>
+
+        <div style='color:#4d1919'> {{patient.login}} </div>
+    </div>
+
+
     <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
         <div class='table-of-details'>
 
-            <div><label for="firstName">first name: </label></div>
+                     <div><label for="firstName">first name: </label></div>
             <div><input class='input-style' type='text' [(ngModel)]="patient.firstName" formControlName="firstName" placeholder="first name">
                 <div class='info' *ngIf='patientForm.get("firstName").errors && (patientForm.get("firstName").touched || patientForm.get("firstName").dirty)'>
                     <div class='to-fill' [hidden]="!patientForm.get('firstName').errors.required">First name is required </div>
@@ -27,28 +34,12 @@
                 </div>
             </div>
 
-            <div><label for="password">password: </label></div>
-            <div><input class='input-style' type='text' [(ngModel)]="patient.password" formControlName="password" placeholder="password">
-                <div class='info' *ngIf='patientForm.get("password").errors && (patientForm.get("password").touched || patientForm.get("password").dirty)'>
-                    <div class='to-fill' [hidden]="!patientForm.get('password').errors.required">Password is required </div>
-                    <div class='to-fill' [hidden]="!patientForm.get('password').errors.minlength">At least 8 characters required </div>
-                </div>
-            </div>
-
             <div><label for="gender">gender: </label></div>
             <div><select [(ngModel)]="patient.gender" formControlName="gender" placeholder="gender">
                   <option *ngFor="let gen of genders" [value]="gen">{{gen}}</option>
                   </select>
                 <div class='info' *ngIf='patientForm.get("gender").errors && (patientForm.get("gender").touched || patientForm.get("gender").dirty)'>
                     <div class='to-fill' [hidden]="!patientForm.get('gender').errors.required">Gender is required </div>
-                </div>
-            </div>
-
-            <div><label for="age">age: </label></div>
-            <div> <input class='input-style' type='text' [(ngModel)]="patient.age" formControlName="age" placeholder="age">
-                <div class='info' *ngIf='patientForm.get("age").errors && (patientForm.get("age").touched || patientForm.get("age").dirty)'>
-                    <div class='to-fill' [hidden]="!patientForm.get('age').errors.required">Age is required </div>
-                    <div class='to-fill' [hidden]="!patientForm.get('age').errors.pattern">Age must be a number </div>
                 </div>
             </div>
 
@@ -75,6 +66,7 @@
                 <div><select [(ngModel)]="patient.dateOfBirth.year" formControlName="year" placeholder="year">
                   <option *ngFor="let year of yearsArray" [value]="year">{{year}}</option>
                   </select></div>
+                  
                 <div><label for="month">month: </label></div>
                 <div><select [(ngModel)]="patient.dateOfBirth.month" formControlName="month" placeholder="month">
                   <option *ngFor="let month of monthsArray" [value]="month">{{month}}</option>
@@ -112,5 +104,5 @@
             </div>
         </div>
     </form>
-    <div *ngIf='invalid' class='invalid'>Login is taken</div>
+
 </div>

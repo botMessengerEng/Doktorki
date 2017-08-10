@@ -7,7 +7,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-doctor-edit-form',
   templateUrl: './doctor-edit-form.component.html',
-  styleUrls: ['./forms-style.css',  '../admin/admin-style.css'],
+  styleUrls: ['./forms-style.css',  '../admin/admin-style.css', './layout.css'],
 })
 
 export class DoctorEditFormComponent implements OnInit {

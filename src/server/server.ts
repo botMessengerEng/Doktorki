@@ -132,8 +132,8 @@ app.post('/insert-doctor', (req: express.Request, res: express.Response) => {
 });
 
 // ------------- patient ------------------------------------------------------------------------////////////////////////
-app.post('patient-details', (req:express.Request, res: express.Response) => {
-    mongoPatientDetails.findElement( {role: req.body.role, login: req.body.login},
+app.post('/patient-details', (req:express.Request, res: express.Response) => {
+    mongoPatientDetails.findElement( { login: req.body.login},
     (result) => res.json(result));
 });
 
@@ -141,6 +141,7 @@ app.put('/patient-details', (req: express.Request, res: express.Response) => {
     mongoPatientDetails.updateElement(req.body,
         (result) => res.json(result));
 });
+
 
 // ------------- register -----------------------------------------------------------------------////////////////////////
 app.post('/register', (req: express.Request, res: express.Response) => {
