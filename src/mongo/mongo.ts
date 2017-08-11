@@ -1,79 +1,50 @@
 import { MongoClient } from 'mongodb';
 import * as assert from 'assert';
 
+
 export class MongoCollection {
     private collection;
-
     constructor (private url: string, collectionName ) {
-      MongoClient.connect(this.url, (err, db) => {
-        assert.equal(null, err);
+      MongoClient.connect(this.url).then((db) => {
         this.collection = db.collection(collectionName);
         console.log('Connected successfully to server');
       });
     }
 
-    insertElements(data, callback) {
-      this.collection.insertMany(data, (err, result) => {
-        assert.equal(err, null);
-        console.log(`Inserted ${data.length} documents into the collection`);
-        callback(result);
-      });
-      return new Promise(resolve => resolve(true));
+    async insertElements(data) {
+      const result = await this.collection.insert(data);
+      console.log(`Inserted ${data.length} documents into the collection`);
+      return new Promise ((resolve) => resolve(result));
     }
 
-    showElements(callback) {
-      this.collection.find({}).sort({lastName: 1, firstName: 1}).toArray((err, result) => {
-        assert.equal(err, null);
-        console.log('Showed all records');
-        console.log(result);
-        callback(result);
-      });
+    async showElements() {
+      const result = await this.collection.find({}).sort({ lastName: 1, firstName: 1}).toArray();
+      return new Promise(resolve => resolve(result));
     }
 
-    findElement(parameter, callback) {
-      this.collection.find(parameter).sort({ lastName: 1, firstName: 1}).toArray((err, docs) => {
-        assert.equal(err, null);
-        console.log('Found the following records');
-        console.log(docs)
-        callback(docs);
-      });
-      return new Promise(resolve => resolve(true));
+    async findElement(parameter) {
+      const result = await this.collection.find(parameter).sort({ lastName: 1, firstName: 1}).toArray();
+      return new Promise(resolve => resolve(result));
     }
 
-     updateElement(parameter, callback) {
-      this.collection.updateOne({login: parameter.login}
-        , { $set: parameter }, (err, result) => {
-          assert.equal(err, null);
-          console.log('Updated file');
-          callback(result);
-      });
+    async updateElement(parameter) {
+      const result = await this.collection.updateOne({login: parameter.login}, { $set: parameter });
+      return new Promise(resolve => resolve(result));
     }
 
-    updateAllElements(parameter, data, callback) {
-      this.collection.updateMany(parameter
-        , { $set: data }, (err, result) => {
-          assert.equal(err, null);
-          console.log('Updated file');
-          callback(result);
-      });
+    async updateAllElements(parameter) {
+      const result = await this.collection.updateMany({login: parameter.login}, { $set: parameter });
+      return new Promise(resolve => resolve(result));
     }
 
-    removeElement(parameter, callback) {
-      this.collection.deleteOne({login: parameter.login}, 
-        (err, result) => {
-        assert.equal(err, null);
-        console.log('Removed file');
-        callback(result);
-      });
-      return new Promise(resolve => resolve(true));
+    async removeElement(parameter) {
+      const result = await this.collection.deleteOne({login: parameter.login});
+      return new Promise(resolve => resolve(result));
     }
 
-    removeAllElements(parameter, callback) {
-      this.collection.deleteMany(parameter, (err, result) => {
-        assert.equal(err, null);
-        console.log('Removed file');
-        callback(result);
-      });
+    async removeAllElements(parameter) {
+      const result = await this.collection.deleteMany(parameter);
+      return new Promise(resolve => resolve(result));
     }
 
     drop() {

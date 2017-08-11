@@ -3,7 +3,7 @@
         "login": "doctor",
         "date": {
             "year":2017,
-            "month": "Aug",
+            "month": "August",
             "day": 8,
             "hour": "8:00"
         },
@@ -18,7 +18,7 @@
         "login": "doctor",
         "date": {
             "year":2017,
-            "month": "Aug",
+            "month": "August",
             "day": 8,
             "hour": "10:00"
         },
@@ -33,7 +33,7 @@
         "login": "doctor",
         "date": {
             "year":2017,
-            "month": "Aug",
+            "month": "August",
             "day": 9,
             "hour": "17:00"
         },
@@ -48,7 +48,7 @@
         "login": "doctor",
         "date": {
             "year":2017,
-            "month": "Aug",
+            "month": "August",
             "day": 14,
             "hour": "12:00"
         },
@@ -63,7 +63,7 @@
         "login": "doctor",
         "date": {
             "year":2017,
-            "month": "Aug",
+            "month": "August",
             "day": 17,
             "hour": "16:00"
         },

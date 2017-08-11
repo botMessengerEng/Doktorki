@@ -13,27 +13,38 @@
     <div class='content'>
         <div style="margin-bottom:1%"> List of Doctors:</div>
 
-<div class='search-style'>
-         <div>search: </div>
-         <div><input type='text' class='search' [(ngModel)]='doctorFilter' placeholder="doctor's name"/>
-</div></div>
+        <div class='search-style'>
+            <div>search: </div>
+            <div><input type='text' class='search' [(ngModel)]='doctorFilter' placeholder="doctor's name" />
+            </div>
+        </div>
 
         <div *ngFor='let doctor of doctors | firstlastNameFilter:doctorFilter'>
             <table class='table-of-doctor' *ngIf='doctors && doctors.length' [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#003d66" : "#333333",
                                  "border-color": (doctor === selectedDoctor) ? "#003d66" : "#333333"} '>
                 <thead>
                     <tr>
-                        <button class='doctor-button' [class.selected]='doctor === selectedDoctor' (click)='onSelect(doctor)'>
-    <td class='button-divided'>
+                        <td>
+                            <button class='doctor-button' [class.selected]='doctor === selectedDoctor' (click)='onSelect(doctor)'>
+
+
+<div class='button-label'>
+    <div>
      {{doctor.firstName}} {{doctor.lastName}}
-    </td>
-    <td class='button-divided'>
-      {{doctor.specialization}}
-    </td>
-    <td class='button-divided'>
+    </div >
+    <div >
+        <div *ngFor='let spec of doctor.specialization' class='single-specialization'>{{spec}}
+                        {{doctor.specialization[doctor.specialization.length-1]==spec ? ' ' : ','}} </div>
+    
+    </div >
+
+    <div>
        {{doctor.address.city}}
-    </td>
-</button></tr>
+    </div >
+</div>
+
+</button></td>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr class="shortDetails" *ngIf='doctor === selectedDoctor'>

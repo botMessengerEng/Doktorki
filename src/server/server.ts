@@ -39,144 +39,155 @@ app.get('/', (req, res) =>
 );
 
 // ------------- login   ------------------------------------------------------------------------////////////////////////
-app.post('/login', (req: express.Request, res: express.Response) => {
-    console.log(JSON.stringify(req.body));
-    let user;
-        mongoUsers.findElement({
-        login: req.body.login,
-        password: req.body.password
-    }, (result) => user = result)
-    .then(() => setTimeout(() => {
-            if (user[0] !== undefined) {
-                res.json(user[0])
-                console.log('tak');
-            }
-            else{
-                res.json('bledny login lub haslo');
-                console.log('nie');
-                console.log(user);
-        }}, 100));
+app.post('/login', async (req: express.Request, res: express.Response) => {
+        console.log(JSON.stringify(req.body));
+
+        const user = await mongoUsers.findElement({
+            login: req.body.login,
+            password: req.body.password
+        });
+        //(() => setTimeout( async () => {
+        if (user[0] !== undefined) {
+            res.status(200).json(user[0]).end();
+            console.log('tak');
+        }
+        else{
+            res.json('bledny login lub haslo');
+            console.log('nie');
+            console.log(user);
+        };
+       //},0))();
 });
 
 // ------------- doctor  ------------------------------------------------------------------------////////////////////////
 
-app.get('/doctor-details', (req: express.Request, res: express.Response) => {
-    mongoDoctorDetails.findElement( {role: 'doctor'},
-        (result) => res.json(result));
+app.get('/doctor-details', async (req: express.Request, res: express.Response) => {
+    const result = await mongoDoctorDetails.findElement({})
+        res.json(result);
 });
 
-app.post('/doctor-details', (req: express.Request, res: express.Response) => {
-    mongoDoctorDetails.findElement( {role: req.body.role, login: req.body.login},
-        (result) => res.json(result));
+app.post('/doctor-details', async (req: express.Request, res: express.Response) => {
+    const result = await mongoDoctorDetails.findElement( { login: req.body.login});
+    res.json(result)
 });
 
-app.put('/doctor-details', (req: express.Request, res: express.Response) => {
-    mongoDoctorDetails.updateElement( {login: req.body.login,
-                                                    firstName: req.body.firstName,
-                                                    lastName: req.body.lastName,
-                                                    gender: req.body.gender,
-                                                    age: req.body.age,
-                                                    phone: req.body.phone,
-                                                    email: req.body.email,
-                                                    address: {
-                                                        street: req.body.address.street,
-                                                        postcode: req.body.address.postcode,
-                                                        city: req.body.address.city
-                                                    },
-                                                    specialization: req.body.specialization},
-        (result) => res.json(result));
+app.put('/doctor-details', async (req: express.Request, res: express.Response) => {
+    const result = await mongoDoctorDetails.updateElement( 
+        {login: req.body.login,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        gender: req.body.gender,
+        age: req.body.age,
+        phone: req.body.phone,
+        email: req.body.email,
+        address: {
+            street: req.body.address.street,
+            postcode: req.body.address.postcode,
+            city: req.body.address.city
+        },
+        specialization: req.body.specialization});
+    res.json(result);
 });
 
-app.put('/delete-doctor', (req: express.Request, res: express.Response) => {
-    mongoDoctorDetails.removeElement( req.body,
-        () => null)
-        .then(() =>
-            mongoUsers.removeElement( req.body,
-                (result) => res.json(result))
-        );
+app.put('/delete-doctor', async (req: express.Request, res: express.Response) => {
+    const result = await Promise.all([
+        mongoDoctorDetails.removeElement( req.body),
+        mongoUsers.removeElement( req.body)
+    ]);
+    res.json(result);
 });
 
-app.post('/insert-doctor', (req: express.Request, res: express.Response) => {
+app.post('/insert-doctor', async (req: express.Request, res: express.Response) => {
     console.log('recived' + JSON.stringify(req.body));
-    let user;
 
-    mongoUsers.findElement({ login: req.body.login }, (result) => user = result).then(() => setTimeout(() => {
+    const user = await mongoUsers.findElement({ login: req.body.login })
+
         console.log(user);
         if (user[0]!==undefined) {
             res.json(`Login ${req.body.login} is in use!`)
+        } else {
+            await Promise.all([
+                mongoUsers.insertElements([
+                    {login: req.body.login,
+                    password: req.body.password,
+                    role: 'doctor'}
+                ]),
+                mongoDoctorDetails.insertElements([
+                    {login: req.body.login,
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    gender: req.body.gender,
+                    age: req.body.age,
+                    phone: req.body.phone,
+                    email: req.body.email,
+                    address: {
+                        street: req.body.address.street,
+                        postcode: req.body.address.postcode,
+                        city: req.body.address.city
+                    },
+                    specialization: req.body.specialization }
+                ])
+            ])
+            res.json('OK')
         }
-        else {
-            mongoUsers.insertElements([{login: req.body.login,
-                                        password: req.body.password,
-                                        role: 'doctor'}],
-                                        () => null)
-                .then(() =>
-                mongoDoctorDetails.insertElements([{    login: req.body.login,
-                                                        firstName: req.body.firstName,
-                                                        lastName: req.body.lastName,
-                                                        role: 'doctor',
-                                                        gender: req.body.gender,
-                                                        age: req.body.age,
-                                                        phone: req.body.phone,
-                                                        email: req.body.email,
-                                                        address: {
-                                                            street: req.body.address.street,
-                                                            postcode: req.body.address.postcode,
-                                                            city: req.body.address.city
-                                                        },
-                                                        specialization: req.body.specialization }],
-                    result => res.json('OK') )
-            )
-        }
-    }, 500));
 });
 
 // ------------- patient ------------------------------------------------------------------------////////////////////////
-app.post('/patient-details', (req:express.Request, res: express.Response) => {
-    mongoPatientDetails.findElement( { login: req.body.login},
-    (result) => res.json(result));
+app.get('/patient-details', async (req: express.Request, res: express.Response) => {
+    const result = await mongoDoctorDetails.findElement({});
+    res.json(result);
 });
 
-app.put('/patient-details', (req: express.Request, res: express.Response) => {
-    mongoPatientDetails.updateElement(req.body,
-        (result) => res.json(result));
+app.post('patient-details', async (req:express.Request, res: express.Response) => {
+    const result = await mongoPatientDetails.findElement( {login: req.body.login});
+    res.json(result)
 });
 
+app.put('/patient-details', async (req: express.Request, res: express.Response) => {
+    const result = await mongoPatientDetails.updateElement(req.body);
+    res.json(result)
+});
+
+app.post('/patient-details', async (req: express.Request, res: express.Response) => {
+    const result = await mongoPatientDetails.findElement( {login: req.body.login});
+    res.json(result);
+});
 
 // ------------- register -----------------------------------------------------------------------////////////////////////
-app.post('/register', (req: express.Request, res: express.Response) => {
-    console.log('recived' + JSON.stringify(req.body));
-    let user;
+app.post('/register', async (req: express.Request, res: express.Response) => {
+     console.log('recived' + JSON.stringify(req.body));
 
-    mongoUsers.findElement({ login: req.body.login }, (result) => user = result).then(() => setTimeout(() => {
+    const user = await mongoUsers.findElement({ login: req.body.login });
+    //(() => setTimeout( async () => {
         console.log(user);
         if (user[0]!==undefined) {
-            res.json(`Login ${req.body.login} is in use!`)
+            res.json(`Login ${req.body.login} is in use!`).end();
+        } else {
+            await Promise.all([
+                mongoUsers.insertElements([
+                    {login: req.body.login,
+                    password: req.body.password,
+                    role: 'patient'}
+                ]),
+                mongoPatientDetails.insertElements([
+                    {login: req.body.login,
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    gender: req.body.gender,
+                    age: req.body.age,
+                    phone: req.body.phone,
+                    email: req.body.email,
+                    dateOfBirth: {
+                            year: req.body.dateOfBirth.year,
+                            month: req.body.dateOfBirth.month,
+                            day: req.body.dateOfBirth.day
+                    },
+                    PESEL: req.body.PESEL }
+                ])
+            ]);
+            res.status(200).json('OK').end();
         }
-        else {
-            mongoUsers.insertElements([{login: req.body.login,
-                                        password: req.body.password,
-                                        role: 'patient'}],
-                                        () => null)
-                .then(() =>
-                mongoPatientDetails.insertElements([{   login: req.body.login,
-                                                        role: 'patient',
-                                                        firstName: req.body.firstName,
-                                                        lastName: req.body.lastName,
-                                                        gender: req.body.gender,
-                                                        age: req.body.age,
-                                                        phone: req.body.phone,
-                                                        email: req.body.email,
-                                                        dateOfBirth: {
-                                                                year: req.body.dateOfBirth.year,
-                                                                month: req.body.dateOfBirth.month,
-                                                                day: req.body.dateOfBirth.day
-                                                        },
-                                                        PESEL: req.body.PESEL }],
-                    result => res.json('OK') )
-            )
-        }
-    }, 500));
+    //},0))();
 });
 
 app.listen(3000, function () {
@@ -187,743 +198,746 @@ app.listen(3000, function () {
 
 ///-----------------DataBase Init path -----------------///
 
-app.get('/users-add', (req: express.Request, res: express.Response) => {
-    mongoUsers.insertElements([
-    {
-        "login": "admin",
-        "password": "admin",
-        "role": "admin"
-    },
-    {
-        "login": "doctor",
-        "password": "doctor",
-        "role": "doctor"
-    },
-    {
-        "login": "patient",
-        "password": "patient",
-        "role": "patient"
-    },
-    {
-        "login": "doktorek",
-        "password": "prawilny",
-        "role": "doctor"
-    },
-    {
-        "login": "doktorBezUprawnien",
-        "password": "jakRowerzystaBezUprawnien",
-        "role": "doctor"
-    },
-    {
-        "login": "Brooke",
-        "password": "1234",
-        "role": "doctor"
-    },
-    {
-        "login": "elekarz",
-        "password": "@als",
-        "role": "doctor"
-    },
-    {
-        "login": "monicaC",
-        "password": "anteny",
-        "role": "doctor"
-    },
-    {
-        "login": "eve63",
-        "password": "eve63",
-        "role": "doctor"
-    },
-    {
-        "login": "pawelKrakow",
-        "password": "wawel",
-        "role": "doctor"
-    },
-    {
-        "login": "leo_z_tarnowa",
-        "password": "ananas@66",
-        "role": "doctor"
-    },
-    {
-        "login": "doktorro",
-        "password": "paprykarz_szczecisnski",
-        "role": "doctor"
-    },
-    {
-        "login": "medicziKasia",
-        "password": "traktor77",
-        "role": "doctor"
-    },
-    {
-        "login": "lolek",
-        "password": "bolek",
-        "role": "doctor"
-    },
-    {
-        "login": "patient",
-        "password": "admin",
-        "role": "patient"
-    },
-    {
-        "login": "wpiszLogin",
-        "password": "admin",
-        "role": "patient"
-    },
-    {
-        "login": "synJacka",
-        "password": "admin",
-        "role": "patient"
-    },
-    {
-        "login": "Hulk",
-        "password": "admin",
-        "role": "patient"
-    },
-    {
-        "login": "SpeedyGonzales",
-        "password": "admin",
-        "role": "patient"
-    }
-] , (result) => res.send(result));
-});
-
-
-
-app.get('/doctor-details-add', (req: express.Request, res: express.Response) => {
-    mongoDoctorDetails.insertElements([
-    {
-        'login': 'doktorBezUprawnien',
-        'role': 'doctor',
-        'firstName': 'John',
-        'lastName': 'Smith',
-        'gender': 'male',
-        'age': 37,
-        'phone': '+48 123456789',
-        'email': 'doktorBezUprawnien@gmail.com',
-        'address': {
-            'street': 'Łąkowa 34',
-            'postcode': '39-111',
-            'city': 'Miasto W'
-        },
-        'specialization': 'kości'
-    },
-    {
-        'login': 'doctor',
-        'role': 'doctor',
-        'firstName': 'James',
-        'lastName': 'Lovelock',
-        'gender': 'male',
-        'age': 55,
-        'phone': '+48 123465689',
-        'email': 'jLovelock@gmail.com',
-        'address': {
-            'street': 'Love 66',
-            'postcode': '595-223',
-            'city': 'Paris'
-        },
-        'specialization': 'logopeda'
-    },
-    {
-        'login': 'doktorek',
-        'role': 'doctor',
-        'firstName': 'Marcus',
-        'lastName': 'Will',
-        'gender': 'male',
-        'age': 32,
-        'phone': '+48 773456789',
-        'email': 'doktorek@gmail.com',
-        'address': {
-            'street': 'Green 123',
-            'postcode': '25-083',
-            'city': 'Masecziuset'
-        },
-        'specialization': 'od uszów'
-    },
-    {
-        'login': 'Brooke',
-        'role': 'doctor',
-        'firstName': 'Brooke',
-        'lastName': 'Winchester',
-        'gender': 'male',
-        'age': 81,
-        'phone': '+23 322567289',
-        'email': 'BrookeDoctor@gmail.com',
-        'address': {
-            'street': 'Piernikowa 33',
-            'postcode': '22-083',
-            'city': 'Carcas'
-        },
-        'specialization': 'internista'
-    },
-    {
-        'login': 'elekarz',
-        'role': 'doctor',
-        'firstName': 'Tim',
-        'lastName': 'Cole',
-        'gender': 'male',
-        'age': 46,
-        'phone': '+11 773452289',
-        'email': 'tim-cole@gmail.com',
-        'address': {
-            'street': 'Lniana 76',
-            'postcode': '22-445',
-            'city': 'Colorado'
-        }, 
-        'specialization': 'alergolog'
-    },
-    {
-        'login': 'monicaC',
-        'role': 'doctor',
-        'firstName': 'Monica',
-        'lastName': 'C',
-        'gender': 'female',
-        'age': 27,
-        'phone': '+77 222116789',
-        'email': 'monicaC@gmail.com',
-        'address': {
-            'street': 'Lukrowa 66',
-            'postcode': '211-7783',
-            'city': 'Toruń'
-        },
-        'specialization': 'pediatra'
-    },
-    {
-        'login': 'eve63',
-        'role': 'doctor',
-        'firstName': 'Eva',
-        'lastName': 'Limone',
-        'gender': 'female',
-        'age': 62,
-        'phone': '+48 773456789',
-        'email': 'doktorek@gmail.com',
-        'address': {
-            'street': 'Limonkowa 24',
-            'postcode': '35-083',
-            'city': 'Floryda'
-        },
-        'specialization': 'ginekolog'
-    },
-    {
-        'login': 'pawelKrakow',
-        'role': 'doctor',
-        'firstName': 'Pawel',
-        'lastName': 'Kowalski',
-        'gender': 'male',
-        'age': 37,
-        'phone': '+48 123454755',
-        'email': 'pawelKrakow@gmail.com',
-        'address': {
-            'street': 'Słowackiego 45',
-            'postcode': '30-083',
-            'city': 'Kraków'
-        },
-        'specialization': 'kardiolog'
-    },
-    {
-        'login': 'leo_z_tarnowa',
-        'role': 'doctor',
-        'firstName': 'Leopold',
-        'lastName': 'Brzytwa',
-        'gender': 'male',
-        'age': 31,
-        'phone': '+48 133456789',
-        'email': 'leo@gmail.com',
-        'address': {
-            'street': 'Ładna 11',
-            'postcode': '35-283',
-            'city': 'Tarnów'
-        },
-        'specialization': 'kardiolog'
-    },
-    {
-        'login': 'doktorro',
-        'role': 'doctor',
-        'firstName': 'Pedro',
-        'lastName': 'El Gonzalez',
-        'gender': 'male',
-        'age': 49,
-        'phone': '+18 773234789',
-        'email': 'doktorro@gmail.com',
-        'address': {
-            'street': 'Naczosów 23',
-            'postcode': '25-083',
-            'city': 'Cancun'
-        },
-        'specialization': 'okulista'
-    },
-    {
-        'login': 'medicziKasia',
-        'role': 'doctor',
-        'firstName': 'Katarzyna',
-        'lastName': 'Medycejska',
-        'gender': 'female',
-        'age': 39,
-        'phone': '+48 73131789',
-        'email': 'mediczi@gmail.com',
-        'address': {
-            'street': 'Paryska 55',
-            'postcode': '15-0443',
-            'city': 'Florencja'
-        },
-        'specialization': 'stomatolog'
-    },
+app.get('/users-add', async (req: express.Request, res: express.Response) => {
+    const result = await mongoUsers.insertElements([
         {
-        'login': 'lolek',
-        'role': 'doctor',
-        'firstName': 'Leonidas',
-        'lastName': 'Włodarczyk',
-        'gender': 'male',
-        'age': 65,
-        'phone': '+18 973346789',
-        'email': 'lolek@gmail.com',
-        'address': {
-            'street': 'Fiołkowa 13',
-            'postcode': '45-033',
-            'city': 'Gdańsk'
+            "login": "admin",
+            "password": "admin",
+            "role": "admin"
         },
-        'specialization': 'chirurg'
-    }
-] , (result) => res.send(result));
-});
-
-
-app.get('/patient-details-add', (req: express.Request, res: express.Response) => {
-    mongoPatientDetails.insertElements([
         {
-        "login": "patient",
-        "firstName": "Leopold",
-        "lastName": "Staff",
-        "gender": "male",
-        "phone": "+48 666253442",
-        "email": "b.f.staff@yahoo.lol",
-        "dateOfBirth": {
-            "year": 1977,
-            "month": "Aug",
-            "day": 24
+            "login": "doctor",
+            "password": "doctor",
+            "role": "doctor"
         },
-        "PESEL": "77082410610"
-    },
-    {
-        "login": "wpiszLogin",
-        "firstName": "Zygfryd",
-        "lastName": "Siwonogi",
-        "gender": "male",
-        "phone": "124324235",
-        "email": "mail@mainNa5minut.pl",
-        "dateOfBirth": {
-            "year": 1902,
-            "month": "Dec",
-            "day": 31
+        {
+            "login": "patient",
+            "password": "patient",
+            "role": "patient"
         },
-        "PESEL": "02123102319"
-    },
-    {
-        "login": "synJacka",
-        "firstName": "Skalbimierz",
-        "lastName": "Uważny",
-        "gender": "male",
-        "phone": "124524887",
-        "email": "skalbimerz.uwazy@gmial.com",
-        "dateOfBirth": {
-            "year": 1982,
-            "month": "Mar",
-            "day": 11
+        {
+            "login": "doktorek",
+            "password": "prawilny",
+            "role": "doctor"
         },
-        "PESEL": "82031118433"
-    },
-    {
-        "login": "Hulk",
-        "firstName": "Bruce",
-        "lastName": "Banner",
-        "gender": "male",
-        "phone": "102988372",
-        "email": "hugeandgreen@stark.industries.com",
-        "dateOfBirth": {
-            "year": 1962,
-            "month": "May",
-            "day": 2
+        {
+            "login": "doktorBezUprawnien",
+            "password": "jakRowerzystaBezUprawnien",
+            "role": "doctor"
         },
-        "PESEL": "62050211094"
-    },
-    {
-        "login": "SpeedyGonzales",
-        "firstName": "Wacław",
-        "lastName": "Pośpieszny",
-        "gender": "male",
-        "phone": "382910928",
-        "email": "hjgfs@interia.eu",
-        "dateOfBirth": {
-            "year": 1983,
-            "month": "Feb",
-            "day": 21
+        {
+            "login": "Brooke",
+            "password": "1234",
+            "role": "doctor"
         },
-        "PESEL": "83022114618"
-    }
-    ], (result) => res.json(result));
+        {
+            "login": "elekarz",
+            "password": "@als",
+            "role": "doctor"
+        },
+        {
+            "login": "monicaC",
+            "password": "anteny",
+            "role": "doctor"
+        },
+        {
+            "login": "eve63",
+            "password": "eve63",
+            "role": "doctor"
+        },
+        {
+            "login": "pawelKrakow",
+            "password": "wawel",
+            "role": "doctor"
+        },
+        {
+            "login": "leo_z_tarnowa",
+            "password": "ananas@66",
+            "role": "doctor"
+        },
+        {
+            "login": "doktorro",
+            "password": "paprykarz_szczecisnski",
+            "role": "doctor"
+        },
+        {
+            "login": "medicziKasia",
+            "password": "traktor77",
+            "role": "doctor"
+        },
+        {
+            "login": "lolek",
+            "password": "bolek",
+            "role": "doctor"
+        },
+        {
+            "login": "patient",
+            "password": "admin",
+            "role": "patient"
+        },
+        {
+            "login": "wpiszLogin",
+            "password": "admin",
+            "role": "patient"
+        },
+        {
+            "login": "synJacka",
+            "password": "admin",
+            "role": "patient"
+        },
+        {
+            "login": "Hulk",
+            "password": "admin",
+            "role": "patient"
+        },
+        {
+            "login": "SpeedyGonzales",
+            "password": "admin",
+            "role": "patient"
+        }
+    ]);
+        (() => res.json(result))();
 });
 
 
+app.get('/doctor-details-add', async (req: express.Request, res: express.Response) => {
+    const result = await mongoDoctorDetails.insertElements([
+        {
+            'login': 'doktorBezUprawnien',
+            'role': 'doctor',
+            'firstName': 'John',
+            'lastName': 'Smith',
+            'gender': 'male',
+            'age': 37,
+            'phone': '+48 123456789',
+            'email': 'doktorBezUprawnien@gmail.com',
+            'address': {
+                'street': 'Łąkowa 34',
+                'postcode': '39-111',
+                'city': 'Miasto W'
+            },
+            'specialization': ['kości']
+        },
+        {
+            'login': 'doctor',
+            'role': 'doctor',
+            'firstName': 'James',
+            'lastName': 'Lovelock',
+            'gender': 'male',
+            'age': 55,
+            'phone': '+48 123465689',
+            'email': 'jLovelock@gmail.com',
+            'address': {
+                'street': 'Love 66',
+                'postcode': '595-223',
+                'city': 'Paris'
+            },
+            'specialization': ['logopeda']
+        },
+        {
+            'login': 'doktorek',
+            'role': 'doctor',
+            'firstName': 'Marcus',
+            'lastName': 'Will',
+            'gender': 'male',
+            'age': 32,
+            'phone': '+48 773456789',
+            'email': 'doktorek@gmail.com',
+            'address': {
+                'street': 'Green 123',
+                'postcode': '25-083',
+                'city': 'Masecziuset'
+            },
+            'specialization': ['od uszów']
+        },
+        {
+            'login': 'Brooke',
+            'role': 'doctor',
+            'firstName': 'Brooke',
+            'lastName': 'Winchester',
+            'gender': 'male',
+            'age': 81,
+            'phone': '+23 322567289',
+            'email': 'BrookeDoctor@gmail.com',
+            'address': {
+                'street': 'Piernikowa 33',
+                'postcode': '22-083',
+                'city': 'Carcas'
+            },
+            'specialization': ['internista']
+        },
+        {
+            'login': 'elekarz',
+            'role': 'doctor',
+            'firstName': 'Tim',
+            'lastName': 'Cole',
+            'gender': 'male',
+            'age': 46,
+            'phone': '+11 773452289',
+            'email': 'tim-cole@gmail.com',
+            'address': {
+                'street': 'Lniana 76',
+                'postcode': '22-445',
+                'city': 'Colorado'
+            },
+            'specialization': ['alergolog']
+        },
+        {
+            'login': 'monicaC',
+            'role': 'doctor',
+            'firstName': 'Monica',
+            'lastName': 'C',
+            'gender': 'female',
+            'age': 27,
+            'phone': '+77 222116789',
+            'email': 'monicaC@gmail.com',
+            'address': {
+                'street': 'Lukrowa 66',
+                'postcode': '211-7783',
+                'city': 'Toruń'
+            },
+            'specialization': ['pediatra']
+        },
+        {
+            'login': 'eve63',
+            'role': 'doctor',
+            'firstName': 'Eva',
+            'lastName': 'Limone',
+            'gender': 'female',
+            'age': 62,
+            'phone': '+48 773456789',
+            'email': 'doktorek@gmail.com',
+            'address': {
+                'street': 'Limonkowa 24',
+                'postcode': '35-083',
+                'city': 'Floryda'
+            },
+            'specialization': ['ginekolog']
+        },
+        {
+            'login': 'pawelKrakow',
+            'role': 'doctor',
+            'firstName': 'Pawel',
+            'lastName': 'Kowalski',
+            'gender': 'male',
+            'age': 37,
+            'phone': '+48 123454755',
+            'email': 'pawelKrakow@gmail.com',
+            'address': {
+                'street': 'Słowackiego 45',
+                'postcode': '30-083',
+                'city': 'Kraków'
+            },
+            'specialization': ['kardiolog']
+        },
+        {
+            'login': 'leo_z_tarnowa',
+            'role': 'doctor',
+            'firstName': 'Leopold',
+            'lastName': 'Brzytwa',
+            'gender': 'male',
+            'age': 31,
+            'phone': '+48 133456789',
+            'email': 'leo@gmail.com',
+            'address': {
+                'street': 'Ładna 11',
+                'postcode': '35-283',
+                'city': 'Tarnów'
+            },
+            'specialization': ['kardiolog']
+        },
+        {
+            'login': 'doktorro',
+            'role': 'doctor',
+            'firstName': 'Pedro',
+            'lastName': 'El Gonzalez',
+            'gender': 'male',
+            'age': 49,
+            'phone': '+18 773234789',
+            'email': 'doktorro@gmail.com',
+            'address': {
+                'street': 'Naczosów 23',
+                'postcode': '25-083',
+                'city': 'Cancun'
+            },
+            'specialization': ['okulista']
+        },
+        {
+            'login': 'medicziKasia',
+            'role': 'doctor',
+            'firstName': 'Katarzyna',
+            'lastName': 'Medycejska',
+            'gender': 'female',
+            'age': 39,
+            'phone': '+48 73131789',
+            'email': 'mediczi@gmail.com',
+            'address': {
+                'street': 'Paryska 55',
+                'postcode': '15-0443',
+                'city': 'Florencja'
+            },
+            'specialization': ['stomatolog']
+        },
+        {
+            'login': 'lolek',
+            'role': 'doctor',
+            'firstName': 'Leonidas',
+            'lastName': 'Włodarczyk',
+            'gender': 'male',
+            'age': 65,
+            'phone': '+18 973346789',
+            'email': 'lolek@gmail.com',
+            'address': {
+                'street': 'Fiołkowa 13',
+                'postcode': '45-033',
+                'city': 'Gdańsk'
+            },
+            'specialization': ['chirurg']
+        }
+    ]);
+        (() => res.json(result))();
+});
 
-app.get('/init-db', (req: express.Request, res: express.Response) => {
-    mongoUsers.drop()
-    .then(() => mongoPatientDetails.drop()
-        .then(() => mongoDoctorDetails.drop()
-            .then(() => mongoUsers.insertElements([
-                {
-                    'login': 'admin',
-                    'password': 'admin',
-                    'role': 'admin'
+
+app.get('/patient-details-add', async (req: express.Request, res: express.Response) => {
+    await mongoPatientDetails.insertElements([
+        {
+            "login": "patient",
+            "firstName": "Leopold",
+            "lastName": "Staff",
+            "gender": "male",
+            "phone": "+48 666253442",
+            "email": "b.f.staff@yahoo.lol",
+            "dateOfBirth": {
+                "year": 1977,
+                "month": "Aug",
+                "day": 24
+            },
+            "PESEL": "77082410610"
+        },
+        {
+            "login": "wpiszLogin",
+            "firstName": "Zygfryd",
+            "lastName": "Siwonogi",
+            "gender": "male",
+            "phone": "124324235",
+            "email": "mail@mainNa5minut.pl",
+            "dateOfBirth": {
+                "year": 1902,
+                "month": "Dec",
+                "day": 31
+            },
+            "PESEL": "02123102319"
+        },
+        {
+            "login": "synJacka",
+            "firstName": "Skalbimierz",
+            "lastName": "Uważny",
+            "gender": "male",
+            "phone": "124524887",
+            "email": "skalbimerz.uwazy@gmial.com",
+            "dateOfBirth": {
+                "year": 1982,
+                "month": "Mar",
+                "day": 11
+            },
+            "PESEL": "82031118433"
+        },
+        {
+            "login": "Hulk",
+            "firstName": "Bruce",
+            "lastName": "Banner",
+            "gender": "male",
+            "phone": "102988372",
+            "email": "hugeandgreen@stark.industries.com",
+            "dateOfBirth": {
+                "year": 1962,
+                "month": "May",
+                "day": 2
+            },
+            "PESEL": "62050211094"
+        },
+        {
+            "login": "SpeedyGonzales",
+            "firstName": "Wacław",
+            "lastName": "Pośpieszny",
+            "gender": "male",
+            "phone": "382910928",
+            "email": "hjgfs@interia.eu",
+            "dateOfBirth": {
+                "year": 1983,
+                "month": "Feb",
+                "day": 21
+            },
+            "PESEL": "83022114618"
+        }
+    ])
+
+});
+
+
+app.get('/init-db', async (req: express.Request, res: express.Response) => {
+    await Promise.all([mongoUsers.drop(), mongoPatientDetails.drop(), mongoDoctorDetails.drop()])
+    const result = await Promise.all([
+        mongoUsers.insertElements([
+            {
+                'login': 'admin',
+                'password': 'admin',
+                'role': 'admin'
+            },
+            {
+                'login': 'doctor',
+                'password': 'doctor',
+                'role': 'doctor'
+            },
+            {
+                'login': 'doktorek',
+                'password': 'prawilny',
+                'role': 'doctor'
+            },
+            {
+                'login': 'doktorBezUprawnien',
+                'password': 'jakRowerzystaBezUprawnien',
+                'role': 'doctor'
+            },
+            {
+                'login': 'Brooke',
+                'password': '1234',
+                'role': 'doctor'
+            },
+            {
+                'login': 'elekarz',
+                'password': '@als',
+                'role': 'doctor'
+            },
+            {
+                'login': 'monicaC',
+                'password': 'anteny',
+                'role': 'doctor'
+            },
+            {
+                'login': 'eve63',
+                'password': 'eve63',
+                'role': 'doctor'
+            },
+            {
+                'login': 'pawelKrakow',
+                'password': 'wawel',
+                'role': 'doctor'
+            },
+            {
+                'login': 'leo_z_tarnowa',
+                'password': 'ananas@66',
+                'role': 'doctor'
+            },
+            {
+                'login': 'doktorro',
+                'password': 'paprykarz_szczecisnski',
+                'role': 'doctor'
+            },
+            {
+                'login': 'medicziKasia',
+                'password': 'traktor77',
+                'role': 'doctor'
+            },
+            {
+                'login': 'lolek',
+                'password': 'bolek',
+                'role': 'doctor'
+            },
+            {
+                'login': 'patient',
+                'password': 'admin',
+                'role': 'patient'
+            },
+            {
+                'login': 'wpiszLogin',
+                'password': 'admin',
+                'role': 'patient'
+            },
+            {
+                'login': 'synJacka',
+                'password': 'admin',
+                'role': 'patient'
+            },
+            {
+                'login': 'Hulk',
+                'password': 'admin',
+                'role': 'patient'
+            },
+            {
+                'login': 'SpeedyGonzales',
+                'password': 'admin',
+                'role': 'patient'
+            }
+        ]),
+        mongoPatientDetails.insertElements([
+            {
+                "login": "patient",
+                "firstName": "Leopold",
+                "lastName": "Staff",
+                "gender": "male",
+                "phone": "+48 666253442",
+                "email": "b.f.staff@yahoo.lol",
+                "dateOfBirth": {
+                    "year": 1977,
+                    "month": "Aug",
+                    "day": 24
                 },
-                {
-                    'login': 'doctor',
-                    'password': 'doctor',
-                    'role': 'doctor'
+                "PESEL": "77082410610"
+            },
+            {
+                "login": "wpiszLogin",
+                "firstName": "Zygfryd",
+                "lastName": "Siwonogi",
+                "gender": "male",
+                "phone": "124324235",
+                "email": "mail@mainNa5minut.pl",
+                "dateOfBirth": {
+                    "year": 1902,
+                    "month": 'Dec',
+                    "day": 31
                 },
-                {
-                    'login': 'doktorek',
-                    'password': 'prawilny',
-                    'role': 'doctor'
+                "PESEL": "02123102319"
+            },
+            {
+                "login": "synJacka",
+                "firstName": "Skalbimierz",
+                "lastName": "Uważny",
+                "gender": "male",
+                "phone": "124524887",
+                "email": "skalbimerz.uwazy@gmial.com",
+                "dateOfBirth": {
+                    "year": 1982,
+                    "month": "Mar",
+                    "day": 11
                 },
-                {
-                    'login': 'doktorBezUprawnien',
-                    'password': 'jakRowerzystaBezUprawnien',
-                    'role': 'doctor'
+                "PESEL": "82031118433"
+            },
+            {
+                "login": "Hulk",
+                "firstName": "Bruce",
+                "lastName": "Banner",
+                "gender": "male",
+                "phone": "102988372",
+                "email": "hugeandgreen@stark.industries.com",
+                "dateOfBirth": {
+                    "year": 1962,
+                    "month": "May",
+                    "day": 2
                 },
-                {
-                    'login': 'Brooke',
-                    'password': '1234',
-                    'role': 'doctor'
+                "PESEL": "62050211094"
+            },
+            {
+                "login": "SpeedyGonzales",
+                "firstName": "Wacław",
+                "lastName": "Pośpieszny",
+                "gender": "male",
+                "phone": "382910928",
+                "email": "hjgfs@interia.eu",
+                "dateOfBirth": {
+                    "year": 1983,
+                    "month": "Feb",
+                    "day": 21
                 },
-                {
-                    'login': 'elekarz',
-                    'password': '@als',
-                    'role': 'doctor'
+                "PESEL": "83022114618"
+            }
+        ]),
+        mongoDoctorDetails.insertElements([
+            {
+                'login': 'doktorBezUprawnien',
+                'role': 'doctor',
+                'firstName': 'John',
+                'lastName': 'Smith',
+                'gender': 'male',
+                'age': 37,
+                'phone': '+48 123456789',
+                'email': 'doktorBezUprawnien@gmail.com',
+                'address': {
+                    'street': 'Łąkowa 34',
+                    'postcode': '39-111',
+                    'city': 'Miasto W'
                 },
-                {
-                    'login': 'monicaC',
-                    'password': 'anteny',
-                    'role': 'doctor'
+                'specialization': ['kości']
+            },
+            {
+                'login': 'doctor',
+                'role': 'doctor',
+                'firstName': 'James',
+                'lastName': 'Lovelock',
+                'gender': 'male',
+                'age': 55,
+                'phone': '+48 123465689',
+                'email': 'jLovelock@gmail.com',
+                'address': {
+                    'street': 'Love 66',
+                    'postcode': '595-223',
+                    'city': 'Paris'
                 },
-                {
-                    'login': 'eve63',
-                    'password': 'eve63',
-                    'role': 'doctor'
+                'specialization': ['logopeda']
+            },
+            {
+                'login': 'doktorek',
+                'role': 'doctor',
+                'firstName': 'Marcus',
+                'lastName': 'Will',
+                'gender': 'male',
+                'age': 32,
+                'phone': '+48 773456789',
+                'email': 'doktorek@gmail.com',
+                'address': {
+                    'street': 'Green 123',
+                    'postcode': '25-083',
+                    'city': 'Masecziuset'
                 },
-                {
-                    'login': 'pawelKrakow',
-                    'password': 'wawel',
-                    'role': 'doctor'
+                'specialization': ['od uszów']
+            },
+            {
+                'login': 'Brooke',
+                'role': 'doctor',
+                'firstName': 'Brooke',
+                'lastName': 'Winchester',
+                'gender': 'male',
+                'age': 81,
+                'phone': '+23 322567289',
+                'email': 'BrookeDoctor@gmail.com',
+                'address': {
+                    'street': 'Piernikowa 33',
+                    'postcode': '22-083',
+                    'city': 'Carcas'
                 },
-                {
-                    'login': 'leo_z_tarnowa',
-                    'password': 'ananas@66',
-                    'role': 'doctor'
+                'specialization': ['internista']
+            },
+            {
+                'login': 'elekarz',
+                'role': 'doctor',
+                'firstName': 'Tim',
+                'lastName': 'Cole',
+                'gender': 'male',
+                'age': 46,
+                'phone': '+11 773452289',
+                'email': 'tim-cole@gmail.com',
+                'address': {
+                    'street': 'Lniana 76',
+                    'postcode': '22-445',
+                    'city': 'Colorado'
                 },
-                {
-                    'login': 'doktorro',
-                    'password': 'paprykarz_szczecisnski',
-                    'role': 'doctor'
+                'specialization': ['alergolog']
+            },
+            {
+                'login': 'monicaC',
+                'role': 'doctor',
+                'firstName': 'Monica',
+                'lastName': 'C',
+                'gender': 'female',
+                'age': 27,
+                'phone': '+77 222116789',
+                'email': 'monicaC@gmail.com',
+                'address': {
+                    'street': 'Lukrowa 66',
+                    'postcode': '211-7783',
+                    'city': 'Toruń'
                 },
-                {
-                    'login': 'medicziKasia',
-                    'password': 'traktor77',
-                    'role': 'doctor'
+                'specialization': ['pediatra']
+            },
+            {
+                'login': 'eve63',
+                'role': 'doctor',
+                'firstName': 'Eva',
+                'lastName': 'Limone',
+                'gender': 'female',
+                'age': 62,
+                'phone': '+48 773456789',
+                'email': 'doktorek@gmail.com',
+                'address': {
+                    'street': 'Limonkowa 24',
+                    'postcode': '35-083',
+                    'city': 'Floryda'
                 },
-                {
-                    'login': 'lolek',
-                    'password': 'bolek',
-                    'role': 'doctor'
+                'specialization': ['ginekolog']
+            },
+            {
+                'login': 'pawelKrakow',
+                'role': 'doctor',
+                'firstName': 'Pawel',
+                'lastName': 'Kowalski',
+                'gender': 'male',
+                'age': 37,
+                'phone': '+48 123454755',
+                'email': 'pawelKrakow@gmail.com',
+                'address': {
+                    'street': 'Słowackiego 45',
+                    'postcode': '30-083',
+                    'city': 'Kraków'
                 },
-                {
-                    'login': 'patient',
-                    'password': 'admin',
-                    'role': 'patient'
+                'specialization': ['kardiolog']
+            },
+            {
+                'login': 'leo_z_tarnowa',
+                'role': 'doctor',
+                'firstName': 'Leopold',
+                'lastName': 'Brzytwa',
+                'gender': 'male',
+                'age': 31,
+                'phone': '+48 133456789',
+                'email': 'leo@gmail.com',
+                'address': {
+                    'street': 'Ładna 11',
+                    'postcode': '35-283',
+                    'city': 'Tarnów'
                 },
-                {
-                    'login': 'wpiszLogin',
-                    'password': 'admin',
-                    'role': 'patient'
+                'specialization': ['kardiolog']
+            },
+            {
+                'login': 'doktorro',
+                'role': 'doctor',
+                'firstName': 'Pedro',
+                'lastName': 'El Gonzalez',
+                'gender': 'male',
+                'age': 49,
+                'phone': '+18 773234789',
+                'email': 'doktorro@gmail.com',
+                'address': {
+                    'street': 'Naczosów 23',
+                    'postcode': '25-083',
+                    'city': 'Cancun'
                 },
-                {
-                    'login': 'synJacka',
-                    'password': 'admin',
-                    'role': 'patient'
+                'specialization': ['okulista']
+            },
+            {
+                'login': 'medicziKasia',
+                'role': 'doctor',
+                'firstName': 'Katarzyna',
+                'lastName': 'Medycejska',
+                'gender': 'female',
+                'age': 39,
+                'phone': '+48 73131789',
+                'email': 'mediczi@gmail.com',
+                'address': {
+                    'street': 'Paryska 55',
+                    'postcode': '15-0443',
+                    'city': 'Florencja'
                 },
-                {
-                    'login': 'Hulk',
-                    'password': 'admin',
-                    'role': 'patient'
+                'specialization': ['stomatolog']
+            },
+            {
+                'login': 'lolek',
+                'role': 'doctor',
+                'firstName': 'Leonidas',
+                'lastName': 'Włodarczyk',
+                'gender': 'male',
+                'age': 65,
+                'phone': '+18 973346789',
+                'email': 'lolek@gmail.com',
+                'address': {
+                    'street': 'Fiołkowa 13',
+                    'postcode': '45-033',
+                    'city': 'Gdańsk'
                 },
-                {
-                    'login': 'SpeedyGonzales',
-                    'password': 'admin',
-                    'role': 'patient'
-                }
-            ], (result) => null)
-                .then(() => mongoPatientDetails.insertElements([
-                    {
-                        "login": "patient",
-                        "firstName": "Leopold",
-                        "lastName": "Staff",
-                        "gender": "male",
-                        "phone": "+48 666253442",
-                        "email": "b.f.staff@yahoo.lol",
-                        "dateOfBirth": {
-                            "year": 1977,
-                            "month": "Aug",
-                            "day": 24
-                        },
-                        "PESEL": "77082410610"
-                    },
-                    {
-                        "login": "wpiszLogin",
-                        "firstName": "Zygfryd",
-                        "lastName": "Siwonogi",
-                        "gender": "male",
-                        "phone": "124324235",
-                        "email": "mail@mainNa5minut.pl",
-                        "dateOfBirth": {
-                            "year": 1902,
-                            "month": 'Dec',
-                            "day": 31
-                        },
-                        "PESEL": "02123102319"
-                    },
-                    {
-                        "login": "synJacka",
-                        "firstName": "Skalbimierz",
-                        "lastName": "Uważny",
-                        "gender": "male",
-                        "phone": "124524887",
-                        "email": "skalbimerz.uwazy@gmial.com",
-                        "dateOfBirth": {
-                            "year": 1982,
-                            "month": "Mar",
-                            "day": 11
-                        },
-                        "PESEL": "82031118433"
-                    },
-                    {
-                        "login": "Hulk",
-                        "firstName": "Bruce",
-                        "lastName": "Banner",
-                        "gender": "male",
-                        "phone": "102988372",
-                        "email": "hugeandgreen@stark.industries.com",
-                        "dateOfBirth": {
-                            "year": 1962,
-                            "month": "May",
-                            "day": 2
-                        },
-                        "PESEL": "62050211094"
-                    },
-                    {
-                        "login": "SpeedyGonzales",
-                        "firstName": "Wacław",
-                        "lastName": "Pośpieszny",
-                        "gender": "male",
-                        "phone": "382910928",
-                        "email": "hjgfs@interia.eu",
-                        "dateOfBirth": {
-                            "year": 1983,
-                            "month": "Feb",
-                            "day": 21
-                        },
-                        "PESEL": "83022114618"
-                    }
-                ], (result) => null)
-                    .then(() => mongoDoctorDetails.insertElements([
-                        {
-                            'login': 'doktorBezUprawnien',
-                            'role': 'doctor',
-                            'firstName': 'John',
-                            'lastName': 'Smith',
-                            'gender': 'male',
-                            'age': 37,
-                            'phone': '+48 123456789',
-                            'email': 'doktorBezUprawnien@gmail.com',
-                            'address': {
-                                'street': 'Łąkowa 34',
-                                'postcode': '39-111',
-                                'city': 'Miasto W'
-                            },
-                            'specialization': 'kości'
-                        },
-                        {
-                            'login': 'doctor',
-                            'role': 'doctor',
-                            'firstName': 'James',
-                            'lastName': 'Lovelock',
-                            'gender': 'male',
-                            'age': 55,
-                            'phone': '+48 123465689',
-                            'email': 'jLovelock@gmail.com',
-                            'address': {
-                                'street': 'Love 66',
-                                'postcode': '595-223',
-                                'city': 'Paris'
-                            },
-                            'specialization': 'logopeda'
-                        },
-                        {
-                            'login': 'doktorek',
-                            'role': 'doctor',
-                            'firstName': 'Marcus',
-                            'lastName': 'Will',
-                            'gender': 'male',
-                            'age': 32,
-                            'phone': '+48 773456789',
-                            'email': 'doktorek@gmail.com',
-                            'address': {
-                                'street': 'Green 123',
-                                'postcode': '25-083',
-                                'city': 'Masecziuset'
-                            },
-                            'specialization': 'od uszów'
-                        },
-                        {
-                            'login': 'Brooke',
-                            'role': 'doctor',
-                            'firstName': 'Brooke',
-                            'lastName': 'Winchester',
-                            'gender': 'male',
-                            'age': 81,
-                            'phone': '+23 322567289',
-                            'email': 'BrookeDoctor@gmail.com',
-                            'address': {
-                                'street': 'Piernikowa 33',
-                                'postcode': '22-083',
-                                'city': 'Carcas'
-                            },
-                            'specialization': 'internista'
-                        },
-                        {
-                            'login': 'elekarz',
-                            'role': 'doctor',
-                            'firstName': 'Tim',
-                            'lastName': 'Cole',
-                            'gender': 'male',
-                            'age': 46,
-                            'phone': '+11 773452289',
-                            'email': 'tim-cole@gmail.com',
-                            'address': {
-                                'street': 'Lniana 76',
-                                'postcode': '22-445',
-                                'city': 'Colorado'
-                            }, 
-                            'specialization': 'alergolog'
-                        },
-                        {
-                            'login': 'monicaC',
-                            'role': 'doctor',
-                            'firstName': 'Monica',
-                            'lastName': 'C',
-                            'gender': 'female',
-                            'age': 27,
-                            'phone': '+77 222116789',
-                            'email': 'monicaC@gmail.com',
-                            'address': {
-                                'street': 'Lukrowa 66',
-                                'postcode': '211-7783',
-                                'city': 'Toruń'
-                            },
-                            'specialization': 'pediatra'
-                        },
-                        {
-                            'login': 'eve63',
-                            'role': 'doctor',
-                            'firstName': 'Eva',
-                            'lastName': 'Limone',
-                            'gender': 'female',
-                            'age': 62,
-                            'phone': '+48 773456789',
-                            'email': 'doktorek@gmail.com',
-                            'address': {
-                                'street': 'Limonkowa 24',
-                                'postcode': '35-083',
-                                'city': 'Floryda'
-                            },
-                            'specialization': 'ginekolog'
-                        },
-                        {
-                            'login': 'pawelKrakow',
-                            'role': 'doctor',
-                            'firstName': 'Pawel',
-                            'lastName': 'Kowalski',
-                            'gender': 'male',
-                            'age': 37,
-                            'phone': '+48 123454755',
-                            'email': 'pawelKrakow@gmail.com',
-                            'address': {
-                                'street': 'Słowackiego 45',
-                                'postcode': '30-083',
-                                'city': 'Kraków'
-                            },
-                            'specialization': 'kardiolog'
-                        },
-                        {
-                            'login': 'leo_z_tarnowa',
-                            'role': 'doctor',
-                            'firstName': 'Leopold',
-                            'lastName': 'Brzytwa',
-                            'gender': 'male',
-                            'age': 31,
-                            'phone': '+48 133456789',
-                            'email': 'leo@gmail.com',
-                            'address': {
-                                'street': 'Ładna 11',
-                                'postcode': '35-283',
-                                'city': 'Tarnów'
-                            },
-                            'specialization': 'kardiolog'
-                        },
-                        {
-                            'login': 'doktorro',
-                            'role': 'doctor',
-                            'firstName': 'Pedro',
-                            'lastName': 'El Gonzalez',
-                            'gender': 'male',
-                            'age': 49,
-                            'phone': '+18 773234789',
-                            'email': 'doktorro@gmail.com',
-                            'address': {
-                                'street': 'Naczosów 23',
-                                'postcode': '25-083',
-                                'city': 'Cancun'
-                            },
-                            'specialization': 'okulista'
-                        },
-                        {
-                            'login': 'medicziKasia',
-                            'role': 'doctor',
-                            'firstName': 'Katarzyna',
-                            'lastName': 'Medycejska',
-                            'gender': 'female',
-                            'age': 39,
-                            'phone': '+48 73131789',
-                            'email': 'mediczi@gmail.com',
-                            'address': {
-                                'street': 'Paryska 55',
-                                'postcode': '15-0443',
-                                'city': 'Florencja'
-                            },
-                            'specialization': 'stomatolog'
-                        },
-                            {
-                            'login': 'lolek',
-                            'role': 'doctor',
-                            'firstName': 'Leonidas',
-                            'lastName': 'Włodarczyk',
-                            'gender': 'male',
-                            'age': 65,
-                            'phone': '+18 973346789',
-                            'email': 'lolek@gmail.com',
-                            'address': {
-                                'street': 'Fiołkowa 13',
-                                'postcode': '45-033',
-                                'city': 'Gdańsk'
-                            },
-                            'specialization': 'chirurg'
-                        }
-                    ], (result) => res.json(result)))))));
+                'specialization': ['chirurg']
+            }
+        ])
+        ]);
+
+        (() => res.json(result))();
 })

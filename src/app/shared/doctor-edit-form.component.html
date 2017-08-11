@@ -1,13 +1,12 @@
 <div class='content'>
     <div class='names'>{{doctor.firstName}} {{doctor.lastName}}</div>
-    <div class='specialization'>{{doctor.specialization}}</div><br>
+    <div class='specialization'>{{doctor.specialization[0]}}</div><br>
 
     <div class='table-of-details' style='margin-bottom:20px'>
         <div>login: </div>
 
         <div style='color:#4d1919'> {{doctor.login}} </div>
     </div>
-
 
     <form [formGroup]="doctorEditForm" (ngSubmit)="onSubmit()">
         <div class='table-of-details'>
@@ -49,8 +48,15 @@
             <div><label for="city">city: </label></div>
             <div> <input class='input-style' type='text' [(ngModel)]="doctor.address.city" formControlName='city'></div>
 
+<!--TUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU -->
             <div><label for="specialization">specialization: </label></div>
-            <div> <input class='input-style' type='text' [(ngModel)]="doctor.specialization" formControlName='specialization'></div>
+            <div> 
+                <div class='single-specialization' *ngFor='let i=index; let spec of doctor.specialization'>
+                    <input class='input-style' type='text' [(ngModel)]="doctor.specialization[i]" formControlName='specialization'>
+                </div>
+            </div>
+<!--TUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU -->
+
 
         </div>
 

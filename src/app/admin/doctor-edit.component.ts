@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectorRef, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { AppService } from 'app/app.service';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -32,7 +32,7 @@ export class DoctorEditComponent implements OnInit {
 
   constructor(private router: Router,
     private appService: AppService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute)  {
   }
 
   ngOnInit(): void {
@@ -40,7 +40,7 @@ export class DoctorEditComponent implements OnInit {
   }
 
   getDoctor() {
-      this.appService.postQuery({ role: 'doctor', login: this.login })
+      this.appService.postQuery({ login: this.login })
         .subscribe((doctor) => this.doctor = doctor);
   }
 

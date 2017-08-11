@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { AppService } from 'app/app.service';
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DoctorEditComponent } from "app/admin/doctor-edit.component";
 
 @Component({
   selector: 'app-doctor-edit-form',
@@ -10,7 +11,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./forms-style.css',  '../admin/admin-style.css', './layout.css'],
 })
 
-export class DoctorEditFormComponent implements OnInit {
+export class DoctorEditFormComponent implements OnInit /*AfterViewInit*/ {
   @Input() doctor: any;
   @Input() admin;
   login: string;
@@ -23,6 +24,8 @@ export class DoctorEditFormComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder) {
   }
+
+
 
   ngOnInit(): void {
     this.doctorEditForm = this.fb.group({
@@ -37,8 +40,10 @@ export class DoctorEditFormComponent implements OnInit {
       city: [],
       specialization: [],
     });
+    console.log(this.doctor.specialization[0]);
   }
 
+ 
 
   onSubmit() {
     this.appService.updateQuery(this.doctor

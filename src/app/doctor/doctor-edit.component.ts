@@ -42,7 +42,7 @@ export class DoctorEditComponent implements OnInit {
   }
 
   getDoctor() {
-      this.appService.postQuery({ role: 'doctor', login: this.login })
+      this.appService.postQuery({ login: this.login })
         .subscribe((doctor) => this.doctor = doctor);
   }
 

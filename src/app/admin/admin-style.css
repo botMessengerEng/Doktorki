@@ -149,3 +149,29 @@ p{
     font-family: 'Quicksand', sans-serif;
     outline:0;
 }
+
+.button-label
+{
+    grid-template-columns: 25% 50% 25%;
+    display: grid;
+    grid-gap: 0px;
+    justify-content: left; 
+    font-family: 'Quicksand', sans-serif;
+    text-decoration: none;
+    text-align: center;
+    font-size: 16px;
+}
+
+.button-label div{
+    align-self: center;
+}
+
+.button-label div .single-specialization{
+    display: inline-block;
+    color:white;
+    text-align: center;
+    padding-left:5px;
+}
+
+td{
+}

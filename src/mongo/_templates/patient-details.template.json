@@ -8,7 +8,7 @@
         "email": "b.f.staff@yahoo.lol",
         "dateOfBirth": {
             "year": 1977,
-            "month": "Aug",
+            "month": "August",
             "day": 24
         },
         "PESEL": "77082410610"
@@ -22,7 +22,7 @@
         "email": "mail@mainNa5minut.pl",
         "dateOfBirth": {
             "year": 1902,
-            "month": "Dec",
+            "month": "December",
             "day": 31
         },
         "PESEL": "02123102319"
@@ -36,7 +36,7 @@
         "email": "skalbimerz.uwazy@gmial.com",
         "dateOfBirth": {
             "year": 1982,
-            "month": "Mar",
+            "month": "March",
             "day": 11
         },
         "PESEL": "82031118433"
@@ -64,7 +64,7 @@
         "email": "hjgfs@interia.eu",
         "dateOfBirth": {
             "year": 1983,
-            "month": "Feb",
+            "month": "February",
             "day": 21
         },
         "PESEL": "83022114618"

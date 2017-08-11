@@ -1,7 +1,6 @@
 [
     {
         "login": "doktorBezUprawnien",
-        "role": "doctor",
         "firstName": "John",
         "lastName": "Smith",
         "gender": "male",
@@ -17,7 +16,6 @@
     },
     {
         "login": "doctor",
-        "role": "doctor",
         "firstName": "James",
         "lastName": "Lovelock",
         "gender": "male",
@@ -33,7 +31,6 @@
     },
     {
         "login": "doktorek",
-        "role": "doctor",
         "firstName": "Marcus",
         "lastName": "Will",
         "gender": "male",
@@ -49,7 +46,6 @@
     },
     {
         "login": "Brooke",
-        "role": "doctor",
         "firstName": "Brooke",
         "lastName": "Winchester",
         "gender": "male",
@@ -65,7 +61,6 @@
     },
     {
         "login": "elekarz",
-        "role": "doctor",
         "firstName": "Tim",
         "lastName": "Cole",
         "gender": "male",
@@ -81,7 +76,6 @@
     },
     {
         "login": "monicaC",
-        "role": "doctor",
         "firstName": "Monica",
         "lastName": "C",
         "gender": "female",
@@ -97,7 +91,6 @@
     },
     {
         "login": "eve63",
-        "role": "doctor",
         "firstName": "Eva",
         "lastName": "Limone",
         "gender": "demale",
@@ -113,7 +106,6 @@
     },
     {
         "login": "pawelKrakow",
-        "role": "doctor",
         "firstName": "Pawel",
         "lastName": "Kowalski",
         "gender": "male",
@@ -129,7 +121,6 @@
     },
     {
         "login": "leo_z_tarnowa",
-        "role": "doctor",
         "firstName": "Leopold",
         "lastName": "Brzytwa",
         "gender": "male",
@@ -145,7 +136,6 @@
     },
     {
         "login": "doktorro",
-        "role": "doctor",
         "firstName": "Pedro",
         "lastName": "El Gonzalez",
         "gender": "male",
@@ -161,7 +151,6 @@
     },
     {
         "login": "medicziKasia",
-        "role": "doctor",
         "firstName": "Katarzyna",
         "lastName": "Medycejska",
         "gender": "female",
@@ -177,7 +166,6 @@
     },
         {
         "login": "lolek",
-        "role": "doctor",
         "firstName": "Leonidas",
         "lastName": "Włodarczyk",        
         "gender": "male",
