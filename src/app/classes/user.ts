@@ -14,7 +14,6 @@ export enum Role {
 export class Doctor {
     login: string;
     password: string;
-    role = 'doctor';
     firstName: string;
     lastName: string;
     gender: string;
@@ -27,7 +26,7 @@ export class Doctor {
         city: ''
     }
 
-    specialization: string;
+    specialization: string [];
 
     constructor(login,password,firstName,lastName,gender,age,phone,email,street,postcode,city,specialization) {
         this.login = login;
@@ -50,7 +49,6 @@ export class Doctor {
 export class Patient {
     login: string;
     password: string;
-    role = 'patient';
     firstName: string;
     lastName: string;
     gender: string;
