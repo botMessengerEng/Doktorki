@@ -13,16 +13,17 @@
 
             <div><label for="firstName">first name: </label></div>
             <div><input class='input-style' type='text' [(ngModel)]="doctor.firstName" formControlName="firstName">
-                <div class='info' *ngIf='doctorEditForm.get("firstName").errors && (doctorEditForm.get("firstName").touched || doctorEditForm.get("firstName").dirty)'>
-                    <div class='to-fill' [hidden]="!doctorEditForm.get('firstName').errors.required">First name is required </div>
+                <div class='info' *ngIf='controlMessage[0]'>
+                   <div class='to-fill'> {{controlMessage[0]}}</div>
                 </div>
             </div>
 
             <div><label for="lastName">last name: </label></div>
             <div><input class='input-style' type='text' [(ngModel)]="doctor.lastName" formControlName="lastName">
-                <div class='info' *ngIf='doctorEditForm.get("lastName").errors && (doctorEditForm.get("lastName").touched || doctorEditForm.get("lastName").dirty)'>
-                    <div class='to-fill' [hidden]="!doctorEditForm.get('lastName').errors.required">Last name is required </div>
+                         <div class='info' *ngIf='controlMessage[1]'>
+                   <div class='to-fill'> {{controlMessage[1]}}</div>
                 </div>
+
             </div>
 
             <div><label for="gender">gender: </label></div>
@@ -48,14 +49,16 @@
             <div><label for="city">city: </label></div>
             <div> <input class='input-style' type='text' [(ngModel)]="doctor.address.city" formControlName='city'></div>
 
-<!--TUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU -->
+        <!--<div formArrayName="spec" *ngFor="let spec of doctor.specialization; let i=index">
+        <div [formGroupName]="i">-->
             <div><label for="specialization">specialization: </label></div>
             <div> 
-                <div class='single-specialization' *ngFor='let i=index; let spec of doctor.specialization'>
-                    <input class='input-style' type='text' [(ngModel)]="doctor.specialization[i]" formControlName='specialization'>
+                <div class='single-specialization'>
+                    <input class='input-style' type='text' [(ngModel)]="doctor.specialization[i]">
                 </div>
             </div>
-<!--TUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU -->
+            <!--</div>
+        </div>-->
 
 
         </div>

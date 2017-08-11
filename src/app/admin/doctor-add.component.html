@@ -74,23 +74,39 @@
                 <div><label for="postcode">postcode: </label></div>
                 <div> <input class='input-style' type='text' [(ngModel)]="doctor.address.postcode" formControlName="postcode" placeholder="postcode"></div>
 
-                <div><label for="city">city: </label></div>
-                <div> <input class='input-style' type='text' [(ngModel)]="doctor.address.city" formControlName="city" placeholder="city"></div>
-
-                <div><label for="specialization">specialization: </label></div>
-                <div> <input class='input-style' type='text' [(ngModel)]="doctor.specialization" formControlName="specialization"
-                        placeholder="specialization"></div>
-                <div> </div>
-
-
-                <div style="text-align: right">
-                    <button type="submit" class='option-button' [disabled]="!doctorAddForm.valid">Submit</button>
-                </div>
-
+                <div style='margin-bottom:20px'><label for="city">city: </label></div>
+                <div style='margin-bottom:20px'> <input class='input-style' type='text' [(ngModel)]="doctor.address.city" formControlName="city" placeholder="city"></div>
             </div>
+
+            <div formArrayName="addresses" *ngFor="let address of addresses.controls; let i=index">
+                <div [formGroupName]="i">
+                    <div class='table-of-details'>
+
+                        <div style='margin-bottom:5px'><label for="specialization" > {{i==0 ? 'specialization' : ' '}}  </label></div>
+                        <div style='margin-bottom:5px'> <input class='input-style' type='text' placeholder="specialization">
+                        
+                        <div *ngIf='!i'>
+                        <button type="button" (click)='addAddress()'> + </button>
+                        </div>
+                          <div *ngIf='i'>
+                        <button type="button" (click)='addAddress()'> - </button>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div> </div>
+
+            <div style="text-align: right">
+                <button type="submit" class='option-button' [disabled]="!doctorAddForm.valid">Submit</button>
+            </div>
+
         </form>
+
+
     </div>
 </div>
 
 
-<!--pattern="^((\b[a-zA-Z]{2,40}\b)\s*){2,5}$"-->
+

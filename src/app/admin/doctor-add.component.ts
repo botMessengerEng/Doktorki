@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AppService } from 'app/app.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Doctor } from '../classes/user';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
 @Component({
     templateUrl: './doctor-add.component.html',
@@ -15,6 +15,9 @@ export class DoctorAddComponent implements OnInit {
     genders = ['male', 'female'];
     doctorAddForm: FormGroup;
 
+    get addresses(): FormArray{
+        return <FormArray>this.doctorAddForm.get('addresses');
+    }
     constructor(
         private appService: AppService,
         private route: ActivatedRoute,
@@ -37,12 +40,26 @@ export class DoctorAddComponent implements OnInit {
             street: [],
             postcode: [],
             city: [],
-            specialization: [],
+            specialization: [],  
+            addresses: this.fb.array([ this.buildAddress() ])
         });
 
     }
 
+  addAddress(): void {
+        this.addresses.push(this.buildAddress());
+    }
 
+    buildAddress(): FormGroup {
+        return this.fb.group({
+                addressType: 'home',
+                street1: '',
+                street2: '',
+                city: '',
+                state: '',
+                zip: ''
+        });
+    }
     onSubmit() {
         this.appService.addNewDoctor(this.doctor)
             .subscribe(result => {

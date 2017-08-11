@@ -37,6 +37,7 @@
 
             <div><label for="gender">gender: </label></div>
             <div><select [(ngModel)]="patient.gender" formControlName="gender" placeholder="gender">
+                 <option value="" disabled selected hidden>select gender</option>
                   <option *ngFor="let gen of genders" [value]="gen">{{gen}}</option>
                   </select>
                 <div class='info' *ngIf='patientForm.get("gender").errors && (patientForm.get("gender").touched || patientForm.get("gender").dirty)'>
@@ -64,7 +65,7 @@
                 <div class='info' *ngIf='patientForm.get("email").errors && (patientForm.get("email").touched || patientForm.get("email").dirty)'>
                     <div class='to-fill' [hidden]="!patientForm.get('email').errors.pattern">Email is not valid</div>
                     <div class='to-fill' [hidden]="!patientForm.get('email').errors.required">Email is required </div>
-                </div>
+      </div>
             </div>
         </div>
 
@@ -73,16 +74,19 @@
             <div class='table-of-details'>
                 <div><label for="year">year: </label></div>
                 <div><select [(ngModel)]="patient.dateOfBirth.year" formControlName="year" placeholder="year">
+                <option value="" disabled selected hidden>select year of birth</option>
                   <option *ngFor="let year of yearsArray" [value]="year">{{year}}</option>
                   </select></div>
                 <div><label for="month">month: </label></div>
                 <div><select [(ngModel)]="patient.dateOfBirth.month" formControlName="month" placeholder="month">
+                <option value="" disabled selected hidden>select month of birth</option>
                   <option *ngFor="let month of monthsArray" [value]="month">{{month}}</option>
                   </select></div>
 
 
                 <div style='margin-bottom:20px'><label for="day">day: </label></div>
                 <div><select [(ngModel)]="patient.dateOfBirth.day" formControlName="day" placeholder="day" style='margin-bottom:20px'>
+                 <option value="" disabled selected hidden>select day of birth</option>
                 <option *ngFor="let day of daysArray" [value]="day">{{day}}</option>
                   </select>
                     <div class='info' *ngIf='patientForm.get("dayMonthGroup").errors && (patientForm.get("dayMonthGroup").touched || patientForm.get("dayMonthGroup").dirty)'>

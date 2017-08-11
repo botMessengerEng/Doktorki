@@ -32,8 +32,15 @@ export class DoctorEditComponent implements OnInit {
 
   constructor(private router: Router,
     private appService: AppService,
-    private route: ActivatedRoute)  {
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef)  {
   }
+ 
+  // ngAfterViewInit() {
+  //   this.doctor = this.doctor[0];
+  //   this.cdr.detectChanges();
+
+  // }
 
   ngOnInit(): void {
     this.getLoginFromUrl().then(() => this.getDoctor());
