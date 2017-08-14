@@ -2,7 +2,7 @@
 <div class='container'>
 
     <nav class='menu'>
-        <div> Doktorki </div>
+        <div class='doktorki-logo'> . </div>
         <div> <a routerLink="/admin/add/doctor">add doctor</a> </div>
         <div><a routerLink="/admin/manage/doctors" class='set'>manage doctors</a> </div>
         <div> <a routerLink="/admin/add/patient">add patient</a> </div>
@@ -33,9 +33,8 @@
      {{doctor.firstName}} {{doctor.lastName}}
     </div >
     <div >
-        <div *ngFor='let spec of doctor.specialization' class='single-specialization'>{{spec}}
-                        {{doctor.specialization[doctor.specialization.length-1]==spec ? ' ' : ','}} </div>
-    
+        <div *ngFor='let spec of doctor.specializations' class='single-specialization'>{{spec.specialization}}
+                        {{doctor.specializations[doctor.specializations.length-1].specialization==spec.specialization ? ' ' : ','}} </div>
     </div >
 
     <div>

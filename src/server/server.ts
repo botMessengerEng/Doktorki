@@ -139,7 +139,7 @@ app.post('/insert-doctor', async (req: express.Request, res: express.Response) =
                             postcode: req.body.address.postcode,
                             city: req.body.address.city
                         },
-                        specialization: req.body.specialization }
+                        specializations: req.body.specializations }
                     ])
                 ]);
                 res.json('OK')
@@ -404,7 +404,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '39-111',
                         'city': 'Miasto W'
                     },
-                    'specialization': ['kości']
+                    'specializations': [{'specialization': 'kości'}]
                 },
                 {
                     'login': 'doctor',
@@ -419,7 +419,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '595-223',
                         'city': 'Paris'
                     },
-                    'specialization': ['logopeda']
+                    'specializations': [{'specialization':'logopeda'}]
                 },
                 {
                     'login': 'doktorek',
@@ -434,7 +434,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '25-083',
                         'city': 'Masecziuset'
                     },
-                    'specialization': ['od uszów']
+                    'specializations': [{'specialization':'od uszów'}]
                 },
                 {
                     'login': 'Brooke',
@@ -449,7 +449,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '22-083',
                         'city': 'Carcas'
                     },
-                    'specialization': ['internista']
+                    'specializations': [{'specialization':'internista'}]
                 },
                 {
                     'login': 'elekarz',
@@ -464,7 +464,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '22-445',
                         'city': 'Colorado'
                     },
-                    'specialization': ['alergolog']
+                    'specializations': [{'specialization':'alergolog'}]
                 },
                 {
                     'login': 'monicaC',
@@ -479,7 +479,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '211-7783',
                         'city': 'Toruń'
                     },
-                    'specialization': ['pediatra']
+                    'specializations': [{'specialization':'pediatra'}]
                 },
                 {
                     'login': 'eve63',
@@ -494,7 +494,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '35-083',
                         'city': 'Floryda'
                     },
-                    'specialization': ['ginekolog']
+                    'specializations': [{'specialization':'ginekolog'}]
                 },
                 {
                     'login': 'pawelKrakow',
@@ -509,7 +509,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '30-083',
                         'city': 'Kraków'
                     },
-                    'specialization': ['kardiolog']
+                    'specializations': [{'specialization':'kardiolog'}]
                 },
                 {
                     'login': 'leo_z_tarnowa',
@@ -524,7 +524,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '35-283',
                         'city': 'Tarnów'
                     },
-                    'specialization': ['kardiolog']
+                    'specializations': [{'specialization':'kardiolog'}]
                 },
                 {
                     'login': 'doktorro',
@@ -539,7 +539,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '25-083',
                         'city': 'Cancun'
                     },
-                    'specialization': ['okulista', 'od oczu xD']
+                    'specializations': [{'specialization':'okulista'}, {'specialization':'laryngolog'}]
                 },
                 {
                     'login': 'medicziKasia',
@@ -554,7 +554,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '15-0443',
                         'city': 'Florencja'
                     },
-                    'specialization': ['stomatolog']
+                    'specializations': [{'specialization':'stomatolog'}]
                 },
                 {
                     'login': 'lolek',
@@ -569,7 +569,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '45-033',
                         'city': 'Gdańsk'
                     },
-                    'specialization': ['chirurg', 'od uszów']
+                    'specializations': [{'specialization':'chirurg'}, {'specialization':'od uszów'}]
                 }
             ])
             ]);

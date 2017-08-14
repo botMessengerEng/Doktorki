@@ -19,14 +19,16 @@ export class DoctorEditFormComponent implements OnInit /*AfterViewInit*/ {
   genders = ['male', 'female'];
   doctorEditForm: FormGroup;
   controlMessage= new Array();
-
+x:number;
   private validationMessages = {
     required: [
       'First name is required',
       'Last name is required',
     ]
   }
-
+  get specializations(): FormArray {
+        return <FormArray>this.doctorEditForm.get('specializations');
+    }
 
 get spec(): FormArray{
   return <FormArray>this.doctorEditForm.get('spec');
@@ -34,24 +36,35 @@ get spec(): FormArray{
   constructor(private router: Router,
     private appService: AppService,
     private route: ActivatedRoute,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder) { 
+      this.x=0;
+    }
 
   ngOnInit(): void {
     this.doctorEditForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      gender: [],
-      age: [],
-      phone: [],
-      email: [],
-      street: [],
-      postcode: [],
-      city: [],
+      firstName: [this.doctor.firstName, Validators.required],
+      lastName: [this.doctor.lastName, Validators.required],
+      gender: [this.doctor.gender],
+      age: [this.doctor.age],
+      phone: [this.doctor.phone],
+      email: [this.doctor.email],
+      street: [this.doctor.address.street],
+      postcode: [this.doctor.address.postcode],
+      city: [this.doctor.address.city],
+      specializations: this.fb.array([this.buildSpecialization()])
+      });
 
-      spec: this.fb.array(['' , '']),
-    });
+        this.doctorEditForm.get('firstName').valueChanges.subscribe(value => this.doctor.firstName = this.doctorEditForm.get('firstName').value);
+        this.doctorEditForm.get('lastName').valueChanges.subscribe(value => this.doctor.lastName = this.doctorEditForm.get('lastName').value);
+        this.doctorEditForm.get('specializations').valueChanges.subscribe(value => this.doctor.specializations = this.doctorEditForm.get('specializations').value);
+         this.doctorEditForm.get('age').valueChanges.subscribe(value => this.doctor.age = this.doctorEditForm.get('age').value);
+         this.doctorEditForm.get('phone').valueChanges.subscribe(value => this.doctor.phone = this.doctorEditForm.get('phone').value);
+         this.doctorEditForm.get('email').valueChanges.subscribe(value => this.doctor.email = this.doctorEditForm.get('email').value);
+         this.doctorEditForm.get('street').valueChanges.subscribe(value => this.doctor.address.street = this.doctorEditForm.get('street').value);
+         this.doctorEditForm.get('postcode').valueChanges.subscribe(value => this.doctor.address.postcode = this.doctorEditForm.get('postcode').value);
+         this.doctorEditForm.get('city').valueChanges.subscribe(value => this.doctor.address.city = this.doctorEditForm.get('city').value);
 
-    const firstNameControl = this.doctorEditForm.get('firstName');
+ const firstNameControl = this.doctorEditForm.get('firstName');
     firstNameControl.valueChanges.subscribe(value =>
       this.setMessage(firstNameControl, 0));
 
@@ -60,6 +73,32 @@ get spec(): FormArray{
       this.setMessage(lastNameControl, 1));
   }
 
+
+
+    addSpecialization(): void {
+        this.specializations.push(this.buildSpecialization());
+    }
+
+    deleteSpecialization(specialization): void {
+        const control = <FormArray>this.doctorEditForm.controls['specializations'];
+        control.removeAt(specialization);
+    }
+
+  buildSpecialization(): FormGroup {
+
+         if(this.x>this.doctor.specializations.length){
+        return this.fb.group({
+            specialization: '',
+        });
+      }
+      
+        else{
+        return this.fb.group({
+            specialization: this.doctor.specializations[this.x++].specialization
+        });      
+    }
+
+  }
 
 
   onSubmit() {
@@ -98,3 +137,22 @@ get spec(): FormArray{
 
 
 }
+  // buildSpecialization(): FormGroup {
+
+  //        if(this.x>this.doctor.specializations.length){
+  //       return this.fb.group({
+  //           specialization: '',
+  //       });
+  //     }
+      
+  //       else{
+  //         let tempArrayOfSpecializations = "";
+  //         for(let i=0; i>=this.doctor.specializations.length ; i++){
+
+  //              tempArrayOfSpecializations+= '"{' + this.doctor.specializations[i].specialization + '}"'
+  //         }
+
+
+  //        return this.fb.group({tempArrayOfSpecializations});
+  //       };
+  // }

@@ -34,7 +34,8 @@ export class DoctorsManageComponent implements OnInit {
   getDoctors() {
     this.appService.getQuery()
       .subscribe(kroliczki => this.doctors = kroliczki,
-      error => this.errorMessage = <any>error);
+      error => this.errorMessage = <any>error
+      );
   }
 
   onSelect(doctor: any): void {

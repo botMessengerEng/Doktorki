@@ -26,9 +26,9 @@ export class Doctor {
         city: ''
     }
 
-    specialization: string [];
+    specializations: JSON [];
 
-    constructor(login,password,firstName,lastName,gender,age,phone,email,street,postcode,city,specialization) {
+    constructor(login,password,firstName,lastName,gender,age,phone,email,street,postcode,city,specializations) {
         this.login = login;
         this.password = password;
         this.firstName = name;
@@ -40,7 +40,7 @@ export class Doctor {
         this.address.street = street;
         this.address.postcode = postcode;
         this.address.city = city;
-        this.specialization =specialization;
+        this.specializations = specializations;
     }
 
 }
