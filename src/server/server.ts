@@ -92,7 +92,7 @@ app.route('/doctor-details')
                     postcode: req.body.address.postcode,
                     city: req.body.address.city
                 },
-                specialization: req.body.specialization});
+                specializations: req.body.specializations});
             res.json(result);
         } catch (err) {
             res.send(err);

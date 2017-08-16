@@ -104,19 +104,18 @@
                         <div *ngIf='i'>
                             <button class='buttonRemove' type="button" (click)='deleteSpecialization(i)'>  -  </button>
                         </div>
-
                     </div>
                 </div>
             </div>
-            <div> </div>
 
-            <div style="text-align: right">
-                <button type="submit" class='option-button' [disabled]="!doctorAddForm.valid">Submit</button>
+            <div class='table-of-specializations'>
+                <div> </div>
+                <div style="margin-top:4%">
+                    <button type="submit" class='option-button' [disabled]="!doctorAddForm.valid">Submit</button>
+                </div>
             </div>
-
+            
         </form>
-
-
     </div>
 </div>
 
@@ -127,3 +126,4 @@ Values: {{doctorAddForm.value | json}}
 <br> Doctor: {{doctor | json}}
 
 <br> Doctor: {{doctor.specializations[0].specialization | json}}-->
+<!--<br> Doctor: {{specializations.get('0.specialization').value}}-->

@@ -1,7 +1,7 @@
 <div class='content'>
     <div class='names'>{{doctorEditForm.get('firstName').value}} {{doctorEditForm.get('lastName').value}}</div>
-        <div *ngFor='let spec of doctor.specializations' class='specialization'>{{spec.specialization}} </div>
-        <br>
+    <div *ngFor='let spec of doctor.specializations' class='specialization'>{{spec.specialization}} </div>
+    <br>
 
     <div class='table-of-details' style='margin-bottom:20px'>
         <div>login: </div>
@@ -15,73 +15,61 @@
             <div><label for="firstName">first name: </label></div>
             <div><input class='input-style' type='text' formControlName="firstName">
                 <div class='info' *ngIf='controlMessage[0]'>
-                   <div class='to-fill'> {{controlMessage[0]}}</div>
+                    <div class='to-fill'> {{controlMessage[0]}}</div>
                 </div>
             </div>
 
             <div><label for="lastName">last name: </label></div>
             <div><input class='input-style' type='text' formControlName="lastName">
-                         <div class='info' *ngIf='controlMessage[1]'>
-                   <div class='to-fill'> {{controlMessage[1]}}</div>
+                <div class='info' *ngIf='controlMessage[1]'>
+                    <div class='to-fill'> {{controlMessage[1]}}</div>
                 </div>
 
             </div>
 
             <div><label for="gender">gender: </label></div>
-            <div><select  formControlName="gender">
+            <div><select formControlName="gender">
                   <option *ngFor="let gen of genders" [value]="gen">{{gen}}</option>
                   </select></div>
 
             <div><label for="age">age: </label></div>
-            <div> <input class='input-style' type='text'  formControlName='age'></div>
+            <div> <input class='input-style' type='text' formControlName='age'></div>
 
             <div><label for="phone">phone: </label></div>
-            <div> <input class='input-style' type='text'formControlName='phone'></div>
+            <div> <input class='input-style' type='text' formControlName='phone'></div>
 
             <div><label for="email">email: </label></div>
-            <div> <input class='input-style' type='text'formControlName='email'></div>
+            <div> <input class='input-style' type='text' formControlName='email'></div>
 
             <div><label for="street">street: </label></div>
             <div> <input class='input-style' type='text' formControlName='street'></div>
 
             <div><label for="postcode">postcode: </label></div>
-            <div> <input class='input-style' type='text'  formControlName='postcode'></div>
+            <div> <input class='input-style' type='text' formControlName='postcode'></div>
 
             <div><label for="city">city: </label></div>
-            <div> <input class='input-style' type='text' formControlName='city'></div>
+            <div style='margin-bottom:20px'> <input class='input-style' type='text' formControlName='city'></div>
         </div>
 
-        <!--<div formArrayName="spec" *ngFor="let spec of doctor.specialization; let i=index">
-        <div [formGroupName]="i">-->
-            <!--<div><label for="specialization">specialization: </label></div>
-            <div> 
-                <div class='single-specialization'>
-                    <input class='input-style' type='text' [(ngModel)]="doctor.specialization[i]">
-                </div>
-            </div>-->
-            <!--</div>
-        </div>-->
 
-        
-   <div formArrayName="specializations" *ngFor="let spec of specializations.controls; let i=index">
-                <div [formGroupName]="i">
-                    <div class='table-of-specializations'>
-
-                        <div style='margin-bottom:5px'><label for="specialization"> {{i==0 ? 'specialization' : ' '}}  </label></div>
-                        <div style='margin-bottom:5px'> <input class='input-style' type='text' placeholder="specialization" formControlName="specialization">
-                        </div>
-
-                        <div *ngIf='!i'>
-                            <button class='buttonAdd' type="button" (click)='addSpecialization()'>  +  </button>
-                        </div>
-                        <div *ngIf='i'>
-                            <button class='buttonRemove' type="button" (click)='deleteSpecialization(i)'>  -  </button>
-                        </div>
-
+        <div formArrayName="specializations" *ngFor="let spec of specializations.controls; let i=index">
+            <div [formGroupName]="i">
+                <div class='table-of-specializations'>
+                    <div style='margin-bottom:5px'><label for="specialization"> {{i==0 ? 'specialization' : ' '}}  </label></div>
+                    <div style='margin-bottom:5px'> <input class='input-style' type='text' placeholder="specialization" formControlName="specialization">
                     </div>
+
+                    <div *ngIf='!i'>
+                        <button class='buttonAdd' type="button" (click)='addSpecialization()'>  +  </button>
+                    </div>
+                    <div *ngIf='i'>
+                        <button class='buttonRemove' type="button" (click)='deleteSpecialization(i)'>  -  </button>
+                    </div>
+
                 </div>
             </div>
-            <div> </div>
+        </div>
+        <div> </div>
 
 
         <div *ngIf="admin" class='buttons'>
@@ -98,3 +86,13 @@
     </form>
 
 </div>
+
+
+<!--Values: {{doctorEditForm.value | json}}
+<br> Specializations: {{doctorEditForm.get('specializations').value | json}}
+<br> Doctor: {{doctor | json}}
+<br> Doctor: {{doctor.specializations[0].specialization | json}}
+<br> Lenght: {{doctor.specializations.length | json}}
+<br> SpecTemp: {{specializationsTemp}}
+<br> cos: {{doctorEditForm.get('specializations').value | json}}
+<button (click)='x()'>yeee</button>-->
