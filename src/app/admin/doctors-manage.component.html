@@ -18,10 +18,18 @@
             <div><input type='text' class='search' [(ngModel)]='doctorFilter' placeholder="doctor's name" />
             </div>
         </div>
+        <div class='table-header'>
+            <div class='table-header-content'>
+                <div> DOCTOR'S NAME</div>
+                <div>SPECIALIZATIONS</div>
+                <div>CITY</div>
+            </div>
+        </div>
+
 
         <div *ngFor='let doctor of doctors | firstlastNameFilter:doctorFilter'>
-            <table class='table-of-doctor' *ngIf='doctors && doctors.length' [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#003d66" : "#333333",
-                                 "border-color": (doctor === selectedDoctor) ? "#003d66" : "#333333"} '>
+            <table class='table-of-doctor' *ngIf='doctors && doctors.length' [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#003d66" : "#fafafa",
+                                 "border-color": (doctor === selectedDoctor) ? "#003d66" : "#fafafa"} '>
                 <thead>
                     <tr>
                         <td>
@@ -32,11 +40,10 @@
     <div>
      {{doctor.firstName}} {{doctor.lastName}}
     </div >
-    <div >
-        <div *ngFor='let spec of doctor.specializations' class='single-specialization'>{{spec.specialization}}
-                        {{doctor.specializations[doctor.specializations.length-1].specialization==spec.specialization ? ' ' : ','}} </div>
+    <div>
+        <div *ngFor='let spec of doctor.specializations' class='single-specialization'>
+            {{spec.specialization}} {{doctor.specializations[doctor.specializations.length-1].specialization==spec.specialization ? ' ' : ','}} </div>
     </div >
-
     <div>
        {{doctor.address.city}}
     </div >

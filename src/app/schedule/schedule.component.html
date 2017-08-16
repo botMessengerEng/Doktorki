@@ -1,0 +1,39 @@
+<div class='container'>
+  <nav class='menu'>
+    <div> Doktorki </div>
+    <div><a routerLink="/login" class='set'>schedule</a> </div>
+    <div> <a routerLink="/login">find patient</a> </div>
+    <div> <a [routerLink]="['/doctor', login, 'edit']">edit profile</a> </div>
+    <div><a routerLink="/login">log out</a> </div>
+  </nav>
+
+
+  <div class='content'>
+
+    <div>dzien tygodnia</div>
+    <div>hour</div>
+    <div>terminarz</div>
+
+    <div class='minutes'>
+      <div></div>
+      <div *ngFor="let min of minutes; let i = index">{{min}} </div>
+
+    </div>
+
+    <div class='hours' *ngFor="let hour of hours; let i = index">
+      
+      <div>{{hour}} </div>
+      
+            <div>xx </div>
+            <div>yy </div>
+            <div>zz </div>
+            <div>aa </div>
+
+      </div>
+
+
+
+
+
+  </div>
+</div>
