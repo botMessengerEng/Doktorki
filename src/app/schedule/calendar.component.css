@@ -67,3 +67,20 @@
     color: #004d80;
     text-decoration: none;
 }
+
+.arrows{
+    width:100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    cursor: pointer;
+    color: #008ae6;
+}
+
+.arrows .arrow{
+    font-size: 40px;
+    text-align: left;
+}
+
+.arrows .arrow:last-child{
+    text-align: right;
+}

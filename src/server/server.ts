@@ -539,8 +539,36 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'city': 'Miasto W'
                     },
                     'specializations': [{'specialization': 'kości'}],
-                    "workingHours": {},
-                    "holiday": [{}]
+                    "workingHours": {
+                        "monday": {
+                            "start": "18:00",
+                            "end": "22:00"
+                        },
+                        "tuesday": {
+                            "start": "7:00",
+                            "end": "15:30"
+                        },
+                        "wednesday": {
+                            "start": "6:00",
+                            "end": "11:15"
+                        },
+                        "thursday": {
+                            "start": "14:30",
+                            "end": "21:00"
+                        },
+                        "friday": {
+                            "start": "6:15",
+                            "end": "13:00"
+                        },
+                        "saturday": {
+                            "start": "",
+                            "end": ""
+                        },
+                        "sunday": {
+                            "start": "",
+                            "end": ""
+                        }
+                    }
                 },
                 {
                     'login': 'doctor',
@@ -575,7 +603,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         },
                         "friday": {
                             "start": "13:00",
-                            "end": "23:00"
+                            "end": "21:45"
                         },
                         "saturday": {
                             "start": "",
@@ -585,7 +613,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                             "start": "",
                             "end": ""
                         }
-                    } 
+                    }
                 },
                 {
                     'login': 'doktorek',
@@ -601,7 +629,36 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'city': 'Masecziuset'
                     },
                     'specializations': [{'specialization':'od uszów'}],
-                    "workingHours": {}
+                    "workingHours": {
+                        "monday": {
+                            "start": "8:00",
+                            "end": "16:15"
+                        },
+                        "tuesday": {
+                            "start": "12:30",
+                            "end": "17:00"
+                        },
+                        "wednesday": {
+                            "start": "12:00",
+                            "end": "16:45"
+                        },
+                        "thursday": {
+                            "start": "9:15",
+                            "end": "17:45"
+                        },
+                        "friday": {
+                            "start": "15:00",
+                            "end": "22:00"
+                        },
+                        "saturday": {
+                            "start": "",
+                            "end": ""
+                        },
+                        "sunday": {
+                            "start": "",
+                            "end": ""
+                        }
+                    }
                 },
                 {
                     'login': 'Brooke',
@@ -617,7 +674,36 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'city': 'Carcas'
                     },
                     'specializations': [{'specialization':'internista'}],
-                    "workingHours": {}
+                    "workingHours": {
+                        "monday": {
+                            "start": "12:15",
+                            "end": "19:15"
+                        },
+                        "tuesday": {
+                            "start": "7:00",
+                            "end": "14:30"
+                        },
+                        "wednesday": {
+                            "start": "8:15",
+                            "end": "15:15"
+                        },
+                        "thursday": {
+                            "start": "17:45",
+                            "end": "22:00"
+                        },
+                        "friday": {
+                            "start": "12:00",
+                            "end": "16:00"
+                        },
+                        "saturday": {
+                            "start": "",
+                            "end": ""
+                        },
+                        "sunday": {
+                            "start": "",
+                            "end": ""
+                        }
+                    }
                 },
                 {
                     'login': 'elekarz',
@@ -633,7 +719,36 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'city': 'Colorado'
                     },
                     'specializations': [{'specialization':'alergolog'}],
-                    "workingHours": {} 
+                    "workingHours": {
+                       "monday": {
+                            "start": "8:00",
+                            "end": "16:00"
+                        },
+                        "tuesday": {
+                            "start": "7:15",
+                            "end": "15:30"
+                        },
+                        "wednesday": {
+                            "start": "6:00",
+                            "end": "14:00"
+                        },
+                        "thursday": {
+                            "start": "13:30",
+                            "end": "21:30"
+                        },
+                        "friday": {
+                            "start": "16:15",
+                            "end": "22:00"
+                        },
+                        "saturday": {
+                            "start": "",
+                            "end": ""
+                        },
+                        "sunday": {
+                            "start": "",
+                            "end": ""
+                        }
+                    } 
                  },
                 {
                     'login': 'monicaC',
@@ -649,7 +764,36 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'city': 'Toruń'
                     },
                     'specializations': [{'specialization':'pediatra'}],
-                    "workingHours": {}   
+                    "workingHours": {
+                        "monday": {
+                            "start": "9:00",
+                            "end": "15:00"
+                        },
+                        "tuesday": {
+                            "start": "13:00",
+                            "end": "19:30"
+                        },
+                        "wednesday": {
+                            "start": "12:00",
+                            "end": "18:15"
+                        },
+                        "thursday": {
+                            "start": "12:30",
+                            "end": "21:15"
+                        },
+                        "friday": {
+                            "start": "6:45",
+                            "end": "15:15"
+                        },
+                        "saturday": {
+                            "start": "",
+                            "end": ""
+                        },
+                        "sunday": {
+                            "start": "",
+                            "end": ""
+                        }
+                    }   
                 },
                 {
                     'login': 'eve63',
@@ -665,7 +809,36 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'city': 'Floryda'
                     },
                     'specializations': [{'specialization':'ginekolog'}],
-                    "workingHours": {}  
+                    "workingHours": {
+                        "monday": {
+                            "start": "11:00",
+                            "end": "18:00"
+                        },
+                        "tuesday": {
+                            "start": "12:00",
+                            "end": "17:30"
+                        },
+                        "wednesday": {
+                            "start": "16:00",
+                            "end": "21:15"
+                        },
+                        "thursday": {
+                            "start": "13:30",
+                            "end": "20:00"
+                        },
+                        "friday": {
+                            "start": "7:00",
+                            "end": "15:00"
+                        },
+                        "saturday": {
+                            "start": "",
+                            "end": ""
+                        },
+                        "sunday": {
+                            "start": "",
+                            "end": ""
+                        }
+                    }  
                  },
                 {
                     'login': 'pawelKrakow',
@@ -681,7 +854,36 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'city': 'Kraków'
                     },
                     'specializations': [{'specialization':'kardiolog'}],
-                    "workingHours": {}
+                    "workingHours": {
+                        "monday": {
+                            "start": "11:00",
+                            "end": "15:00"
+                        },
+                        "tuesday": {
+                            "start": "7:00",
+                            "end": "15:30"
+                        },
+                        "wednesday": {
+                            "start": "7:15",
+                            "end": "15:15"
+                        },
+                        "thursday": {
+                            "start": "13:30",
+                            "end": "22:00"
+                        },
+                        "friday": {
+                            "start": "9:00",
+                            "end": "14:00"
+                        },
+                        "saturday": {
+                            "start": "",
+                            "end": ""
+                        },
+                        "sunday": {
+                            "start": "",
+                            "end": ""
+                        }
+                    }
                 },
                 {
                     'login': 'leo_z_tarnowa',
@@ -697,7 +899,36 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'city': 'Tarnów'
                     },
                     'specializations': [{'specialization':'kardiolog'}],
-                    "workingHours": {}
+                    "workingHours": {
+                        "monday": {
+                            "start": "8:00",
+                            "end": "15:00"
+                        },
+                        "tuesday": {
+                            "start": "7:00",
+                            "end": "15:30"
+                        },
+                        "wednesday": {
+                            "start": "12:00",
+                            "end": "18:15"
+                        },
+                        "thursday": {
+                            "start": "14:30",
+                            "end": "21:00"
+                        },
+                        "friday": {
+                            "start": "15:15",
+                            "end": "21:00"
+                        },
+                        "saturday": {
+                            "start": "",
+                            "end": ""
+                        },
+                        "sunday": {
+                            "start": "",
+                            "end": ""
+                        }
+                    }
                 },
                 {
                     'login': 'doktorro',
@@ -713,7 +944,36 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'city': 'Cancun'
                     },
                     'specializations': [{'specialization':'okulista'}, {'specialization':'laryngolog'}],
-                    "workingHours": {}
+                    "workingHours": {
+                        "monday": {
+                            "start": "9:00",
+                            "end": "14:00"
+                        },
+                        "tuesday": {
+                            "start": "11:00",
+                            "end": "17:30"
+                        },
+                        "wednesday": {
+                            "start": "8:15",
+                            "end": "14:15"
+                        },
+                        "thursday": {
+                            "start": "14:30",
+                            "end": "21:00"
+                        },
+                        "friday": {
+                            "start": "9:00",
+                            "end": "13:00"
+                        },
+                        "saturday": {
+                            "start": "",
+                            "end": ""
+                        },
+                        "sunday": {
+                            "start": "",
+                            "end": ""
+                        }
+                    }
                 },
                 {
                     'login': 'medicziKasia',
@@ -729,7 +989,36 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'city': 'Florencja'
                     },
                     'specializations': [{'specialization':'stomatolog'}],
-                    "workingHours": {}
+                    "workingHours": {
+                      "monday": {
+                            "start": "11:00",
+                            "end": "15:00"
+                        },
+                        "tuesday": {
+                            "start": "17:00",
+                            "end": "21:30"
+                        },
+                        "wednesday": {
+                            "start": "8:00",
+                            "end": "15:15"
+                        },
+                        "thursday": {
+                            "start": "12:30",
+                            "end": "18:00"
+                        },
+                        "friday": {
+                            "start": "12:15",
+                            "end": "17:00"
+                        },
+                        "saturday": {
+                            "start": "",
+                            "end": ""
+                        },
+                        "sunday": {
+                            "start": "",
+                            "end": ""
+                        }
+                    }
                 },
                 {
                     'login': 'lolek',
@@ -745,7 +1034,36 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'city': 'Gdańsk'
                     },
                     'specializations': [{'specialization':'chirurg'}, {'specialization':'od uszów'}],
-                    "workingHours": {}    
+                    "workingHours": {
+                       "monday": {
+                            "start": "7:00",
+                            "end": "14:00"
+                        },
+                        "tuesday": {
+                            "start": "7:15",
+                            "end": "15:30"
+                        },
+                        "wednesday": {
+                            "start": "8:00",
+                            "end": "12:15"
+                        },
+                        "thursday": {
+                            "start": "11:30",
+                            "end": "16:00"
+                        },
+                        "friday": {
+                            "start": "13:15",
+                            "end": "21:00"
+                        },
+                        "saturday": {
+                            "start": "",
+                            "end": ""
+                        },
+                        "sunday": {
+                            "start": "",
+                            "end": ""
+                        }
+                    }    
                 }
             ]),
             mongoSchedule.insertElements([
@@ -876,9 +1194,100 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     },
                     "patient": {
                         "login": "SpeedyGonzales",
-                        "description": "koncza się speed-tabsy doktorze"  
+                        "description": "koncza się speed-tabsy doktorze"
                     }
-                }
+                },
+                {
+                    "login": "lolek",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 25,
+                        "hour": "13:15"
+                    },
+                    "patient": {
+                        "login": "Heisenberg",
+                        "description": "prześwietlenie ucha"
+                    }
+                },
+                {
+                    "login": "lolek",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 25,
+                        "hour": "15:45"
+                    },
+                    "patient": {
+                        "login": "SpeedyGonzales",
+                        "description": "zdjęcie gipsu"
+                    }
+                },
+                {
+                    "login": "lolek",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 24,
+                        "hour": "12:45"
+                    },
+                    "patient": {
+                        "login": "Jesse",
+                        "description": "zdjęcie szwów z rozciętego łuku brwiowego"
+                    }
+                },
+                 {
+                    "login": "doktorBezUprawnien",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 24,
+                        "hour": "18:30"
+                    },
+                    "patient": {
+                        "login": "Jesse",
+                        "description": "sprawdzenie kości czaszki"
+                    }
+                },
+                {
+                    "login": "doktorBezUprawnien",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 24,
+                        "hour": "19:15"
+                    },
+                    "patient": {
+                        "login": "Hulk",
+                        "description": "naprawa kości po walce ze złem"
+                    }
+                },
+                {
+                    "login": "doktorBezUprawnien",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 30,
+                        "hour": "9:15"
+                    },
+                    "patient": {
+                        "login": "synJacka",
+                        "description": "naprawa całości"
+                    }
+                },
+                {
+                    "login": "Brooke",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 24,
+                        "hour": "21:15"
+                    },
+                    "patient": {
+                        "login": "synJacka",
+                        "description": "choroba afrykańska(?)"
+                    }
+                },
             ])
             ]);
 

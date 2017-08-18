@@ -39,15 +39,15 @@ export class ScheduleComponent implements OnInit {
         let hour = i + ':' + m;
         let transformedHour = parseInt(i + m);
         var re = /:/gi;
-        let transformedStartHour = parseInt(this.doctor.workingHours[(this.daysArray[this.dayOfWeek]).toString()].start.replace(re, ""));
-        let transformedEndHour = parseInt(this.doctor.workingHours[(this.daysArray[this.dayOfWeek]).toString()].end.replace(re, ""));
-
+        let transformedStartHour = parseInt(this.doctor.workingHours[(this.daysArray[this.dayOfWeek==0 ? 6 : this.dayOfWeek-1]).toString()].start.replace(re, ""));
+        let transformedEndHour = parseInt(this.doctor.workingHours[(this.daysArray[this.dayOfWeek==0 ? 6 : this.dayOfWeek-1]).toString()].end.replace(re, ""));
 
 
         if (this.appointments != undefined && this.appointmentsArray != undefined) {
             let styles;
             if (transformedHour < transformedStartHour || transformedHour >= transformedEndHour || (!transformedEndHour && !transformedStartHour)) {
-                return { 'background-color': '#fafafa' };
+                return { 'background-color': '#fafafa',
+                          'color': '#d9d9d9' };
             }
 
             else if (this.appointmentsArray.find((element) => hour == element)) {
@@ -56,11 +56,9 @@ export class ScheduleComponent implements OnInit {
 
             else {
                 return { 'background-color': '#e6ffe6' };
-
             }
         }
     }
-
 
 
 }
