@@ -21,6 +21,7 @@ export class AppService {
     private _dataBaseUrl3 = 'http://localhost:3000/insert-doctor';
     private _dataBaseUrlRegister = 'http://localhost:3000/register';
     private _dataBaseUrlPatientDetails = 'http://localhost:3000/patient-details';
+    private _dataBaseUrlSchedule = 'http://localhost:3000/schedule';
     constructor (private _http: Http) {}
 
 
@@ -71,6 +72,13 @@ export class AppService {
 
     findPatient(param): Observable<string> {
         return this._http.post(this._dataBaseUrlPatientDetails, param)
+            .map((response: Response) => response.json())
+            .do(data => console.log('All: ' + JSON.stringify(data)))
+            .catch(this.handlerError);
+    }
+
+    findVisits(param): Observable<string> {
+        return this._http.post(this._dataBaseUrlSchedule, param)
             .map((response: Response) => response.json())
             .do(data => console.log('All: ' + JSON.stringify(data)))
             .catch(this.handlerError);

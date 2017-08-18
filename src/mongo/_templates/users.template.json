@@ -93,5 +93,30 @@
         "login": "SpeedyGonzales",
         "password": "admin",
         "role": "patient"
+    },
+    {
+        "login": "Mark",
+        "password": "admin",
+        "role": "patient"
+    },
+    {
+        "login": "Robinio",
+        "password": "admin",
+        "role": "patient"
+    },
+    {
+        "login": "Jess",
+        "password": "admin",
+        "role": "patient"
+    },
+    {
+        "login": "Heisenberg",
+        "password": "Werner",
+        "role": "patient"
+    },
+    {
+        "login": "Jesse",
+        "password": "admin",
+        "role": "patient"
     }
 ]

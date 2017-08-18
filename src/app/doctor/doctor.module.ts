@@ -27,7 +27,8 @@ import { DoctorScheduleComponent } from './doctor-schedule.component';
     RouterModule.forChild([
       { path: 'doctor/:login', component: DoctorComponent },
       { path: 'doctor/:login/edit', component: DoctorEditComponent },
-      { path: 'doctor/:login/schedule', component: DoctorScheduleComponent }
+      { path: 'doctor/:login/schedule', component: DoctorScheduleComponent },
+      { path: 'doctor/:login/schedule/:year/:month/:day', component: DoctorScheduleComponent }
     ])
   ],
 

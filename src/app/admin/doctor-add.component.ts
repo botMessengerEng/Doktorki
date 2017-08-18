@@ -34,7 +34,7 @@ export class DoctorAddComponent implements OnInit {
             lastName: ['', Validators.required],
             login: ['', [Validators.required, Validators.minLength(3)]],
             password: ['', [Validators.required, Validators.minLength(8)]],
-            gender: [],
+            gender: [''],
             age: ['', [Validators.pattern('^[0-9]+$')]],
             phone: [],
             email: ['', [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+')]],

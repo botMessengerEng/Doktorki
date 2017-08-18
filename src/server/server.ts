@@ -18,11 +18,13 @@ const app = express();
 const collectionUsers = 'Users';
 const collectionDoctorDetails = 'DoctorDetails';
 const collectionPatientDetails = 'PatientDetails';
+const collectionSchedule = 'Schedule';
 
 const url = 'mongodb://localhost:27017/DoktorkiDB';
 const mongoUsers = new MongoCollection(url, collectionUsers);
 const mongoDoctorDetails = new MongoCollection(url, collectionDoctorDetails);
 const mongoPatientDetails = new MongoCollection(url, collectionPatientDetails);
+const mongoSchedule = new MongoCollection(url, collectionSchedule);
 
 app.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
@@ -46,7 +48,6 @@ app.post('/login', async (req: express.Request, res: express.Response) => {
             login: req.body.login,
             password: req.body.password
         });
-        //(() => setTimeout( async () => {
         if (user[0] !== undefined) {
             res.status(200).json(user[0]).end();
             console.log('tak');
@@ -56,7 +57,6 @@ app.post('/login', async (req: express.Request, res: express.Response) => {
             console.log('nie');
             console.log(user);
         };
-       //},0))();
 });
 
 // ------------- doctor  ------------------------------------------------------------------------////////////////////////
@@ -219,103 +219,167 @@ app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 });
 
-
-
+// ------------- schedule -----------------------------------------------------------------------////////////////////////
+app.route('/schedule')
+    .get(async (req: express.Request, res: express.Response) => {
+        try {
+            const result = await mongoSchedule.findElement({});
+            res.json(result);
+        } catch (err) {
+            res.send(err);
+        }
+    })
+    .put(async (req: express.Request, res: express.Response) => {
+        try {
+            const result = await mongoSchedule.updateElement(req.body);
+            res.json(result)
+        } catch (err) {
+            res.send(err);
+        }
+    })
+    .post(async (req: express.Request, res: express.Response) => {
+        try {
+            const result = await mongoSchedule.findElement( {login: req.body.login,
+                                                            'date.hour': {$regex: /.*?/},
+                                                            'date.year': req.body.date.year,
+                                                            'date.month': req.body.date.month,
+                                                            'date.day': req.body.date.day}
+            );
+            res.json(result);
+        } catch (err) {
+            res.send(err);
+        }
+    });
 ///-----------------DataBase Init path -----------------///
 app.get('/init-db', async (req: express.Request, res: express.Response) => {
     try {
-        await Promise.all([mongoUsers.drop(), mongoPatientDetails.drop(), mongoDoctorDetails.drop()])
+        await Promise.all([
+            mongoUsers.drop(),
+            mongoPatientDetails.drop(),
+            mongoDoctorDetails.drop(),
+            mongoSchedule.drop()
+        ]);
         const result = await Promise.all([
             mongoUsers.insertElements([
                 {
-                    'login': 'admin',
-                    'password': 'admin',
-                    'role': 'admin'
+                    "login": "admin",
+                    "password": "admin",
+                    "role": "admin"
                 },
                 {
-                    'login': 'doctor',
-                    'password': 'doctor',
-                    'role': 'doctor'
+                    "login": "doctor",
+                    "password": "doctor",
+                    "role": "doctor"
                 },
                 {
-                    'login': 'doktorek',
-                    'password': 'prawilny',
-                    'role': 'doctor'
+                    "login": "patient",
+                    "password": "patient",
+                    "role": "patient"
                 },
                 {
-                    'login': 'doktorBezUprawnien',
-                    'password': 'jakRowerzystaBezUprawnien',
-                    'role': 'doctor'
+                    "login": "doktorek",
+                    "password": "prawilny",
+                    "role": "doctor"
                 },
                 {
-                    'login': 'Brooke',
-                    'password': '1234',
-                    'role': 'doctor'
+                    "login": "doktorBezUprawnien",
+                    "password": "jakRowerzystaBezUprawnien",
+                    "role": "doctor"
                 },
                 {
-                    'login': 'elekarz',
-                    'password': '@als',
-                    'role': 'doctor'
+                    "login": "Brooke",
+                    "password": "1234",
+                    "role": "doctor"
                 },
                 {
-                    'login': 'monicaC',
-                    'password': 'anteny',
-                    'role': 'doctor'
+                    "login": "elekarz",
+                    "password": "@als",
+                    "role": "doctor"
                 },
                 {
-                    'login': 'eve63',
-                    'password': 'eve63',
-                    'role': 'doctor'
+                    "login": "monicaC",
+                    "password": "anteny",
+                    "role": "doctor"
                 },
                 {
-                    'login': 'pawelKrakow',
-                    'password': 'wawel',
-                    'role': 'doctor'
+                    "login": "eve63",
+                    "password": "eve63",
+                    "role": "doctor"
                 },
                 {
-                    'login': 'leo_z_tarnowa',
-                    'password': 'ananas@66',
-                    'role': 'doctor'
+                    "login": "pawelKrakow",
+                    "password": "wawel",
+                    "role": "doctor"
                 },
                 {
-                    'login': 'doktorro',
-                    'password': 'paprykarz_szczecisnski',
-                    'role': 'doctor'
+                    "login": "leo_z_tarnowa",
+                    "password": "ananas@66",
+                    "role": "doctor"
                 },
                 {
-                    'login': 'medicziKasia',
-                    'password': 'traktor77',
-                    'role': 'doctor'
+                    "login": "doktorro",
+                    "password": "paprykarz_szczecisnski",
+                    "role": "doctor"
                 },
                 {
-                    'login': 'lolek',
-                    'password': 'bolek',
-                    'role': 'doctor'
+                    "login": "medicziKasia",
+                    "password": "traktor77",
+                    "role": "doctor"
                 },
                 {
-                    'login': 'patient',
-                    'password': 'admin',
-                    'role': 'patient'
+                    "login": "lolek",
+                    "password": "bolek",
+                    "role": "doctor"
                 },
                 {
-                    'login': 'wpiszLogin',
-                    'password': 'admin',
-                    'role': 'patient'
+                    "login": "patient",
+                    "password": "admin",
+                    "role": "patient"
                 },
                 {
-                    'login': 'synJacka',
-                    'password': 'admin',
-                    'role': 'patient'
+                    "login": "wpiszLogin",
+                    "password": "admin",
+                    "role": "patient"
                 },
                 {
-                    'login': 'Hulk',
-                    'password': 'admin',
-                    'role': 'patient'
+                    "login": "synJacka",
+                    "password": "admin",
+                    "role": "patient"
                 },
                 {
-                    'login': 'SpeedyGonzales',
-                    'password': 'admin',
-                    'role': 'patient'
+                    "login": "Hulk",
+                    "password": "admin",
+                    "role": "patient"
+                },
+                {
+                    "login": "SpeedyGonzales",
+                    "password": "admin",
+                    "role": "patient"
+                },
+                {
+                    "login": "Mark",
+                    "password": "admin",
+                    "role": "patient"
+                },
+                {
+                    "login": "Robinio",
+                    "password": "admin",
+                    "role": "patient"
+                },
+                {
+                    "login": "Jess",
+                    "password": "admin",
+                    "role": "patient"
+                },
+                {
+                    "login": "Heisenberg",
+                    "password": "Werner",
+                    "role": "patient"
+                },
+                {
+                    "login": "Jesse",
+                    "password": "admin",
+                    "role": "patient"
                 }
             ]),
             mongoPatientDetails.insertElements([
@@ -342,7 +406,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "email": "mail@mainNa5minut.pl",
                     "dateOfBirth": {
                         "year": 1902,
-                        "month": 'December',
+                        "month": "December",
                         "day": 31
                     },
                     "PESEL": "02123102319"
@@ -366,6 +430,20 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "firstName": "Bruce",
                     "lastName": "Banner",
                     "gender": "male",
+                    "phone": "102988392",
+                    "email": "mark@onet.pl",
+                    "dateOfBirth": {
+                        "year": 1982,
+                        "month": "May",
+                        "day": 2
+                    },
+                    "PESEL": "62050211094"
+                },
+                {
+                    "login": "Mark",
+                    "firstName": "Marek",
+                    "lastName": "Markowicz",
+                    "gender": "male",
                     "phone": "102988372",
                     "email": "hugeandgreen@stark.industries.com",
                     "dateOfBirth": {
@@ -373,7 +451,63 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         "month": "May",
                         "day": 2
                     },
-                    "PESEL": "62050211094"
+                    "PESEL": "82050218792"
+                },
+                {
+                    "login": "Robinio",
+                    "firstName": "Robert",
+                    "lastName": "Górski",
+                    "gender": "male",
+                    "phone": "102118372",
+                    "email": "nnfksjths@o2.com",
+                    "dateOfBirth": {
+                        "year": 1993,
+                        "month": "May",
+                        "day": 7
+                    },
+                    "PESEL": "93050816835"
+                },
+                {
+                    "login": "Jess",
+                    "firstName": "Justyna",
+                    "lastName": "Franiewska",
+                    "gender": "female",
+                    "phone": "118268372",
+                    "email": "jess_92@gmail.com",
+                    "dateOfBirth": {
+                        "year": 1992,
+                        "month": "October",
+                        "day": 3
+                    },
+                    "PESEL": "92100308786"
+                },
+                {
+                    "login": "Heisenberg",
+                    "firstName": "Walter",
+                    "lastName": "White",
+                    "gender": "male",
+                    "phone": "118200372",
+                    "email": "babyblue@gmail.com",
+                    "dateOfBirth": {
+                        "year": 1959,
+                        "month": "September",
+                        "day": 7
+                    },
+                    "PESEL": "59090719558"
+                },
+                {
+                    "login": "Jesse",
+                    "firstName": "Jesse",
+                    "lastName": "Pinkman",
+                    "gender": "male",
+                    "phone": "118200372",
+                    "email": "yeahb_tch@gmail.com",
+                    "dateOfBirth": {
+                        "year": 1984,
+                        "month": "September",
+                        "day": 17
+                    },
+                    "PESEL": "84091713058"
                 },
                 {
                     "login": "SpeedyGonzales",
@@ -404,7 +538,9 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '39-111',
                         'city': 'Miasto W'
                     },
-                    'specializations': [{'specialization': 'kości'}]
+                    'specializations': [{'specialization': 'kości'}],
+                    "workingHours": {},
+                    "holiday": [{}]
                 },
                 {
                     'login': 'doctor',
@@ -419,7 +555,37 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '595-223',
                         'city': 'Paris'
                     },
-                    'specializations': [{'specialization':'logopeda'}]
+                    'specializations': [{'specialization':'logopeda'}],
+                    "workingHours": {
+                        "monday": {
+                            "start": "8:00",
+                            "end": "14:00"
+                        },
+                        "tuesday": {
+                            "start": "7:30",
+                            "end": "15:00"
+                        },
+                        "wednesday": {
+                            "start": "7:00",
+                            "end": "18:00"
+                        },
+                        "thursday": {
+                            "start": "12:00",
+                            "end": "20:00"
+                        },
+                        "friday": {
+                            "start": "13:00",
+                            "end": "23:00"
+                        },
+                        "saturday": {
+                            "start": "",
+                            "end": ""
+                        },
+                        "sunday": {
+                            "start": "",
+                            "end": ""
+                        }
+                    } 
                 },
                 {
                     'login': 'doktorek',
@@ -434,7 +600,8 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '25-083',
                         'city': 'Masecziuset'
                     },
-                    'specializations': [{'specialization':'od uszów'}]
+                    'specializations': [{'specialization':'od uszów'}],
+                    "workingHours": {}
                 },
                 {
                     'login': 'Brooke',
@@ -449,7 +616,8 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '22-083',
                         'city': 'Carcas'
                     },
-                    'specializations': [{'specialization':'internista'}]
+                    'specializations': [{'specialization':'internista'}],
+                    "workingHours": {}
                 },
                 {
                     'login': 'elekarz',
@@ -464,8 +632,9 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '22-445',
                         'city': 'Colorado'
                     },
-                    'specializations': [{'specialization':'alergolog'}]
-                },
+                    'specializations': [{'specialization':'alergolog'}],
+                    "workingHours": {} 
+                 },
                 {
                     'login': 'monicaC',
                     'firstName': 'Monica',
@@ -479,7 +648,8 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '211-7783',
                         'city': 'Toruń'
                     },
-                    'specializations': [{'specialization':'pediatra'}]
+                    'specializations': [{'specialization':'pediatra'}],
+                    "workingHours": {}   
                 },
                 {
                     'login': 'eve63',
@@ -494,8 +664,9 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '35-083',
                         'city': 'Floryda'
                     },
-                    'specializations': [{'specialization':'ginekolog'}]
-                },
+                    'specializations': [{'specialization':'ginekolog'}],
+                    "workingHours": {}  
+                 },
                 {
                     'login': 'pawelKrakow',
                     'firstName': 'Pawel',
@@ -509,7 +680,8 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '30-083',
                         'city': 'Kraków'
                     },
-                    'specializations': [{'specialization':'kardiolog'}]
+                    'specializations': [{'specialization':'kardiolog'}],
+                    "workingHours": {}
                 },
                 {
                     'login': 'leo_z_tarnowa',
@@ -524,7 +696,8 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '35-283',
                         'city': 'Tarnów'
                     },
-                    'specializations': [{'specialization':'kardiolog'}]
+                    'specializations': [{'specialization':'kardiolog'}],
+                    "workingHours": {}
                 },
                 {
                     'login': 'doktorro',
@@ -539,7 +712,8 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '25-083',
                         'city': 'Cancun'
                     },
-                    'specializations': [{'specialization':'okulista'}, {'specialization':'laryngolog'}]
+                    'specializations': [{'specialization':'okulista'}, {'specialization':'laryngolog'}],
+                    "workingHours": {}
                 },
                 {
                     'login': 'medicziKasia',
@@ -554,7 +728,8 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '15-0443',
                         'city': 'Florencja'
                     },
-                    'specializations': [{'specialization':'stomatolog'}]
+                    'specializations': [{'specialization':'stomatolog'}],
+                    "workingHours": {}
                 },
                 {
                     'login': 'lolek',
@@ -569,7 +744,140 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         'postcode': '45-033',
                         'city': 'Gdańsk'
                     },
-                    'specializations': [{'specialization':'chirurg'}, {'specialization':'od uszów'}]
+                    'specializations': [{'specialization':'chirurg'}, {'specialization':'od uszów'}],
+                    "workingHours": {}    
+                }
+            ]),
+            mongoSchedule.insertElements([
+                {
+                    "login": "doctor",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 21,
+                        "hour": "8:00"
+                    },
+                    "patient": {
+                        "login": "patient",
+                        "description": "strzała w kolano"  
+                    }
+                },
+                {
+                    "login": "doctor",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 21,
+                        "hour": "10:00"
+                    },
+                    "patient": {
+                        "login": "wpiszLogin",
+                        "description": "L4"  
+                    }
+                },
+                {
+                    "login": "doctor",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 21,
+                        "hour": "13:30"
+                    },
+                    "patient": {
+                        "login": "synJacka",
+                        "description": "złamałem nogę przez nie uwagę"  
+                    }
+                },
+                {
+                    "login": "doctor",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 21,
+                        "hour": "12:00"
+                    },
+                    "patient": {
+                        "login": "Hulk",
+                        "description": "napromieniowało mnie"  
+                    }
+                },
+                {
+                    "login": "doctor",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 21,
+                        "hour": "12:30"
+                    },
+                    "patient": {
+                        "login": "Mark",
+                        "description": "L4"  
+                    }
+                },
+                {
+                    "login": "doctor",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 21,
+                        "hour": "12:45"
+                    },
+                    "patient": {
+                        "login": "Robinio",
+                        "description": "L4"  
+                    }
+                },
+                {
+                    "login": "doctor",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 21,
+                        "hour": "11:15"
+                    },
+                    "patient": {
+                        "login": "Jess",
+                        "description": "a tak z nudów"  
+                    }
+                },
+                {
+                    "login": "doctor",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 21,
+                        "hour": "9:15"
+                    },
+                    "patient": {
+                        "login": "Heisenberg",
+                        "description": "odbior wynikow badania"  
+                    }
+                },
+                {
+                    "login": "doctor",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 21,
+                        "hour": "9:45"
+                    },
+                    "patient": {
+                        "login": "Jesse",
+                        "description": "wypadek przy pracy"  
+                    }
+                },
+                {
+                    "login": "doctor",
+                    "date": {
+                        "year":2017,
+                        "month": "August",
+                        "day": 21,
+                        "hour": "13:45"
+                    },
+                    "patient": {
+                        "login": "SpeedyGonzales",
+                        "description": "koncza się speed-tabsy doktorze"  
+                    }
                 }
             ])
             ]);

@@ -46,6 +46,20 @@
         "firstName": "Bruce",
         "lastName": "Banner",
         "gender": "male",
+        "phone": "102988392",
+        "email": "mark@onet.pl",
+        "dateOfBirth": {
+            "year": 1982,
+            "month": "May",
+            "day": 2
+        },
+        "PESEL": "62050211094"
+    },
+    {
+        "login": "Mark",
+        "firstName": "Marek",
+        "lastName": "Markowicz",
+        "gender": "male",
         "phone": "102988372",
         "email": "hugeandgreen@stark.industries.com",
         "dateOfBirth": {
@@ -53,7 +67,63 @@
             "month": "May",
             "day": 2
         },
-        "PESEL": "62050211094"
+        "PESEL": "82050218792"
+    },
+    {
+        "login": "Robinio",
+        "firstName": "Robert",
+        "lastName": "Górski",
+        "gender": "male",
+        "phone": "102118372",
+        "email": "nnfksjths@o2.com",
+        "dateOfBirth": {
+            "year": 1993,
+            "month": "May",
+            "day": 7
+        },
+        "PESEL": "93050816835"
+    },
+    {
+        "login": "Jess",
+        "firstName": "Justyna",
+        "lastName": "Franiewska",
+        "gender": "female",
+        "phone": "118268372",
+        "email": "jess_92@gmail.com",
+        "dateOfBirth": {
+            "year": 1992,
+            "month": "October",
+            "day": 3
+        },
+        "PESEL": "92100308786"
+    },
+    {
+        "login": "Heisenberg",
+        "firstName": "Walter",
+        "lastName": "White",
+        "gender": "male",
+        "phone": "118200372",
+        "email": "babyblue@gmail.com",
+        "dateOfBirth": {
+            "year": 1959,
+            "month": "September",
+            "day": 7
+        },
+        "PESEL": "59090719558"
+    },
+    {
+        "login": "Jesse",
+        "firstName": "Jesse",
+        "lastName": "Pinkman",
+        "gender": "male",
+        "phone": "118200372",
+        "email": "yeahb_tch@gmail.com",
+        "dateOfBirth": {
+            "year": 1984,
+            "month": "September",
+            "day": 17
+        },
+        "PESEL": "84091713058"
     },
     {
         "login": "SpeedyGonzales",

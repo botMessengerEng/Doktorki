@@ -36,11 +36,6 @@ export class DoctorEditComponent implements OnInit {
     private cdr: ChangeDetectorRef)  {
   }
  
-  // ngAfterViewInit() {
-  //   this.doctor = this.doctor[0];
-  //   this.cdr.detectChanges();
-
-  // }
 
   ngOnInit(): void {
     this.getLoginFromUrl().then(() => this.getDoctor());

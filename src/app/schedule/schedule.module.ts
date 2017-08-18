@@ -6,18 +6,24 @@ import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { RouterModule } from "@angular/router";
 import { ScheduleComponent } from "app/schedule/schedule.component";
+import { CalendarComponent } from "app/schedule/calendar.component";
 
 @NgModule({
     declarations: [
-        ScheduleComponent
+        ScheduleComponent,
+        CalendarComponent
     ],
     imports: [
         SharedModule,
         BrowserModule,
         FormsModule,
+        RouterModule,
         HttpModule,
     ],
-    exports: [ScheduleComponent],
+    exports: [
+        ScheduleComponent,
+        CalendarComponent
+    ],
     providers: [],
 })
 export class ScheduleModule {}

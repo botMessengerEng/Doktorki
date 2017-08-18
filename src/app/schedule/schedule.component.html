@@ -1,18 +1,6 @@
-<div class='container'>
-  <nav class='menu'>
-    <div> Doktorki </div>
-    <div><a routerLink="/login" class='set'>schedule</a> </div>
-    <div> <a routerLink="/login">find patient</a> </div>
-    <div> <a [routerLink]="['/doctor', login, 'edit']">edit profile</a> </div>
-    <div><a routerLink="/login">log out</a> </div>
-  </nav>
-
-
-  <div class='content'>
-
-    <div>dzien tygodnia</div>
-    <div>hour</div>
-    <div>terminarz</div>
+<div class='content'>
+  <div> {{doctor.firstName}} {{doctor.lastName}} 21.08.2017(hardcodingmotzno)</div>
+  <div class='schedule'>
 
     <div class='minutes'>
       <div></div>
@@ -21,18 +9,15 @@
     </div>
 
     <div class='hours' *ngFor="let hour of hours; let i = index">
-      
+
       <div>{{hour}} </div>
-      
-            <div>xx </div>
-            <div>yy </div>
-            <div>zz </div>
-            <div>aa </div>
 
-      </div>
+      <div attr.id="{{hour}}:00" [ngStyle]='setButtons(hour, "00")'>{{hour}}:00  </div>
+      <div attr.id="{{hour}}:15" [ngStyle]='setButtons(hour, "15")'>{{hour}}:15 </div>
+      <div attr.id="{{hour}}:30" [ngStyle]='setButtons(hour, "30")'>{{hour}}:30 </div>
+      <div attr.id="{{hour}}:45" [ngStyle]='setButtons(hour, "45")'>{{hour}}:45 </div>
 
-
-
+    </div>
 
 
   </div>

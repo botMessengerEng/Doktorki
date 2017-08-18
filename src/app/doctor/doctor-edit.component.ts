@@ -9,15 +9,15 @@ import { SharedModule } from '../shared/shared.module';
   template: `   <div class='container'>
                   <nav class='menu'>
                     <div> Doktorki </div>
-                    <div><a routerLink="/login">schedule</a> </div>
+                    <div><a [routerLink]="['/doctor', login, 'schedule']">schedule</a> </div>
                     <div> <a routerLink="/login">find patient</a> </div>
                     <div> <a [routerLink]="['/doctor', login, 'edit']" class='set'>edit profile</a> </div>
                     <div><a routerLink="/login">log out</a> </div>
                 </nav>
-
               <div class='content'>
                 <div *ngIf="doctor!=undefined"><app-doctor-edit-form [doctor]="doctor[0]" [admin]="false"></app-doctor-edit-form>
-              </div> `,
+            </div>
+              </div> </div> `,
 
   styleUrls: ['./doctor-style.css', '../shared/layout.css']
 

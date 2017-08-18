@@ -1,0 +1,27 @@
+<div class='calender'>
+    <div class='year'>2017</div>
+    <div class='month'>{{monthName}}</div>
+    <div class='days'>
+        <div>Monday</div>
+        <div>Tuesday</div>
+        <div>Wensday</div>
+        <div>Thursday</div>
+        <div>Friday</div>
+        <div>Saturday</div>
+        <div>Sunday</div>
+    </div>
+
+
+        <div class='day'>
+            <div *ngFor="let day of days; let i = index">
+                    <div attr.id="{{day}}" [ngStyle]='{"background-color" : (day===today) ? "#003d66" : "white"}'>
+
+                        <a  [routerLink]= "['/doctor', login, 'schedule', year, monthNumber, day]"  [ngStyle]='{
+                                                       "color": (day===today) ? "white" : "002e4d"}'>
+                        {{day}}</a></div>
+            </div>       
+        </div>
+
+
+</div>
+
