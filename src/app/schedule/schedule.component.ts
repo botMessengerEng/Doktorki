@@ -26,7 +26,6 @@ export class ScheduleComponent implements OnInit {
     ngOnInit() {
         setTimeout(() => this.appointmentHoursGenerator(), 0);
          this.dayOfWeek=this.date.getDay()
-         console.log(this.date.getDay());
         }
 
     appointmentHoursGenerator() {

@@ -1,5 +1,5 @@
 <div class='content'>
-  <div> {{doctor.firstName}} {{doctor.lastName}} 21.08.2017(hardcodingmotzno)</div>
+  <div> {{doctor.firstName}} {{doctor.lastName}} {{date.getDate()}}.{{date.getMonth()+1 < 10 ? ('0'+( date.getMonth()+1)) : date.getMonth()+1 }}.{{date.getFullYear()}}</div>
   <div class='schedule'>
 
     <div class='minutes'>

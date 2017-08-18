@@ -51,7 +51,7 @@ export class CalendarComponent {
             return { "background-color": "#003d66" }
         }
         else {
-             return { "background-color": "white" }
+            return { "background-color": "white" }
         }
     }
 
@@ -59,7 +59,8 @@ export class CalendarComponent {
         if (day === this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year) {
             return { "color": "white" }
         }
-        else if ((day < this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year) || (day > this.currentDay && i < 6 ) || (day < this.currentDay && i > 29 )) {
+        else if ((day < this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year)
+            || (day > this.currentDay && i < 6) || (day < this.currentDay && i > 29)) {
             return {
                 "color": "#d9d9d9",
                 "pointer-events": "none"
