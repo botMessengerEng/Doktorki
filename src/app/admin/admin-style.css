@@ -216,3 +216,14 @@ p{
     font-weight: bold;
 }
 
+
+.pagination /deep/ .ngx-pagination {
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .pagination /deep/ .ngx-pagination .current {
+    background: #002e4d;
+    font-size: 14px;
+  }
+  

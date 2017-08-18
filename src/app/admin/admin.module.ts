@@ -8,6 +8,7 @@ import { DoctorEditComponent } from './doctor-edit.component';
 import { DoctorAddComponent } from './doctor-add.component';
 import { PatientAddComponent } from './patient-add.component';
 import { SharedModule } from '../shared/shared.module';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    NgxPaginationModule,
     RouterModule.forChild([
        { path: 'admin/manage/doctors', component: DoctorsManageComponent},
        { path: 'admin/edit/doctor/:login', component: DoctorEditComponent},

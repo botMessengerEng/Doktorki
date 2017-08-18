@@ -27,7 +27,7 @@
         </div>
 
 
-        <div *ngFor='let doctor of doctors | firstlastNameFilter:doctorFilter'>
+        <div *ngFor='let doctor of doctors | firstlastNameFilter:doctorFilter  | paginate: { itemsPerPage: 9, currentPage: p }'>
             <table class='table-of-doctor' *ngIf='doctors && doctors.length' [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#003d66" : "#fafafa",
                                  "border-color": (doctor === selectedDoctor) ? "#003d66" : "#fafafa"} '>
                 <thead>
@@ -73,6 +73,9 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="pagination">
+            <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
         </div>
     </div>
 </div>
