@@ -1,4 +1,5 @@
 .details-of-what {
+    margin-top:3%;
     display: grid;
     grid-template-columns: 45% 45%; 
     grid-gap: 50px;
@@ -15,8 +16,8 @@
     align-self: start;
     font-weight: bold;
     background-color: #fafafa;
-    border-radius: 2px;
-    padding:20px;
+    border-radius: 12px;
+    padding: 20px;
 }
 
 .details-of-what .details-of-something .normal-data{
@@ -29,3 +30,17 @@
 .details-of-what .details-of-something .normal-data div{
     padding-bottom: 2%;
 }
+
+.details-of-what .details-of-something .table-of-details{
+    margin-top: 2%;
+    grid-template-columns: 20% 45%; 
+    text-align: left;
+    align-self: start;
+    grid-row-gap: 0px;
+}
+
+.details-of-what .details-of-something .table-of-details div{
+    padding-bottom: 2%;
+
+}
+

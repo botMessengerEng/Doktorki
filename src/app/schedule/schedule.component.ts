@@ -14,8 +14,8 @@ export class ScheduleComponent implements OnInit {
     dayOfWeek: any;
     daysArray = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
     appointmentsArray = new Array();
-    private minutes = ['00', '15', '30', '45'];
-    private hours = [];
+    minutes = ['00', '15', '30', '45'];
+    hours = [];
 
     constructor(private appService: AppService) {
         for (let i = 6; i < 23; i++) {
@@ -35,7 +35,10 @@ export class ScheduleComponent implements OnInit {
         }
 
     }
-    setButtons(i: number, m: string) {
+    setButtons(i:any, m: string) {
+        if (i<10) {
+            i='0'+i;
+        }
         let hour = i + ':' + m;
         let transformedHour = parseInt(i + m);
         var re = /:/gi;

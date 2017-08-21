@@ -72,7 +72,7 @@ export class DoctorScheduleComponent implements OnInit {
 
   getDoctorAppointments(){
     this.appService.findVisits({ login: this.login, date: { year: this.date.getFullYear(),
-                                                            month: this.monthArray[this.date.getMonth()],
+                                                            month: this.date.getMonth()+1,
                                                             day: this.date.getDate()
                                                           }
     }).subscribe((appointments) => this.appointments = appointments);

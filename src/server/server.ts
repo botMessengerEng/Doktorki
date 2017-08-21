@@ -223,7 +223,7 @@ app.listen(3000, function () {
 app.route('/schedule')
     .get(async (req: express.Request, res: express.Response) => {
         try {
-            const result = await mongoSchedule.findElement({});
+            const result = await mongoSchedule.showElements();
             res.json(result);
         } catch (err) {
             res.send(err);
@@ -250,6 +250,15 @@ app.route('/schedule')
             res.send(err);
         }
     });
+
+app.get('/schedule/:param', async (req: express.Request, res: express.Response) => {
+    try {
+        const result = await mongoSchedule.showElements({ 'date.year': 1, 'date.month': 1, 'date.day': 1, 'date.hour': 1}, +req.param('param'));
+        res.json(result);
+    } catch (err) {
+        res.send(err);
+    }
+});
 ///-----------------DataBase Init path -----------------///
 app.get('/init-db', async (req: express.Request, res: express.Response) => {
     try {
@@ -1071,9 +1080,9 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "doctor",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 21,
-                        "hour": "8:00"
+                        "hour": "08:00"
                     },
                     "patient": {
                         "login": "patient",
@@ -1084,7 +1093,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "doctor",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 21,
                         "hour": "10:00"
                     },
@@ -1097,7 +1106,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "doctor",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 21,
                         "hour": "13:30"
                     },
@@ -1110,7 +1119,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "doctor",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 21,
                         "hour": "12:00"
                     },
@@ -1123,7 +1132,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "doctor",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 21,
                         "hour": "12:30"
                     },
@@ -1136,7 +1145,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "doctor",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 21,
                         "hour": "12:45"
                     },
@@ -1149,7 +1158,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "doctor",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 21,
                         "hour": "11:15"
                     },
@@ -1162,9 +1171,9 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "doctor",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 21,
-                        "hour": "9:15"
+                        "hour": "09:15"
                     },
                     "patient": {
                         "login": "Heisenberg",
@@ -1175,9 +1184,9 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "doctor",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 21,
-                        "hour": "9:45"
+                        "hour": "09:45"
                     },
                     "patient": {
                         "login": "Jesse",
@@ -1188,7 +1197,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "doctor",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 21,
                         "hour": "13:45"
                     },
@@ -1201,7 +1210,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "lolek",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 25,
                         "hour": "13:15"
                     },
@@ -1214,7 +1223,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "lolek",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 25,
                         "hour": "15:45"
                     },
@@ -1227,7 +1236,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "lolek",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 24,
                         "hour": "12:45"
                     },
@@ -1240,7 +1249,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "doktorBezUprawnien",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 24,
                         "hour": "18:30"
                     },
@@ -1253,7 +1262,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "doktorBezUprawnien",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 24,
                         "hour": "19:15"
                     },
@@ -1266,9 +1275,9 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "doktorBezUprawnien",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 30,
-                        "hour": "9:15"
+                        "hour": "09:15"
                     },
                     "patient": {
                         "login": "synJacka",
@@ -1279,7 +1288,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     "login": "Brooke",
                     "date": {
                         "year":2017,
-                        "month": "August",
+                        "month": 8,
                         "day": 24,
                         "hour": "21:15"
                     },
@@ -1293,6 +1302,6 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
 
             res.json(result);
     } catch (err) {
-        res.send(err);
+        res.json(err);
     }
 });

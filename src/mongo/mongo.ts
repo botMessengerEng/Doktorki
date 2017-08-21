@@ -17,8 +17,8 @@ export class MongoCollection {
       return new Promise ((resolve) => resolve(result));
     }
 
-    async showElements() {
-      const result = await this.collection.find({}).sort({ lastName: 1, firstName: 1}).toArray();
+    async showElements( sortParam?, limitParam?: number) {
+      const result = await this.collection.find({}).sort(sortParam ? sortParam : { lastName: 1, firstName: 1}).limit(limitParam ? limitParam : 0).toArray();
       return new Promise(resolve => resolve(result));
     }
 

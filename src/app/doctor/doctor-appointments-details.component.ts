@@ -16,8 +16,8 @@ import { SharedModule } from '../shared/shared.module';
                 </nav>
 
               <div class='content'>
-              <div *ngIf="patient!=undefined && appointment!=undefined">
-              <app-appontments-details [patient]="patient[0]" [appointment]="appointment[0]"></app-appontments-details>
+              <div *ngIf="patient!=undefined && singleAppointment!=undefined">
+              <app-appontments-details [patient]="patient[0]" [appointment]="singleAppointment"></app-appontments-details>
               </div>
               </div>
               </div> `,
@@ -32,7 +32,8 @@ export class DoctorAppointmentsDetailsComponent implements OnInit {
   doctor: any;
   genders = ['male', 'female'];
   day: any;
-  appointment: any;
+  appointments: any;
+  singleAppointment:any;
   date = new Date();
   hour: any;
   minutes: any;
@@ -51,7 +52,8 @@ export class DoctorAppointmentsDetailsComponent implements OnInit {
       .then(() => this.getHourFromUrl())
       .then(() => this.changeHourMinutesFormat())
       .then(() => this.getDoctorAppointments())
-      .then(param => this.appointment = param)
+      .then(param => this.appointments = param)
+      .then(() => this.getDoctorSingleAppointment())
       .then(() => this.getPatient());
   }
 
@@ -87,22 +89,31 @@ export class DoctorAppointmentsDetailsComponent implements OnInit {
     return this.appService.findVisits({
       login: this.login, date: {
         year: this.date.getFullYear(),
-        month: this.monthArray[this.date.getMonth() + 1],
+        month: this.date.getMonth()+1,
         day: this.date.getDate(),
-        hour: this.hourValidFormat
       }
     }).toPromise();
     // .subscribe((appointments) => this.appointments = appointments);
   }
 
 
+  getDoctorSingleAppointment(){
+     this.singleAppointment = this.appointments.find((element) => this.hourValidFormat == element.date.hour)
+     console.log(this.singleAppointment);
+       return new Promise(resolve => {
+      resolve(true);
+    });
+  }
+  
   getPatient() {
-    if (this.appointment != undefined) {
-      console.log(this.appointment[0].patient.login);
-      this.appService.findPatient({ login: this.appointment[0].patient.login })
+    if (this.singleAppointment != undefined) {
+      console.log(this.singleAppointment.patient.login);
+      this.appService.findPatient({ login: this.singleAppointment.patient.login })
         .subscribe((patient) => this.patient = patient);
     }
   }
+
+  
 
 }
 

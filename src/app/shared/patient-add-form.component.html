@@ -75,19 +75,19 @@
                 <div><label for="year">year: </label></div>
                 <div><select [(ngModel)]="patient.dateOfBirth.year" formControlName="year" placeholder="year">
                 <option value="" disabled selected hidden>select year of birth</option>
-                  <option *ngFor="let year of yearsArray" [value]="year">{{year}}</option>
+                  <option *ngFor="let year of dataArrays.yearsArray" [value]="year">{{year}}</option>
                   </select></div>
                 <div><label for="month">month: </label></div>
                 <div><select [(ngModel)]="patient.dateOfBirth.month" formControlName="month" placeholder="month">
                 <option value="" disabled selected hidden>select month of birth</option>
-                  <option *ngFor="let month of monthsArray" [value]="month">{{month}}</option>
+                  <option *ngFor="let month of dataArrays.monthsArray" [value]="month">{{month}}</option>
                   </select></div>
 
 
                 <div style='margin-bottom:20px'><label for="day">day: </label></div>
                 <div><select [(ngModel)]="patient.dateOfBirth.day" formControlName="day" placeholder="day" style='margin-bottom:20px'>
                  <option value="" disabled selected hidden>select day of birth</option>
-                <option *ngFor="let day of daysArray" [value]="day">{{day}}</option>
+                <option *ngFor="let day of dataArrays.daysArray" [value]="day">{{day}}</option>
                   </select>
                     <div class='info' *ngIf='patientForm.get("dayMonthGroup").errors && (patientForm.get("dayMonthGroup").touched || patientForm.get("dayMonthGroup").dirty)'>
                         <div class='to-fill' [hidden]="!patientForm.get('email').errors?.months">Bad</div>

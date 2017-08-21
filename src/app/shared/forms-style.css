@@ -108,3 +108,15 @@ select {
     font-size: 50%;
 }
 
+.invalid{
+    background-color:#ffdddd !important;
+    border: 0.3px solid #ffcccc;
+    border-radius: 5px;
+     padding-top:1%;
+    padding-bottom: 1%;
+    text-align: left !important;
+    color:  #660000;
+    font-size: 100%;
+    margin-top: 2%;
+    margin-bottom: 4%;
+ }
