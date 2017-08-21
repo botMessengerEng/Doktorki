@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppService } from "app/app.service";
+import { Calendar } from "app/classes/calendar";
 
 @Component({
     selector: 'app-schedule',
@@ -10,7 +11,7 @@ export class ScheduleComponent implements OnInit {
     @Input() doctor: any;
     @Input() appointments;
     @Input() date;
-    dayOfWeek:any;
+    dayOfWeek: any;
     daysArray = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
     appointmentsArray = new Array();
     private minutes = ['00', '15', '30', '45'];
@@ -25,8 +26,8 @@ export class ScheduleComponent implements OnInit {
 
     ngOnInit() {
         setTimeout(() => this.appointmentHoursGenerator(), 0);
-         this.dayOfWeek=this.date.getDay()
-        }
+        this.dayOfWeek = this.date.getDay()
+    }
 
     appointmentHoursGenerator() {
         for (let i = 0; i < this.appointments.length; i++) {
@@ -38,15 +39,16 @@ export class ScheduleComponent implements OnInit {
         let hour = i + ':' + m;
         let transformedHour = parseInt(i + m);
         var re = /:/gi;
-        let transformedStartHour = parseInt(this.doctor.workingHours[(this.daysArray[this.dayOfWeek==0 ? 6 : this.dayOfWeek-1]).toString()].start.replace(re, ""));
-        let transformedEndHour = parseInt(this.doctor.workingHours[(this.daysArray[this.dayOfWeek==0 ? 6 : this.dayOfWeek-1]).toString()].end.replace(re, ""));
+        let transformedStartHour = parseInt(this.doctor.workingHours[(this.daysArray[this.dayOfWeek == 0 ? 6 : this.dayOfWeek - 1]).toString()].start.replace(re, ""));
+        let transformedEndHour = parseInt(this.doctor.workingHours[(this.daysArray[this.dayOfWeek == 0 ? 6 : this.dayOfWeek - 1]).toString()].end.replace(re, ""));
 
 
         if (this.appointments != undefined && this.appointmentsArray != undefined) {
             let styles;
             if (transformedHour < transformedStartHour || transformedHour >= transformedEndHour || (!transformedEndHour && !transformedStartHour)) {
-                return { 'background-color': '#fafafa',
-                          'color': '#d9d9d9' };
+                return {
+                    'background-color': '#fafafa',
+                };
             }
 
             else if (this.appointmentsArray.find((element) => hour == element)) {
@@ -59,5 +61,29 @@ export class ScheduleComponent implements OnInit {
         }
     }
 
+    setInactiveHours(i: number, m: string) {
+        let hour = i + ':' + m;
+        let transformedHour = parseInt(i + m);
+        var re = /:/gi;
+        let transformedStartHour = parseInt(this.doctor.workingHours[(this.daysArray[this.dayOfWeek == 0 ? 6 : this.dayOfWeek - 1]).toString()].start.replace(re, ""));
+        let transformedEndHour = parseInt(this.doctor.workingHours[(this.daysArray[this.dayOfWeek == 0 ? 6 : this.dayOfWeek - 1]).toString()].end.replace(re, ""));
 
+
+        if (this.appointments != undefined && this.appointmentsArray != undefined) {
+            let styles;
+            if (transformedHour < transformedStartHour || transformedHour >= transformedEndHour || (!transformedEndHour && !transformedStartHour)) {
+                return {
+                    'color': '#d9d9d9',
+                    'text-decoration': 'none',
+                    'pointer-events': 'none'
+                };
+            }
+            else{
+                return {
+                    'color': '#002e4d',
+                    'text-decoration': 'none'
+                };
+            }
+        }
+    }
 }

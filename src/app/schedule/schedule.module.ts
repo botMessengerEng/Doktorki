@@ -2,27 +2,30 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from "@angular/platform-browser";
 import { SharedModule } from "app/shared/shared.module";
-import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { RouterModule } from "@angular/router";
 import { ScheduleComponent } from "app/schedule/schedule.component";
 import { CalendarComponent } from "app/schedule/calendar.component";
+import { AppointmentsDetailsComponent } from "app/schedule/appointments-details.component";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
         ScheduleComponent,
-        CalendarComponent
+        CalendarComponent,
+        AppointmentsDetailsComponent
     ],
     imports: [
         SharedModule,
         BrowserModule,
-        FormsModule,
+        ReactiveFormsModule,
         RouterModule,
         HttpModule,
     ],
     exports: [
         ScheduleComponent,
-        CalendarComponent
+        CalendarComponent,
+        AppointmentsDetailsComponent
     ],
     providers: [],
 })

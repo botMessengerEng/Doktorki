@@ -11,12 +11,14 @@ import { DoctorEditComponent } from './doctor-edit.component';
 import { SharedModule } from '../shared/shared.module';
 import { ScheduleModule } from '../schedule/schedule.module';
 import { DoctorScheduleComponent } from './doctor-schedule.component';
+import { DoctorAppointmentsDetailsComponent } from 'app/doctor/doctor-appointments-details.component';
 
 @NgModule({
   declarations: [
     DoctorComponent,
     DoctorEditComponent,
-    DoctorScheduleComponent
+    DoctorScheduleComponent,
+    DoctorAppointmentsDetailsComponent
   ],
   imports: [
     SharedModule,
@@ -28,7 +30,8 @@ import { DoctorScheduleComponent } from './doctor-schedule.component';
       { path: 'doctor/:login', component: DoctorComponent },
       { path: 'doctor/:login/edit', component: DoctorEditComponent },
       { path: 'doctor/:login/schedule', component: DoctorComponent },
-      { path: 'doctor/:login/schedule/:year/:month/:day', component: DoctorScheduleComponent }
+      { path: 'doctor/:login/schedule/:year/:month/:day', component: DoctorScheduleComponent },
+      { path: 'doctor/:login/schedule/:year/:month/:day/:hour/:minutes', component: DoctorAppointmentsDetailsComponent }
     ])
   ],
 

@@ -240,7 +240,7 @@ app.route('/schedule')
     .post(async (req: express.Request, res: express.Response) => {
         try {
             const result = await mongoSchedule.findElement( {login: req.body.login,
-                                                            'date.hour': {$regex: /.*?/},
+                                                            'date.hour': req.body.date.hour ? req.body.date.hour : {$regex: /.*?/},
                                                             'date.year': req.body.date.year,
                                                             'date.month': req.body.date.month,
                                                             'date.day': req.body.date.day}

@@ -37,6 +37,7 @@ export class DoctorScheduleComponent implements OnInit {
     private appService: AppService,
     private route: ActivatedRoute) {
   }
+  monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'Novermber', 'December']
 
    ngOnInit(): void {
     this.getLoginFromUrl()
@@ -71,7 +72,7 @@ export class DoctorScheduleComponent implements OnInit {
 
   getDoctorAppointments(){
     this.appService.findVisits({ login: this.login, date: { year: this.date.getFullYear(),
-                                                            month: 'August',
+                                                            month: this.monthArray[this.date.getMonth()],
                                                             day: this.date.getDate()
                                                           }
     }).subscribe((appointments) => this.appointments = appointments);
