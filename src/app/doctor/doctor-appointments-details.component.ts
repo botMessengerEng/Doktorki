@@ -16,8 +16,8 @@ import { SharedModule } from '../shared/shared.module';
                 </nav>
 
               <div class='content'>
-              <div *ngIf="patient!=undefined && singleAppointment!=undefined">
-              <app-appontments-details [patient]="patient[0]" [appointment]="singleAppointment"></app-appontments-details>
+              <div *ngIf="patient!=undefined && singleAppointment!=undefined && doctor!=undefined">
+              <app-appontments-details [patient]="patient[0]" [singleAppointment]="singleAppointment" [appointments]="appointments" [doctor]="doctor[0]"></app-appontments-details>
               </div>
               </div>
               </div> `,
@@ -48,6 +48,8 @@ export class DoctorAppointmentsDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLoginFromUrl()
+      .then(() => this.getDoctor())
+      .then(param => this.doctor = param)
       .then(() => this.getDateFromUrl())
       .then(() => this.getHourFromUrl())
       .then(() => this.changeHourMinutesFormat())
@@ -62,6 +64,11 @@ export class DoctorAppointmentsDetailsComponent implements OnInit {
     return new Promise(resolve => {
       resolve(true);
     });
+  }
+
+  getDoctor() {
+      return this.appService.postQuery({ login: this.login }).toPromise();
+        // .subscribe((doctor) => this.doctor = doctor);
   }
 
   getDateFromUrl() {
@@ -99,7 +106,7 @@ export class DoctorAppointmentsDetailsComponent implements OnInit {
 
   getDoctorSingleAppointment(){
      this.singleAppointment = this.appointments.find((element) => this.hourValidFormat == element.date.hour)
-     console.log(this.singleAppointment);
+     console.log(this.appointments);
        return new Promise(resolve => {
       resolve(true);
     });

@@ -251,9 +251,9 @@ app.route('/schedule')
         }
     });
 
-app.get('/schedule/:param', async (req: express.Request, res: express.Response) => {
+app.post('/schedule/:param', async (req: express.Request, res: express.Response) => {
     try {
-        const result = await mongoSchedule.showElements({ 'date.year': 1, 'date.month': 1, 'date.day': 1, 'date.hour': 1}, +req.param('param'));
+        const result = await mongoSchedule.findElement({login: req.body.login}, { 'date.year': 1, 'date.month': 1, 'date.day': 1, 'date.hour': 1}, +req.param('param'));
         res.json(result);
     } catch (err) {
         res.send(err);

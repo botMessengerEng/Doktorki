@@ -6,8 +6,10 @@
         <div> <a [routerLink]="['/doctor', login, 'edit']">edit profile</a> </div>
         <div><a routerLink="/login">log out</a> </div>
     </nav>
-    <div class='content'>
-        TU BĘDZIE SUPIX ROZPISKA HEHEH (^_^)
+    <div class='content' *ngIf='visits && visits.length'>
+        <div *ngFor = 'let visit of visits'>
+            {{visit.date.hour}}
+        </div>
 
     </div>
 </div>

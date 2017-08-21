@@ -76,7 +76,8 @@ export class Patient {
         this.dateOfBirth.day = day;
         this.PESEL = PESEL;
     }
-
-
 }
+
+
+
 

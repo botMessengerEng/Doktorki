@@ -77,8 +77,8 @@ export class AppService {
             .catch(this.handlerError);
     }
 
-    findVisits(param): Observable<string> {
-        return this._http.post(this._dataBaseUrlSchedule, param)
+    findVisits(param, params?): Observable<string> {
+        return this._http.post(params ? this._dataBaseUrlSchedule + '/' + params : this._dataBaseUrlSchedule, param)
             .map((response: Response) => response.json())
             .do(data => console.log('All: ' + JSON.stringify(data)))
             .catch(this.handlerError);

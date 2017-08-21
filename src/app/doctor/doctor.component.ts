@@ -11,8 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 export class DoctorComponent implements OnInit{
   login: string;
   errorMessage: any;
-  doctor: any;
-  genders = ['male', 'female'];
+  visits;
 
   constructor(private router: Router,
     private appService: AppService,
@@ -21,6 +20,8 @@ export class DoctorComponent implements OnInit{
 
   ngOnInit(): void {
    this.login = this.route.snapshot.params['login'];
+   this.appService.findVisits({login: this.login}, 5)
+    .subscribe(response => this.visits = response);
   }
 
 
