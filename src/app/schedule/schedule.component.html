@@ -1,44 +1,42 @@
-<div class='content'>
-  <div> {{doctor.firstName}} {{doctor.lastName}} {{date.getDate()}}.{{date.getMonth()+1
-    < 10 ? ( '0'+( date.getMonth()+1)) : date.getMonth()+1 }}.{{date.getFullYear()}}</div>
-      <div class='schedule'>
+<div> {{doctor.firstName}} {{doctor.lastName}} {{date.getDate()}}.{{date.getMonth()+1
+  < 10 ? ( '0'+( date.getMonth()+1)) : date.getMonth()+1 }}.{{date.getFullYear()}}</div>
+    <div class='schedule'>
 
-        <div class='minutes'>
-          <div></div>
-          <div *ngFor="let min of minutes; let i = index">{{min}} </div>
+      <div class='minutes'>
+        <div></div>
+        <div *ngFor="let min of minutes; let i = index">{{min}} </div>
 
-        </div>
+      </div>
 
-        <div class='hours' *ngFor="let hour of hours; let i = index">
+      <div class='hours' *ngFor="let hour of hours; let i = index">
 
-          <div>{{hour}} </div>
+        <div>{{hour}} </div>
 
-          <div attr.id="{{hour}}:00" [ngStyle]='setButtons(hour, "00")'>
-            <a [routerLink]="['/doctor', doctor.login, 'schedule', date.getFullYear(), date.getMonth() + 1 , date.getDate(), hour < 10 ? '0' +hour : hour, '00']"
-              [ngStyle]='setInactiveHours(hour, "00")'>
+        <div attr.id="{{hour}}:00" [ngStyle]='setButtons(hour, "00")'>
+          <a [routerLink]="['/doctor', doctor.login, 'schedule', date.getFullYear(), date.getMonth() + 1 , date.getDate(), hour < 10 ? '0' +hour : hour, '00']"
+            [ngStyle]='setInactiveHours(hour, "00")'>
             {{hour}}:00 
         </a>
-          </div>
+        </div>
 
-          <div attr.id="{{hour}}:15" [ngStyle]='setButtons(hour, "15")'>
-            <a [routerLink]="['/doctor', doctor.login, 'schedule', date.getFullYear(), date.getMonth() + 1 , date.getDate(), hour < 10 ? '0' +hour : hour, '15']"
-              [ngStyle]='setInactiveHours(hour, "15")'>
+        <div attr.id="{{hour}}:15" [ngStyle]='setButtons(hour, "15")'>
+          <a [routerLink]="['/doctor', doctor.login, 'schedule', date.getFullYear(), date.getMonth() + 1 , date.getDate(), hour < 10 ? '0' +hour : hour, '15']"
+            [ngStyle]='setInactiveHours(hour, "15")'>
             {{hour}}:15
           </a>
-          </div>
-          <div attr.id="{{hour}}:30" [ngStyle]='setButtons(hour, "30")'>
-            <a [routerLink]="['/doctor', doctor.login, 'schedule', date.getFullYear(), date.getMonth() + 1 , date.getDate(), hour < 10 ? '0' +hour : hour, '30']"
-              [ngStyle]='setInactiveHours(hour, "30")'>
+        </div>
+        <div attr.id="{{hour}}:30" [ngStyle]='setButtons(hour, "30")'>
+          <a [routerLink]="['/doctor', doctor.login, 'schedule', date.getFullYear(), date.getMonth() + 1 , date.getDate(), hour < 10 ? '0' +hour : hour, '30']"
+            [ngStyle]='setInactiveHours(hour, "30")'>
             {{hour}}:30
           </a></div>
-          <div attr.id="{{hour}}:45" [ngStyle]='setButtons(hour, "45")'>
-            <a [routerLink]="['/doctor', doctor.login, 'schedule', date.getFullYear(), date.getMonth() + 1 , date.getDate(), hour < 10 ? '0' +hour : hour, '45']"
-              [ngStyle]='setInactiveHours(hour, "45")'>
+        <div attr.id="{{hour}}:45" [ngStyle]='setButtons(hour, "45")'>
+          <a [routerLink]="['/doctor', doctor.login, 'schedule', date.getFullYear(), date.getMonth() + 1 , date.getDate(), hour < 10 ? '0' +hour : hour, '45']"
+            [ngStyle]='setInactiveHours(hour, "45")'>
             {{hour}}:45
           </a> </div>
 
-        </div>
-
-
       </div>
-  </div>
+
+
+    </div>
