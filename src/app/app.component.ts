@@ -1,10 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AppService } from 'app/app.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.css']
 })
-export class AppComponent {
-  title = 'app works!';
+export class AppComponent implements OnInit {
+    url: string;
+
+    constructor(private appService: AppService) { }
+    
+    ngOnInit() {
+        setTimeout(() => this.url = this.appService.url , 0);
+    }
+
+    callPath(){
+        console.log(this.appService.url);
+    }
 }
+
+

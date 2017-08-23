@@ -1,36 +1,23 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
-import { PatientAddFormComponent } from './patient-add-form.component';
-import { DoctorEditFormComponent } from './doctor-edit-form.component';
-import { PatientEditFormComponent } from './patient-edit-form.component';
-import { NameFilterPipe } from './name-filter.pipe';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
+import { MenuComponent } from 'app/shared/menu/menu.component';
+import { ManageUserComponent } from 'app/shared/manage-user/manage-user.component';
 
 @NgModule({
-  declarations: [
-      PatientAddFormComponent,
-      DoctorEditFormComponent,
-      PatientEditFormComponent,
-      NameFilterPipe
-  ],
-
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpModule,
-  ],
-
-    exports: [
-      PatientAddFormComponent,
-      DoctorEditFormComponent,
-      PatientEditFormComponent,
-      NameFilterPipe
-    ]
-
-
+    declarations: [ 
+        MenuComponent,
+        ManageUserComponent
+    ],
+    imports: [ 
+        CommonModule,
+        ReactiveFormsModule
+     ],
+    exports: [  
+        MenuComponent,
+        ManageUserComponent,
+    ],
+    providers: [],
 })
-export class SharedModule { }
+export class SharedModule {}

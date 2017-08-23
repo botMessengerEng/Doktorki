@@ -50,12 +50,10 @@ app.post('/login', async (req: express.Request, res: express.Response) => {
         });
         if (user[0] !== undefined) {
             res.status(200).json(user[0]).end();
-            console.log('tak');
         }
         else{
             res.json('bledny login lub haslo');
-            console.log('nie');
-            console.log(user);
+            res.status(401);
         };
 });
 
@@ -153,7 +151,7 @@ app.post('/insert-doctor', async (req: express.Request, res: express.Response) =
 app.route('/patient-details')
     .get(async (req: express.Request, res: express.Response) => {
         try {
-            const result = await mongoDoctorDetails.findElement({});
+            const result = await mongoPatientDetails.findElement({});
             res.json(result);
         } catch (err) {
             res.send(err);
@@ -161,8 +159,20 @@ app.route('/patient-details')
     })
     .put(async (req: express.Request, res: express.Response) => {
         try {
-            const result = await mongoPatientDetails.updateElement(req.body);
-            res.json(result)
+            const result = await mongoPatientDetails.updateElement( 
+                {login: req.body.login,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                gender: req.body.gender,
+                phone: req.body.phone,
+                email: req.body.email,
+                dateOfBirth: {
+                    year: req.body.dateOfBirth.year,
+                    month: req.body.dateOfBirth.month,
+                    day: req.body.dateOfBirth.day
+                },
+                PESEL: req.body.PESEL});
+            res.json(result);
         } catch (err) {
             res.send(err);
         }
@@ -197,7 +207,6 @@ app.post('/register', async (req: express.Request, res: express.Response) => {
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
                     gender: req.body.gender,
-                    age: req.body.age,
                     phone: req.body.phone,
                     email: req.body.email,
                     dateOfBirth: {
@@ -554,11 +563,11 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                             "end": "22:00"
                         },
                         "tuesday": {
-                            "start": "7:00",
+                            "start": "07:00",
                             "end": "15:30"
                         },
                         "wednesday": {
-                            "start": "6:00",
+                            "start": "06:00",
                             "end": "11:15"
                         },
                         "thursday": {
@@ -566,7 +575,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                             "end": "21:00"
                         },
                         "friday": {
-                            "start": "6:15",
+                            "start": "06:15",
                             "end": "13:00"
                         },
                         "saturday": {
@@ -595,15 +604,15 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     'specializations': [{'specialization':'logopeda'}],
                     "workingHours": {
                         "monday": {
-                            "start": "8:00",
+                            "start": "08:00",
                             "end": "14:00"
                         },
                         "tuesday": {
-                            "start": "7:30",
+                            "start": "07:30",
                             "end": "15:00"
                         },
                         "wednesday": {
-                            "start": "7:00",
+                            "start": "07:00",
                             "end": "18:00"
                         },
                         "thursday": {
@@ -640,7 +649,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     'specializations': [{'specialization':'od uszów'}],
                     "workingHours": {
                         "monday": {
-                            "start": "8:00",
+                            "start": "08:00",
                             "end": "16:15"
                         },
                         "tuesday": {
@@ -652,7 +661,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                             "end": "16:45"
                         },
                         "thursday": {
-                            "start": "9:15",
+                            "start": "09:15",
                             "end": "17:45"
                         },
                         "friday": {
@@ -689,11 +698,11 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                             "end": "19:15"
                         },
                         "tuesday": {
-                            "start": "7:00",
+                            "start": "07:00",
                             "end": "14:30"
                         },
                         "wednesday": {
-                            "start": "8:15",
+                            "start": "08:15",
                             "end": "15:15"
                         },
                         "thursday": {
@@ -730,15 +739,15 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     'specializations': [{'specialization':'alergolog'}],
                     "workingHours": {
                        "monday": {
-                            "start": "8:00",
+                            "start": "08:00",
                             "end": "16:00"
                         },
                         "tuesday": {
-                            "start": "7:15",
+                            "start": "07:15",
                             "end": "15:30"
                         },
                         "wednesday": {
-                            "start": "6:00",
+                            "start": "06:00",
                             "end": "14:00"
                         },
                         "thursday": {
@@ -775,7 +784,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     'specializations': [{'specialization':'pediatra'}],
                     "workingHours": {
                         "monday": {
-                            "start": "9:00",
+                            "start": "09:00",
                             "end": "15:00"
                         },
                         "tuesday": {
@@ -791,7 +800,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                             "end": "21:15"
                         },
                         "friday": {
-                            "start": "6:45",
+                            "start": "06:45",
                             "end": "15:15"
                         },
                         "saturday": {
@@ -836,7 +845,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                             "end": "20:00"
                         },
                         "friday": {
-                            "start": "7:00",
+                            "start": "07:00",
                             "end": "15:00"
                         },
                         "saturday": {
@@ -869,11 +878,11 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                             "end": "15:00"
                         },
                         "tuesday": {
-                            "start": "7:00",
+                            "start": "07:00",
                             "end": "15:30"
                         },
                         "wednesday": {
-                            "start": "7:15",
+                            "start": "07:15",
                             "end": "15:15"
                         },
                         "thursday": {
@@ -881,7 +890,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                             "end": "22:00"
                         },
                         "friday": {
-                            "start": "9:00",
+                            "start": "09:00",
                             "end": "14:00"
                         },
                         "saturday": {
@@ -910,11 +919,11 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     'specializations': [{'specialization':'kardiolog'}],
                     "workingHours": {
                         "monday": {
-                            "start": "8:00",
+                            "start": "08:00",
                             "end": "15:00"
                         },
                         "tuesday": {
-                            "start": "7:00",
+                            "start": "07:00",
                             "end": "15:30"
                         },
                         "wednesday": {
@@ -955,7 +964,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     'specializations': [{'specialization':'okulista'}, {'specialization':'laryngolog'}],
                     "workingHours": {
                         "monday": {
-                            "start": "9:00",
+                            "start": "09:00",
                             "end": "14:00"
                         },
                         "tuesday": {
@@ -963,7 +972,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                             "end": "17:30"
                         },
                         "wednesday": {
-                            "start": "8:15",
+                            "start": "08:15",
                             "end": "14:15"
                         },
                         "thursday": {
@@ -971,7 +980,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                             "end": "21:00"
                         },
                         "friday": {
-                            "start": "9:00",
+                            "start": "09:00",
                             "end": "13:00"
                         },
                         "saturday": {
@@ -1008,7 +1017,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                             "end": "21:30"
                         },
                         "wednesday": {
-                            "start": "8:00",
+                            "start": "08:00",
                             "end": "15:15"
                         },
                         "thursday": {
@@ -1045,15 +1054,15 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     'specializations': [{'specialization':'chirurg'}, {'specialization':'od uszów'}],
                     "workingHours": {
                        "monday": {
-                            "start": "7:00",
+                            "start": "07:00",
                             "end": "14:00"
                         },
                         "tuesday": {
-                            "start": "7:15",
+                            "start": "07:15",
                             "end": "15:30"
                         },
                         "wednesday": {
-                            "start": "8:00",
+                            "start": "08:00",
                             "end": "12:15"
                         },
                         "thursday": {
@@ -1072,7 +1081,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                             "start": "",
                             "end": ""
                         }
-                    }    
+                    }
                 }
             ]),
             mongoSchedule.insertElements([
@@ -1086,7 +1095,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     },
                     "patient": {
                         "login": "patient",
-                        "description": "strzała w kolano"  
+                        "description": "strzała w kolano"
                     }
                 },
                 {
@@ -1112,7 +1121,7 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                     },
                     "patient": {
                         "login": "synJacka",
-                        "description": "złamałem nogę przez nie uwagę"  
+                        "description": "złamałem nogę przez nie uwagę"
                     }
                 },
                 {
@@ -1291,6 +1300,58 @@ app.get('/init-db', async (req: express.Request, res: express.Response) => {
                         "month": 8,
                         "day": 24,
                         "hour": "21:15"
+                    },
+                    "patient": {
+                        "login": "synJacka",
+                        "description": "choroba afrykańska(?)"
+                    }
+                },
+                {
+                    "login": "Brooke",
+                    "date": {
+                        "year":2017,
+                        "month": 8,
+                        "day": 24,
+                        "hour": "19:15"
+                    },
+                    "patient": {
+                        "login": "synJacka",
+                        "description": "choroba afrykańska(?)"
+                    }
+                },
+                {
+                    "login": "Brooke",
+                    "date": {
+                        "year":2017,
+                        "month": 8,
+                        "day": 24,
+                        "hour": "20:15"
+                    },
+                    "patient": {
+                        "login": "synJacka",
+                        "description": "choroba afrykańska(?)"
+                    }
+                },
+                {
+                    "login": "Brooke",
+                    "date": {
+                        "year":2017,
+                        "month": 8,
+                        "day": 24,
+                        "hour": "20:30"
+                    },
+                    "patient": {
+                        "login": "synJacka",
+                        "description": "choroba afrykańska(?)"
+                    }
+                },
+                {
+                    "login": "Brooke",
+                    "date": {
+                        "year":2017,
+                        "month": 8,
+                        "day": 25,
+                        "hour": "14:30"
                     },
                     "patient": {
                         "login": "synJacka",

@@ -1,0 +1,114 @@
+<app-menu></app-menu>
+<div class='content'>
+    <div class='names'>{{user.firstName}} {{user.lastName}}</div>
+    <div class='specialization'>{{user.PESEL}}</div><br>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class='form-style'>
+
+            <div><label for="firstName">first name: </label></div>
+            <div><input class='input-style' type='text' formControlName="firstName" placeholder="first name">
+                <div class='info' *ngIf='userForm.get("firstName").errors && (userForm.get("firstName").touched || userForm.get("firstName").dirty)'>
+                    <div class='to-fill' [hidden]="!userForm.get('firstName').errors.required">First name is required </div>
+                </div>
+            </div>
+
+            <div><label for="lastName">last name: </label></div>
+            <div><input class='input-style' type='text' formControlName="lastName" placeholder="last name">
+                <div class='info' *ngIf='userForm.get("lastName").errors && (userForm.get("lastName").touched || userForm.get("lastName").dirty)'>
+                    <div class='to-fill' [hidden]="!userForm.get('lastName').errors.required">Last name is required </div>
+                </div>
+            </div>
+
+            <div><label for="login">login: </label></div>
+            <div><input class='input-style' type='text' formControlName="login" placeholder="login">
+                <div class='info' *ngIf='userForm.get("login").errors && (userForm.get("login").touched || userForm.get("login").dirty)'>
+                    <div class='to-fill' [hidden]="!userForm.get('login').errors.required">Login is required </div>
+                    <div class='to-fill' [hidden]="!userForm.get('login').errors.minlength">At least 3 characters required </div>
+                </div>
+            </div>
+
+            <div><label for="password">password: </label></div>
+            <div><input class='input-style' type='text' formControlName="password" placeholder="password">
+                <div class='info' *ngIf='userForm.get("password").errors && (userForm.get("password").touched || userForm.get("password").dirty)'>
+                    <div class='to-fill' [hidden]="!userForm.get('password').errors.required">Password is required </div>
+                    <div class='to-fill' [hidden]="!userForm.get('password').errors.minlength">At least 8 characters required </div>
+                </div>
+            </div>
+
+            <div><label for="gender">gender: </label></div>
+            <div><select formControlName="gender" placeholder="gender">
+                 <option value="" disabled selected hidden>select gender</option>
+                  <option *ngFor="let gen of genders" [value]="gen">{{gen}}</option>
+                  </select>
+                <div class='info' *ngIf='userForm.get("gender").errors && (userForm.get("gender").touched || userForm.get("gender").dirty)'>
+                    <div class='to-fill' [hidden]="!userForm.get('gender').errors.required">Gender is required </div>
+                </div>
+            </div>
+
+            <div><label for="phone">phone: </label></div>
+            <div> <input class='input-style' type='text' formControlName="phone" placeholder="phone">
+                <div class='info' *ngIf='userForm.get("phone").errors && (userForm.get("phone").touched || userForm.get("phone").dirty)'>
+                    <div class='to-fill' [hidden]="!userForm.get('phone').errors.required">Phone is required </div>
+                </div>
+            </div>
+
+            <div style='margin-bottom:20px'><label for="email">email: </label></div>
+            <div style='margin-bottom:20px'> <input class='input-style' type='text' formControlName="email" placeholder="email">
+                <div class='info' *ngIf='userForm.get("email").errors && (userForm.get("email").touched || userForm.get("email").dirty)'>
+                    <div class='to-fill' [hidden]="!userForm.get('email').errors.pattern">Email is not valid</div>
+                    <div class='to-fill' [hidden]="!userForm.get('email').errors.required">Email is required </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div formGroupName="dayMonthGroup">
+            <div class='form-style'>
+                <div><label for="year">year: </label></div>
+                <div><select formControlName="year" placeholder="year">
+                <option value="" disabled selected hidden>select year of birth</option>
+                  <option *ngFor="let year of dateArrays.yearsArray" [value]="year">{{year}}</option>
+                  </select></div>
+                <div><label for="month">month: </label></div>
+                <div><select formControlName="month" placeholder="month">
+                <option value="" disabled selected hidden>select month of birth</option>
+                  <option *ngFor="let month of dateArrays.monthsArray" [value]="month">{{month}}</option>
+                  </select></div>
+
+
+                <div style='margin-bottom:20px'><label for="day">day: </label></div>
+                <div><select formControlName="day" placeholder="day" style='margin-bottom:20px'>
+                 <option value="" disabled selected hidden>select day of birth</option>
+                <option *ngFor="let day of dateArrays.daysArray" [value]="day">{{day}}</option>
+                  </select>
+                    <div class='info' *ngIf='userForm.get("dayMonthGroup").errors && (userForm.get("dayMonthGroup").touched || userForm.get("dayMonthGroup").dirty)'>
+                        <div class='to-fill' [hidden]="!userForm.get('email').errors?.months">Bad</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class='form-style'>
+
+            <div><label for="PESEL">PESEL: </label></div>
+            <div> <input class='input-style' type='text' formControlName="PESEL" placeholder="PESEL">
+                <div class='info' *ngIf='userForm.get("PESEL").errors && (userForm.get("PESEL").touched || userForm.get("PESEL").dirty)'>
+                    <div class='to-fill' [hidden]="!userForm.get('PESEL').errors.maxlength">PESEL is too long</div>
+                    <div class='to-fill' [hidden]="!userForm.get('PESEL').errors.minlength">PESEL is too short</div>
+                    <div class='to-fill' [hidden]="!userForm.get('PESEL').errors.required">PESEL is required </div>
+                    <div class='to-fill' [hidden]="!userForm.get('PESEL').errors.pattern">PESEL must be a number </div>
+                </div>
+            </div>
+            <div> 
+
+            </div>
+
+
+            <div style="text-align: right">
+                <button type="submit" class='option-button' [disabled]="!userForm.valid">Submit</button>
+            </div>
+        </div>
+    </form>
+    <div *ngIf='invalid' class='invalid'>Login is taken</div>
+</div>
