@@ -15,9 +15,6 @@ export class AppComponent implements OnInit {
         setTimeout(() => this.url = this.appService.url , 0);
     }
 
-    callPath(){
-        console.log(this.appService.url);
-    }
 }
 
 

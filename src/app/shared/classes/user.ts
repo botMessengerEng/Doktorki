@@ -4,11 +4,13 @@ export class User {
     role: string;
 }
 
-export class Doctor {
+export class UserDetails {
+    role = "doctor";
     login: string;
     password: string;
     firstName: string;
     lastName: string;
+    PESEL: number;
     gender: string;
     age: number;
     phone: string;
@@ -18,14 +20,35 @@ export class Doctor {
         postcode: '',
         city: ''
     }
+    workingHours = {
+        monday: {
+            start: '',
+            end: ''
+        },
+        tuesday: {
+            start: '',
+            end: ''
+        },
+        wednesday: {
+            start: '',
+            end: ''
+        },
+        thursday: {
+            start: '',
+            end: ''
+        },
+        friday: {
+            start: '',
+            end: ''
+        }
+    }
 
-    specializations: JSON [];
-
-    constructor(login,password,firstName,lastName,gender,age,phone,email,street,postcode,city,specializations) {
+        constructor(login, password, firstName, lastName, PESEL, gender, age, phone, email, street, postcode, city) {
         this.login = login;
         this.password = password;
         this.firstName = name;
         this.lastName = name;
+        this.PESEL = PESEL;
         this.gender = gender;
         this.age = age;
         this.phone = phone;
@@ -33,44 +56,5 @@ export class Doctor {
         this.address.street = street;
         this.address.postcode = postcode;
         this.address.city = city;
-        this.specializations = specializations;
-    }
-
-}
-
-
-export class Patient {
-    login: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    gender: string;
-    age: number;
-    phone: string;
-    email: string;
-    dateOfBirth = {
-        year: null,
-        month: null,
-        day: null
-    }
-    PESEL: string;
-
-    constructor(login,password,firstName,lastName,gender,age,phone,email,year,month,day,PESEL) {
-        this.login = login;
-        this.password = password;
-        this.firstName = name;
-        this.lastName = name;
-        this.gender = gender;
-        this.age = age;
-        this.phone = phone;
-        this.email = email;
-        this.dateOfBirth.year = year;
-        this.dateOfBirth.month = month;
-        this.dateOfBirth.day = day;
-        this.PESEL = PESEL;
     }
 }
-
-
-
-

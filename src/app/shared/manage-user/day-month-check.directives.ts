@@ -5,8 +5,8 @@ export function dayMonthCheck(c: AbstractControl): { [key: string]: boolean } | 
     const month = c.get('month');
     const day = c.get('day');
     const year = c.get('year');
-    const dateArrays= new DateArrays();
-    
+    const dateArrays = new DateArrays();
+
     if (month.value === 'February' && (day.value < 29 || (day.value == 29 && ((year.value % 100 === 0) ? (year.value % 400 === 0) : (year.value % 4 === 0))))) {
         return null;
     } else if (day.value < 31 && (month.value === dateArrays.monthsArray[3] ||

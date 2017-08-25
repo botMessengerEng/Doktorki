@@ -1,0 +1,6 @@
+<div *ngIf='url!="register"'>
+    <nav class='menu'>
+        <div *ngFor='let mContext of menuContext, let i=index' [routerLinkActive]="['active-link']">
+            <a [routerLink]="menuLinks[i]" [routerLinkActive]="['active-link-text']">{{mContext}}</a></div>
+    </nav>
+</div>

@@ -1,23 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { RouterModule } from '@angular/router';
 
-import { MenuComponent } from 'app/shared/menu/menu.component';
-import { ManageUserComponent } from 'app/shared/manage-user/manage-user.component';
+import { MenuComponent } from 'app/shared/menu/menu.component/menu.component';
+import { ManageUserComponent } from 'app/shared/manage-user/manage-user.component/manage-user.component';
+import { MenuService } from 'app/shared/menu/menu.service';
+import { NameFilterPipe } from 'app/shared/pipes/name-filter.pipe';
 
 @NgModule({
-    declarations: [ 
+    declarations: [
         MenuComponent,
-        ManageUserComponent
+        ManageUserComponent,
+        NameFilterPipe
     ],
     imports: [ 
         CommonModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        RouterModule
      ],
-    exports: [  
+    exports: [
         MenuComponent,
         ManageUserComponent,
+        NameFilterPipe
     ],
-    providers: [],
+    providers: [ MenuService ],
 })
 export class SharedModule {}

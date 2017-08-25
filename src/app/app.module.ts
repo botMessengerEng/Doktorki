@@ -6,9 +6,13 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+// import { AppRoutingModule } from 'app/app-routing.module';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { AdminModule } from 'app/admin/admin.module';
 import { SharedModule } from 'app/shared/shared.module';
+import { PatientModule } from 'app/patient/patient.module';
+
 
 @NgModule({
     declarations: [
@@ -20,6 +24,8 @@ import { SharedModule } from 'app/shared/shared.module';
         FormsModule,
         HttpModule,
         AuthModule,
+        AdminModule,
+        PatientModule,
         SharedModule,
         RouterModule.forRoot([
             { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -30,4 +36,4 @@ import { SharedModule } from 'app/shared/shared.module';
     providers: [AppService],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

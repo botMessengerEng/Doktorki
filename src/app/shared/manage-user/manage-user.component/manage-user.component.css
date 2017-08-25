@@ -1,13 +1,18 @@
+.form-divide{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
 .form-style {
     display: grid;
-    grid-template-columns: 15% 250px; 
+    grid-template-columns: 20% 250px; 
     grid-gap: 20px;
     justify-content: center; 
     grid-row-gap: 20px;
     font-size: 20px;
 }
 
-.form-style div{
+.form-style div, .table-of-specializations div{
     color: #002e4d;
     text-align: right;
     font-weight: bold;
@@ -18,7 +23,7 @@
     text-align: left;
 }
 
-.form-style div .input-style {
+.form-style div .input-style, .table-of-specializations div .input-style {
     height: 40px;
     font-size: 16px;
     border: 0.3px solid grey;
@@ -27,12 +32,12 @@
     font-family: 'Quicksand', sans-serif;
 }
 
-.form-style div .input-style:hover{
+.form-style div .input-style:hover, .table-of-specializationsdiv .input-style:hover{
     border: 0.3px solid   #002e4d;
     border-radius: 5px;
 }
 
-.form-style  div .input-style:focus{
+.form-style  div .input-style:focus, .table-of-specializations  div .input-style:focus{
     background-color:     #002e4d;
     border: 0.3px solid   #002e4d;
     border-radius: 5px;
@@ -70,7 +75,9 @@
     font-family: 'Quicksand', sans-serif;
     cursor: pointer;
     margin-bottom:4%;
+    margin-right: 45.5%;
 }
+
 .option-button:hover {
     background-color:   #002e4d;
     font-size: 19px;
@@ -95,7 +102,7 @@ select {
     font-family: 'Quicksand', sans-serif;
 }
 
-.form-style div .info .to-fill{
+.form-style div .info .to-fill, .table-of-specializations div .info .to-fill{
     background-color:#ffdddd !important;
     border: 0.3px solid #ffcccc;
     border-radius: 5px;
@@ -136,5 +143,104 @@ select {
     color:#002e4d;
     font-size:26px;
     box-shadow: 0 4px 20px 0 rgba(0, 46, 77, 0.2), 0 6px 100px 0 rgba(0, 46, 77, 0.2);
+}
+
+.radio-buttons{
+    margin-bottom:3%;
+    font-size: 20px;
+}
+
+.radio-buttons span{
+    padding-right:3%;
+}
+
+
+.table-of-specializations {
+    margin-left: 3%;
+    display: grid;
+    grid-template-columns: 21.5% 250px 1%; 
+    grid-gap: 20px;
+    justify-content: center; 
+    grid-row-gap: 20px;
+    font-size: 20px;
+}
+
+
+.table-of-specializations div:nth-child(3n){
+    text-align: left;
+}
+
+
+
+.buttonAdd {
+    color:#bfff80;
+    font-size:40px;
+    background-color: white;
+    border-style:none;
+    width:40px;
+    outline:0;
+    cursor:pointer;
+}
+
+.buttonRemove {
+    color: #660000;
+    font-size:40px;
+    background-color: white;
+    border-style:none;
+    padding-left:2%;
+    padding-right:2%;
+    outline:0;
+    width:40px;
+    cursor:pointer;
+}
+
+.working-hours {
+    display: grid;
+    grid-template-columns: 43% 3% 43%; 
+    grid-row-gap: 20px;
+    grid-gap: 20px;
+    font-size: 20px;
+    text-align: left !important;
+    margin-bottom:20px;
+}
+
+
+.hour-select-style{
+    width: 80px;
+    height: 40px;
+}
+
+/*.hour-input-style:nth-child(3n){
+    align-self: left;
+}*/
+
+.working-hours div{
+    text-align: right !important;
+}
+
+.working-hours div:nth-child(3n){
+    text-align: left !important;
+}
+
+
+.short-profile{
+    padding-left:2%;
+    /*border: 1px solid #fafafa;*/
+    width:40%;
+    border-radius: 5px;
+}
+.role{
+    padding-left:2%;
+    font-weight: bold;
+    width:40%;
+    color: #004d80;
+}
+
+input[type='radio'] {
+     transform: scale(1.5); 
+}
+
+p{
+    margin-bottom:0px;
 }
 

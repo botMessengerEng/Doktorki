@@ -5,6 +5,7 @@ export class DateArrays {
     hoursArray = new Array(64);
     monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'Novermber', 'December']
     minutes = [':00', ':15', ':30', ':45'];
+    dayOfWeek= ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
     date = new Date;
 
     yearsGenerator() {

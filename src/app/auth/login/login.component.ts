@@ -58,13 +58,13 @@ export class LoginComponent implements OnInit {
 
     redirectAfterLogin(): void {
         if (this.resMessage.role === 'admin') {
-            this.router.navigate(['/admin/manage/doctors']);
+            this.router.navigate(['/admin/users-list']);
         }
         else if (this.resMessage.role === 'doctor') {
             this.router.navigate(['/doctor', this.resMessage.login]);
         }
         else if (this.resMessage.role === 'patient') {
-            this.router.navigate(['/patient', this.resMessage.login, 'edit']);
+            this.router.navigate(['/new-appointment']);
         }
         else {
             this.invalid = true;
@@ -77,10 +77,10 @@ export class LoginComponent implements OnInit {
             .then(() => this.redirectAfterLogin());
     }
 
-    setUrl(){
-        this.url= 'register'
-        this.appService.url = this.url;
-    }
+    // setUrl(){
+    //     this.url= 'register'
+    //     this.appService.url = this.url;
+    // }
 
 }
 

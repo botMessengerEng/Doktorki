@@ -1,0 +1,182 @@
+<div *ngIf='url!="register"'>
+    <app-menu></app-menu>
+</div>
+<div class='content'>
+        <div *ngIf='invalid' class='invalid'>Login is taken</div>
+
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class='radio-buttons' *ngIf='url!="register"'>
+            <span><input type="radio" value="doctor" formControlName="role" (click)='detectRoleChange()' > add doctor</span>
+            <span><input type="radio" value="patient"  formControlName="role"  (click)='detectRoleChange()' > add el pacjente</span>
+        </div>
+    </form>
+    <div *ngIf='url!="register"' class='role'> {{user.role}}</div>
+    <div class='short-profile'>
+        <div class='names'>{{user.firstName}} {{user.lastName}}</div>
+        <div class='specialization'>{{user.PESEL}}</div>
+
+        <div class='specialization' *ngIf='user.role=="doctor"'>
+            <div *ngFor='let spec of user.specializations' class='specialization'>{{spec.specialization}} </div>
+        </div>
+    </div>
+    <br>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class='form-divide' [ngStyle]='{"display" : (url!="register") ? "grid" : "flex", 
+                                            "justify-content" : (url!="register") ? "none" : "center" }'>
+
+            <div class='form-style' [ngStyle]='{"grid-template-columns" : (url!="register") ? "20% 250px" : "40% 250px"}'>
+                <div><label for="firstName">first name: </label></div>
+                <div><input class='input-style' type='text' formControlName="firstName" placeholder="first name">
+                    <div class='info' *ngIf='userForm.get("firstName").errors && (userForm.get("firstName").touched || userForm.get("firstName").dirty)'>
+                        <div class='to-fill' [hidden]="!userForm.get('firstName').errors.required">First name is required </div>
+                    </div>
+                </div>
+
+                <div><label for="lastName">last name: </label></div>
+                <div><input class='input-style' type='text' formControlName="lastName" placeholder="last name">
+                    <div class='info' *ngIf='userForm.get("lastName").errors && (userForm.get("lastName").touched || userForm.get("lastName").dirty)'>
+                        <div class='to-fill' [hidden]="!userForm.get('lastName').errors.required">Last name is required </div>
+                    </div>
+                </div>
+
+                <div><label for="login">login: </label></div>
+                <div><input class='input-style' type='text' formControlName="login" placeholder="login">
+                    <div class='info' *ngIf='userForm.get("login").errors && (userForm.get("login").touched || userForm.get("login").dirty)'>
+                        <div class='to-fill' [hidden]="!userForm.get('login').errors.required">Login is required </div>
+                        <div class='to-fill' [hidden]="!userForm.get('login').errors.minlength">At least 3 characters required </div>
+                    </div>
+                </div>
+
+                <div><label for="password">password: </label></div>
+                <div><input class='input-style' type='text' formControlName="password" placeholder="password">
+                    <div class='info' *ngIf='userForm.get("password").errors && (userForm.get("password").touched || userForm.get("password").dirty)'>
+                        <div class='to-fill' [hidden]="!userForm.get('password').errors.required">Password is required </div>
+                        <div class='to-fill' [hidden]="!userForm.get('password').errors.minlength">At least 8 characters required </div>
+                    </div>
+                </div>
+
+                <div><label for="gender">gender: </label></div>
+                <div><select formControlName="gender" placeholder="gender">
+                 <option value="" disabled selected hidden>select gender</option>
+                  <option *ngFor="let gen of genders" [value]="gen">{{gen}}</option>
+                  </select>
+                    <div class='info' *ngIf='userForm.get("gender").errors && (userForm.get("gender").touched || userForm.get("gender").dirty)'>
+                        <div class='to-fill' [hidden]="!userForm.get('gender').errors.required">Gender is required </div>
+                    </div>
+                </div>
+
+                <div><label for="phone">phone: </label></div>
+                <div> <input class='input-style' type='text' formControlName="phone" placeholder="phone">
+                    <div class='info' *ngIf='userForm.get("phone").errors && (userForm.get("phone").touched || userForm.get("phone").dirty)'>
+                        <div class='to-fill' [hidden]="!userForm.get('phone').errors.required">Phone is required </div>
+                    </div>
+                </div>
+
+                <div><label for="email">email: </label></div>
+                <div> <input class='input-style' type='text' formControlName="email" placeholder="email">
+                    <div class='info' *ngIf='userForm.get("email").errors && (userForm.get("email").touched || userForm.get("email").dirty)'>
+                        <div class='to-fill' [hidden]="!userForm.get('email').errors.pattern">Email is not valid</div>
+                        <div class='to-fill' [hidden]="!userForm.get('email').errors.required">Email is required </div>
+                    </div>
+                </div>
+
+                <div><label for="street">street: </label></div>
+                <div> <input class='input-style' type='text' formControlName="street" placeholder="street"></div>
+
+
+                <div><label for="postcode">postcode: </label></div>
+                <div> <input class='input-style' type='text' formControlName="postcode" placeholder="postcode"></div>
+
+
+                <div><label for="city">city: </label></div>
+
+                <div> <input class='input-style' type='text' formControlName="city" placeholder="city"></div>
+
+
+
+                <div style='margin-bottom:20px'><label for="PESEL">PESEL: </label></div>
+                <div style='margin-bottom:20px'> <input class='input-style' type='text' formControlName="PESEL" placeholder="PESEL">
+                    <div class='info' *ngIf='userForm.get("PESEL").errors && (userForm.get("PESEL").touched || userForm.get("PESEL").dirty)'>
+                        <div class='to-fill' [hidden]="!userForm.get('PESEL').errors.maxlength">PESEL is too long</div>
+                        <div class='to-fill' [hidden]="!userForm.get('PESEL').errors.minlength">PESEL is too short</div>
+                        <div class='to-fill' [hidden]="!userForm.get('PESEL').errors.required">PESEL is required </div>
+                        <div class='to-fill' [hidden]="!userForm.get('PESEL').errors.pattern">PESEL must be a number </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+            <div *ngIf="userForm.get('role').value=='doctor' && url!='register'">
+                <div formArrayName="specializations" *ngFor="let spec of specializations.controls; let i=index">
+                    <div [formGroupName]="i">
+                        <div class='table-of-specializations'>
+
+                            <div style='margin-bottom:5px'><label for="specialization"> {{i==0 ? 'specializations:' : ' '}}  </label></div>
+                            <div style='margin-bottom:5px'> <input class='input-style' type='text' placeholder="specialization" formControlName="specialization">
+                            </div>
+
+                            <div *ngIf='!i'>
+                                <button class='buttonAdd' type="button" (click)='addSpecialization()'>  +  </button>
+                            </div>
+                            <div *ngIf='i'>
+                                <button class='buttonRemove' type="button" (click)='deleteSpecialization(i)'>  -  </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p style='font-size:24px; text-decoration: underline'>Working hours:</p>
+
+                <div formGroupName="workingHours" *ngFor="let day of dateArrays.dayOfWeek">
+                    <div class='form-style'>
+                        <div>{{day}}:</div>
+                        <div formGroupName={{day}}>
+                            <div class='working-hours'>
+                                <div>
+                                    <select class='hour-select-style' type='text' formControlName="start">
+                                    <option value="" disabled selected hidden>from</option>
+                  <option *ngFor="let hour of dateArrays.hoursArray" [value]="hour">{{hour}}</option>
+                            </select>
+
+                                </div>
+                                <div> - </div>
+
+                                <div><select class='hour-select-style' type='text' formControlName="end">
+                                 <option value="" disabled selected hidden>to</option>
+                  <option *ngFor="let hour of dateArrays.hoursArray" [value]="hour">{{hour}}</option>
+                            </select>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+
+
+        <div style="text-align: right">
+            <button type="submit" class='option-button' [disabled]="!userForm.valid">Submit</button>
+        </div>
+    </form>
+</div>
+
+USER: {{user|json}}
+
+<br> FORM: {{userForm.value |json}}
+
+
+<button (click)='click()'>usun</button>
+<button (click)='click2()'>sprawdz</button>

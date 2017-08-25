@@ -13,7 +13,8 @@ import { User } from 'app/shared/classes/user';
 
 export class AuthService {
     private _dataBaseUrlLogin = 'http://localhost:3000/login';
-    private user: User;
+    private _dataBaseUrlAddUser = 'http://localhost:3000/insert-user';
+    user: User;
     constructor (private _http: Http) {}
 
     authenticate(message: any): Observable<string> {
@@ -25,7 +26,13 @@ export class AuthService {
             })
             .catch(this.handlerError);
     }
-    
+
+    addUser(message: any, param): Observable<string> {
+        return this._http.post(this._dataBaseUrlAddUser + '/' + param, message)
+            .map((response: Response) => response.json())
+            .do(data => console.log('Authenticate results: ' + JSON.stringify(data)))
+            .catch(this.handlerError);
+    }
 
     private handlerError(error: Response) {
        console.error(error);

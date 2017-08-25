@@ -1,0 +1,63 @@
+<app-menu></app-menu>
+<div class='content'>
+    <div style="margin-bottom:1%"> List of Doctors:</div>
+
+    <div class='search-style'>
+        <div>search: </div>
+        <div><input type='text' class='search' [(ngModel)]='doctorFilter' placeholder="doctor's name" />
+        </div>
+    </div>
+    <div class='table-header'>
+        <div class='table-header-content'>
+            <div> DOCTOR'S NAME</div>
+            <div>SPECIALIZATIONS</div>
+            <div>CITY</div>
+        </div>
+    </div>
+
+
+    <div *ngFor='let doctor of doctors | firstlastNameFilter:doctorFilter  | paginate: { itemsPerPage: 10, currentPage: p }'>
+        <table class='table-of-doctor' *ngIf='doctors && doctors.length' [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#003d66" : "#fafafa",
+                                 "border-color": (doctor === selectedDoctor) ? "#003d66" : "#fafafa"} '>
+            <thead>
+                <tr>
+                    <td>
+                        <button class='doctor-button' [class.selected]='doctor === selectedDoctor' (click)='onSelect(doctor)'>
+
+
+<div class='button-label'>
+    <div>
+     {{doctor.firstName}} {{doctor.lastName}}
+    </div >
+    <div>
+        <div *ngFor='let spec of doctor.specializations' class='single-specialization'>
+            {{spec.specialization}} {{doctor.specializations[doctor.specializations.length-1].specialization==spec.specialization ? ' ' : ','}} </div>
+    </div >
+    <div>
+       {{doctor.address.city}}
+    </div >
+</div>
+
+</button></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="shortDetails" *ngIf='doctor === selectedDoctor'>
+                    <table class='show-details'>
+                        <tr>
+                            <td class='details-of-doctor'>
+                                <p><strong>Gender: </strong>{{doctor.gender}}</p>
+                                <p><strong>Age: </strong>{{doctor.age}}</p>
+                                <p><strong>Email: </strong>{{doctor.email}}</p>
+                            </td>
+                            <td class='make-appointment'><button class='make-appointment-button' (click)='editDoctor()'>make an appointment</button></td>
+                        </tr>
+                    </table>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">
+        <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+    </div>
+</div>
