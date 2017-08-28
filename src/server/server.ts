@@ -70,7 +70,7 @@ app.route('/user-details/:param?')
     .post(async (req: express.Request, res: express.Response) => {
         try {
             const result = await mongoUsersDetails.findElement({ login: req.body.login });
-            res.json(result)
+            res.json(result);
         } catch (err) {
             res.send(err);
         }

@@ -1,30 +1,57 @@
 <div *ngIf='url!="register"'>
     <app-menu></app-menu>
 </div>
-<div class='content'>
-        <div *ngIf='invalid' class='invalid'>Login is taken</div>
+<div *ngIf='canView==true' class='content'>
+    <div *ngIf='invalid' class='invalid'>Login is taken</div>
 
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <div class='radio-buttons' *ngIf='url!="register"'>
-            <span><input type="radio" value="doctor" formControlName="role" (click)='detectRoleChange()' > add doctor</span>
-            <span><input type="radio" value="patient"  formControlName="role"  (click)='detectRoleChange()' > add el pacjente</span>
+
+        <div *ngIf='url=="register" || url=="admin/add-user"'>
+            <div class='radio-buttons' *ngIf='url!="register"'>
+                <span><input type="radio" value="doctor" formControlName="role" (click)='detectRoleChange()' > add doctor</span>
+                <span><input type="radio" value="patient"  formControlName="role"  (click)='detectRoleChange()' > add el pacjente</span>
+            </div>
         </div>
     </form>
-    <div *ngIf='url!="register"' class='role'> {{user.role}}</div>
+    <div *ngIf='url!="register"' class='role'> {{user[0]!=undefined ? user[0].role : user.role}}</div>
     <div class='short-profile'>
-        <div class='names'>{{user.firstName}} {{user.lastName}}</div>
-        <div class='specialization'>{{user.PESEL}}</div>
+        <div class='names'>{{user[0]!=undefined ? user[0].firstName : user.firstName}} {{user[0]!=undefined ? user[0].lastName : user.lastName}}</div>
+        <div class='specialization'>{{user[0]!=undefined ? user[0].PESEL : user.PESEL}}</div>
 
-        <div class='specialization' *ngIf='user.role=="doctor"'>
-            <div *ngFor='let spec of user.specializations' class='specialization'>{{spec.specialization}} </div>
+        <div class='specialization' *ngIf='user[0]!=undefined ? (user[0].role=="doctor" ? true : false) : (user.role=="doctor" ? true : false)'>
+            <div *ngFor='let spec of (user[0]!=undefined ? user[0].specializations : user.specializations)' class='specialization'>{{spec.specialization}} </div>
         </div>
     </div>
     <br>
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <div class='form-divide' [ngStyle]='{"display" : (url!="register") ? "grid" : "flex", 
-                                            "justify-content" : (url!="register") ? "none" : "center" }'>
+        <div class='form-divide' [ngStyle]='{"display" : (url=="register" || (url!="admin/add-user" && user[0].role=="patient")) ? "flex" : "grid", 
+                                            "justify-content" : (url=="register" || (url!="admin/add-user" && user[0].role=="patient"))  ? "center" : "none" }'>
 
-            <div class='form-style' [ngStyle]='{"grid-template-columns" : (url!="register") ? "20% 250px" : "40% 250px"}'>
+
+
+
+            <div class='form-style' [ngStyle]='{"grid-template-columns" : (url=="register" ||(url!="admin/add-user" && user[0].role=="patient")) ? "40% 250px" : "20% 250px"}'>
+
+                <div><label for="login">login: </label></div>
+                <div *ngIf='url=="register" || url=="admin/add-user"'><input class='input-style' type='text' formControlName="login" placeholder="login" />
+                    <div class='info' *ngIf='userForm.get("login").errors && (userForm.get("login").touched || userForm.get("login").dirty)'>
+                        <div class='to-fill' [hidden]="!userForm.get('login').errors.required">Login is required </div>
+                        <div class='to-fill' [hidden]="!userForm.get('login').errors.minlength">At least 3 characters required </div>
+                    </div>
+                </div>
+                <div *ngIf='url!="register" &&  url!="admin/add-user"' style='color: #660000'> {{userLogin}} </div>
+
+
+      <div *ngIf='user[0]==undefined' ><label for="password">password: </label></div>
+                <div *ngIf='user[0]==undefined'><input  class='input-style' type='text' formControlName="password" placeholder="password">
+                    <div class='info' *ngIf='userForm.get("password").errors && (userForm.get("password").touched || userForm.get("password").dirty)'>
+                        <div class='to-fill' [hidden]="!userForm.get('password').errors.required">Password is required </div>
+                        <div class='to-fill' [hidden]="!userForm.get('password').errors.minlength">At least 8 characters required </div>
+                    </div>
+                </div>
+
+
+
                 <div><label for="firstName">first name: </label></div>
                 <div><input class='input-style' type='text' formControlName="firstName" placeholder="first name">
                     <div class='info' *ngIf='userForm.get("firstName").errors && (userForm.get("firstName").touched || userForm.get("firstName").dirty)'>
@@ -36,22 +63,6 @@
                 <div><input class='input-style' type='text' formControlName="lastName" placeholder="last name">
                     <div class='info' *ngIf='userForm.get("lastName").errors && (userForm.get("lastName").touched || userForm.get("lastName").dirty)'>
                         <div class='to-fill' [hidden]="!userForm.get('lastName').errors.required">Last name is required </div>
-                    </div>
-                </div>
-
-                <div><label for="login">login: </label></div>
-                <div><input class='input-style' type='text' formControlName="login" placeholder="login">
-                    <div class='info' *ngIf='userForm.get("login").errors && (userForm.get("login").touched || userForm.get("login").dirty)'>
-                        <div class='to-fill' [hidden]="!userForm.get('login').errors.required">Login is required </div>
-                        <div class='to-fill' [hidden]="!userForm.get('login').errors.minlength">At least 3 characters required </div>
-                    </div>
-                </div>
-
-                <div><label for="password">password: </label></div>
-                <div><input class='input-style' type='text' formControlName="password" placeholder="password">
-                    <div class='info' *ngIf='userForm.get("password").errors && (userForm.get("password").touched || userForm.get("password").dirty)'>
-                        <div class='to-fill' [hidden]="!userForm.get('password').errors.required">Password is required </div>
-                        <div class='to-fill' [hidden]="!userForm.get('password').errors.minlength">At least 8 characters required </div>
                     </div>
                 </div>
 
@@ -106,7 +117,6 @@
 
 
 
-
             </div>
 
             <div *ngIf="userForm.get('role').value=='doctor' && url!='register'">
@@ -127,6 +137,8 @@
                         </div>
                     </div>
                 </div>
+
+
 
                 <p style='font-size:24px; text-decoration: underline'>Working hours:</p>
 
@@ -161,9 +173,6 @@
 
             </div>
 
-
-
-
         </div>
 
 
@@ -173,10 +182,5 @@
     </form>
 </div>
 
-USER: {{user|json}}
 
-<br> FORM: {{userForm.value |json}}
-
-
-<button (click)='click()'>usun</button>
-<button (click)='click2()'>sprawdz</button>
+{{user[0] |json}}

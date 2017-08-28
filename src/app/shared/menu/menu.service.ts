@@ -20,8 +20,8 @@ export class MenuService {
         //         this.menuContext = [" ", " ", "USER'S LIST", "ADD PATIENT", "LOG OUT"]
         //     }
         //     else if (authService.user.role == "patient") {
-        //         this.menuContext = [" ", " ", "MY APPOINTMENTS", "NEW APPOINTMENTS", "LOG OUT"]
-        //         this.menuLinks = [" ", " ", "/my-appointments", "/new-appointment", "/login"]
+        //         this.menuContext = [" ", "MY APPOINTMENTS", "NEW APPOINTMENTS", "MY PROFILE", "LOG OUT"]
+        //         this.menuLinks = [" ",  "/my-appointments", "/new-appointment", "profile", "/login"]
 
         //     }
         // }

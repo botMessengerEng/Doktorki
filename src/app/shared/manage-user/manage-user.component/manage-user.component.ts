@@ -5,8 +5,9 @@ import { DateArrays } from 'app/shared/classes/date-arrays';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppService } from 'app/app.service';
 import { dayMonthCheck } from 'app/shared/manage-user/day-month-check.directives';
-import { formBuilder, setContent, buildSpecialization } from 'app/shared/manage-user/form-builder';
+import { formBuilder, setContent, buildSpecialization, specializationInit } from 'app/shared/manage-user/form-builder';
 import { AuthService } from 'app/auth/auth.service';
+import 'rxjs/add/operator/toPromise';
 
 @Component({
     templateUrl: './manage-user.component.html',
@@ -22,31 +23,71 @@ export class ManageUserComponent implements OnInit {
     genders = ['male', 'female'];
     dateArrays = new DateArrays();
     roleTmp = "doctor";
+    userLogin: string;
+    userEdit: any;
+    canView = false;
 
     get specializations(): FormArray {
         return <FormArray>this.userForm.get('specializations');
     }
 
     constructor(private appService: AppService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder) {
-            this.url = appService.url;
-            this.user = new UserDetails('', '', '', '', undefined, undefined, undefined, '', '', '', '', '');
+        this.url = appService.url;
+        this.user = new UserDetails('', '', '', '', undefined, undefined, undefined, '', '', '', '', '');
+        this.userForm = formBuilder(this.fb, this.user, 'add');
     }
 
 
+    // (async () => this.userLogin = await this.route.snapshot.params['login'])()
+    //             .then(() => {
+    //                 if (this.userLogin) {
+    //                     this.appService.getUserDetails(this.userLogin).subscribe(user => this.user = user);
+    //                 }
+    //             })
+
+    //         if (this.userLogin) {
+    //             this.appService.getUserDetails(this.userLogin).subscribe(user => this.user = user);
+    //         }
+
+
     ngOnInit() {
-        this.setRole();
 
-        this.dateArrays.hoursGenerator();
-        this.url = this.route.snapshot.url.join('');
-        this.appService.url = this.url;
+        (() => {
+            this.url = this.route.snapshot.url.join('/');
+            this.appService.url = this.url;
+            this.userLogin = this.route.snapshot.params['login'];
 
-        this.dateArrays.daysGenerator();
-        this.dateArrays.yearsGenerator();
-        this.invalid = false;
+            return new Promise(resolve => resolve(true));
+        })()
+            .then(async () => {
 
-        this.userForm = formBuilder(this.fb);
+                if (this.userLogin != undefined) {
+                    await this.appService.getUserDetails({ login: this.userLogin }).toPromise().then(user => this.user = user);
+                }
 
-        setContent(this.userForm, this.user);
+
+                if (this.userLogin == undefined) {
+                    this.setRole();
+                }
+
+                this.dateArrays.hoursGenerator();
+                this.dateArrays.daysGenerator();
+                this.dateArrays.yearsGenerator();
+
+                this.invalid = false;
+                this.canView = true;
+                return new Promise(resolve => resolve(true));
+            })
+            .then(() => {
+                if (this.user[0] != undefined) {
+                    this.userForm = formBuilder(this.fb, this.user[0], 'edit');
+                }
+
+            })
+            .then(() => {
+                setContent(this.userForm, this.user[0] != undefined ? this.user[0] : this.user);
+                this.deletePasswordValidation();
+            });
     }
 
     onSubmit() {
@@ -64,9 +105,9 @@ export class ManageUserComponent implements OnInit {
 
 
     back() {
-            this.router.navigate(['login']);
+        this.router.navigate(['login']);
     }
-    
+
 
 
     addSpecialization(): void {
@@ -116,5 +157,17 @@ export class ManageUserComponent implements OnInit {
             await delete this.user.specializations;
         }
     }
+
+    deletePasswordValidation(): void {
+        const password = this.userForm.get('password');
+        const login = this.userForm.get('login');
+
+        password.clearValidators();
+        password.updateValueAndValidity();
+
+        login.clearValidators();
+        login.updateValueAndValidity();
+    }
+
 
 }

@@ -15,45 +15,58 @@ const formContent = [
     'specializations'
 ];
 
-export function formBuilder(fb: FormBuilder) {
+export let specializationsTemp = new Array<FormGroup>();
+
+export function formBuilder(fb: FormBuilder, user:any, action: string) {
     return fb.group({
-            role: 'doctor',
-            firstName: ['', [Validators.required]],
-            lastName: ['', [Validators.required]],
-            login: ['', [Validators.required, Validators.minLength(3)]],
+            role: [user.role],
+            firstName: [ user.firstName ? user.firstName : '', [Validators.required]],
+            lastName: [ user.lastName ? user.lastName : '', [Validators.required]],
+            login: [ user.login ? user.login : '', [Validators.required, Validators.minLength(3)]],
             password: ['', [Validators.required, Validators.minLength(8)]],
-            gender: ['', [Validators.required]],
-            phone: ['', [Validators.required]],
-            street: [],
-            postcode: [],
-            city: [],
-            email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+')]],
-            PESEL: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]+$')]],
-            specializations: fb.array( [buildSpecialization(fb)]),
+            gender: [ user.gender ? user.gender : '', [Validators.required]],
+            phone: [ user.phone ? user.phone : '', [Validators.required]],
+            street: [ user.address.street ? user.address.street : ''],
+            postcode: [ user.address.postcode ? user.address.postcode : ''],
+            city: [ user.address.city ? user.address.city : ''],
+            email: [ user.email ? user.email : '', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+')]],
+            PESEL: [ user.PESEL ? user.PESEL : '', [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]+$')]],
+            specializations: fb.array(  user.specializations!=undefined ? specializationInit(fb, user) : [buildSpecialization(fb)]),
             workingHours: fb.group({
                 monday: fb.group({
-                    start: [''],
-                    end: ['']
+                    start: [ user.workingHours!=undefined ?  user.workingHours.monday.start : ''],
+                    end: [  user.workingHours!=undefined ?  user.workingHours.monday.end : '' ]
                 }),
                 tuesday: fb.group({
-                    start: [''],
-                    end: ['']
+                    start: [  user.workingHours!=undefined ?  user.workingHours.tuesday.start : '' ],
+                    end: [  user.workingHours!=undefined ?  user.workingHours.tuesday.end : '' ]
                 }),
                 wednesday: fb.group({
-                    start: [''],
-                    end: ['']
+                    start: [  user.workingHours!=undefined ?  user.workingHours.wednesday.start : ''],
+                    end: [  user.workingHours!=undefined ?  user.workingHours.wednesday.end : '']
                 }),
                 thursday: fb.group({
-                    start: [''],
-                    end: ['']
+                    start: [  user.workingHours!=undefined ?  user.workingHours.thursday.start : ''],
+                    end: [  user.workingHours!=undefined ?  user.workingHours.thursday.end : '']
                 }),
                 friday: fb.group({
-                    start: [''],
-                    end: ['']
+                    start: [ user.workingHours!=undefined ?  user.workingHours.friday.start : '' ],
+                    end: [ user.workingHours!=undefined ?  user.workingHours.friday.end : '']
                 }),
             })
         });
+
 }
+
+export function specializationInit(fb: FormBuilder, user) {
+    for (let i = 0; i < user.specializations.length; i++) {
+      specializationsTemp[i] = fb.group({ specialization: user.specializations[i].specialization })
+    }
+    return specializationsTemp;
+
+  }
+
+
 
 export function setContent(userForm: FormGroup, user) {
     formContent.forEach(element => {

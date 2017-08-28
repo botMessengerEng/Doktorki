@@ -200,7 +200,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "gender": "male",
                 'age': 53,
                 'phone': "102988372",
-                'email': "hugeandgreen@stark.industries.com"
+                'email': "hugeandgreen@stark.industries.com",
                 'address': {
                     'street': 'Washington',
                     'postcode': '77-040',

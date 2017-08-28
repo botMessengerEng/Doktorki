@@ -6,7 +6,8 @@ import { UsersListComponent } from 'app/admin/users-list.component/users-list.co
 
 const routes: Routes = [
     { path: 'admin/users-list', component: UsersListComponent },
-    { path: 'admin/add-user', component: ManageUserComponent }
+    { path: 'admin/add-user', component: ManageUserComponent },
+    { path: 'admin/users-list/:login', component: ManageUserComponent }
 ];
 
 @NgModule({

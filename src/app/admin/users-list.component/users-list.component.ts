@@ -11,8 +11,10 @@ export class UsersListComponent implements OnInit {
     errorMessage: any;
     users: any;
     url: string;
-    selectedDoctor: any;
+    selectedUser: any;
     doctorFilter: string = '';
+    onlyDoctors=true;
+    onlyPatients=true;
 
     constructor(private appService: AppService, private router: Router) {}
 
@@ -28,21 +30,21 @@ export class UsersListComponent implements OnInit {
     }
 
     onSelect(users: any): void {
-        if (users === this.selectedDoctor) {
-        this.selectedDoctor = null;
+        if (users === this.selectedUser) {
+        this.selectedUser = null;
         }
         else {
-        this.selectedDoctor = users;
+        this.selectedUser = users;
             }
     }
 
     checkSchedule() {
-        this.router.navigate(['admin/edit/doctor', this.selectedDoctor.login, 'schedule']);
+        this.router.navigate(['admin/edit/doctor', this.selectedUser.login, 'schedule']);
     }
 
 
-    editDoctor() {
-            this.router.navigate(['admin/edit/doctor', this.selectedDoctor.login/*name.replace(/ /g, '').toLowerCase()*/]);
+    editUser() {
+            this.router.navigate(['admin/users-list', this.selectedUser.login/*name.replace(/ /g, '').toLowerCase()*/]);
     }
 
         // deleteAndBackToAdminPage() {

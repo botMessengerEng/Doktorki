@@ -22,12 +22,12 @@ export class AppService {
             .catch(this.handlerError);
     }
 
-    // getDoctorDetails(param): Observable<string> {
-    //     return this._http.post(this._dataBaseUrlDoctorDetails, param)
-    //         .map((response: Response) => response.json())
-    //         .do(data => console.log('All: ' + JSON.stringify(data)))
-    //         .catch(this.handlerError);
-    // }
+    getUserDetails(param): Observable<string> {
+        return this._http.post(this._dataBaseUrlUserDetails, param)
+            .map((response: Response) => response.json())
+            .do(data => console.log('User passed: ' + JSON.stringify(data)))
+            .catch(this.handlerError);
+    }
 
     // updatePatient(param): Observable<string> {
     //     return this._http.put(this._dataBaseUrlPatientDetails, param)
