@@ -8,7 +8,7 @@ export class DateArrays {
     dayOfWeek= ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
     date = new Date;
 
-    yearsGenerator() {
+    private yearsGenerator() {
         for (let i = 0; i <= 107; i++) {
             this.yearsArray[i] = 1910 + i;
         }
@@ -20,16 +20,22 @@ export class DateArrays {
         }
     }
 
-    daysGenerator() {
+    private daysGenerator() {
         for (let i = 1; i <= 31; i++) {
             this.daysArray[i - 1] = i;
         }
     }
 
-    hoursGenerator() {
+    private hoursGenerator() {
         for (let i = 0, j = 6; j <= 21; j++) {
             this.minutes.forEach(element => this.hoursArray[i++] = (j < 10 ? '0' + j : j) + element);
         } 
         this.hoursArray[64] = '22:00';
+    }
+
+    setDate() {
+        this.yearsGenerator();
+        this.daysGenerator();
+        this.hoursGenerator();
     }
 }
