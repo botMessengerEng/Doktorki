@@ -10,6 +10,7 @@
             <div class='radio-buttons' *ngIf='url!="register"'>
                 <span><input type="radio" value="doctor" formControlName="role" (click)='detectRoleChange()' > add doctor</span>
                 <span><input type="radio" value="patient"  formControlName="role"  (click)='detectRoleChange()' > add el pacjente</span>
+    
             </div>
         </div>
     </form>
@@ -75,6 +76,15 @@
                         <div class='to-fill' [hidden]="!userForm.get('gender').errors.required">Gender is required </div>
                     </div>
                 </div>
+
+
+                <div><label for="age">age: </label></div>
+                <div> <input class='input-style' type='text' formControlName="age" placeholder="age">
+                    <div class='info' *ngIf='userForm.get("age").errors && (userForm.get("age").touched || userForm.get("age").dirty)'>
+                        <div class='to-fill' [hidden]="!userForm.get('age').errors.pattern">Age must be a number</div>
+                    </div>
+                </div>
+
 
                 <div><label for="phone">phone: </label></div>
                 <div> <input class='input-style' type='text' formControlName="phone" placeholder="phone">
@@ -183,4 +193,4 @@
 </div>
 
 
-{{user[0] |json}}
+{{userForm.value |json}}

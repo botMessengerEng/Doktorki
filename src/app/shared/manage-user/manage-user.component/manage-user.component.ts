@@ -90,26 +90,6 @@ export class ManageUserComponent implements OnInit {
             });
     }
 
-    onSubmit() {
-        this.authService.addUser(this.user, this.user.role)
-            .subscribe((result) => {
-                if (result === 'OK') {
-                    this.back();
-                }
-                else {
-                    this.invalid = true;
-                }
-            }
-            , err => this.errMessage = err);
-    }
-
-
-    back() {
-        this.router.navigate(['login']);
-    }
-
-
-
     addSpecialization(): void {
         this.specializations.push(buildSpecialization(this.fb));
     }
@@ -117,16 +97,6 @@ export class ManageUserComponent implements OnInit {
     deleteSpecialization(specialization): void {
         const control = <FormArray>this.userForm.controls['specializations'];
         control.removeAt(specialization);
-    }
-
-
-
-    click() {
-        delete this.user.PESEL;
-    }
-
-    click2() {
-        console.log(this.user);
     }
 
 
@@ -168,6 +138,34 @@ export class ManageUserComponent implements OnInit {
         login.clearValidators();
         login.updateValueAndValidity();
     }
+
+
+
+    onSubmit() {
+        if (this.userLogin == undefined) {
+            this.authService.addUser(this.user, this.user.role)
+                .subscribe((result) => {
+                    if (result === 'OK') {
+                        this.router.navigate(['login']);
+                    }
+                    else {
+                        this.invalid = true;
+                        window.scrollTo(0, 0);
+                    }
+                }
+                , err => this.errMessage = err);
+        }
+        else {
+            this.appService.updateUser(this.user[0], this.user[0].role)
+                .subscribe((result) =>  this.router.navigate(['admin/users-list']),
+                err => this.errMessage = err);
+        }
+    }
+
+    back() {
+        this.router.navigate(['admin/users-list']);
+    }
+
 
 
 }

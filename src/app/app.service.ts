@@ -29,12 +29,12 @@ export class AppService {
             .catch(this.handlerError);
     }
 
-    // updatePatient(param): Observable<string> {
-    //     return this._http.put(this._dataBaseUrlPatientDetails, param)
-    //         .map((response: Response) => response.json())
-    //         .do(data => console.log('All: ' + JSON.stringify(data)))
-    //         .catch(this.handlerError);
-    // }
+    updateUser(user, param?): Observable<string> {
+        return this._http.put(param ? this._dataBaseUrlUserDetails + '/' + param : this._dataBaseUrlUserDetails, user)
+            .map((response: Response) => response.json())
+            .do(data => console.log("Users details changed:"  + JSON.stringify(user)))
+            .catch(this.handlerError);
+    }
 
     // findVisits(param, params?): Observable<string> {
     //     return this._http.post(params ? this._dataBaseUrlSchedule + '/' + params : this._dataBaseUrlSchedule, param)

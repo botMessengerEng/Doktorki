@@ -77,23 +77,71 @@ app.route('/user-details/:param?')
     })
     .put(async (req: express.Request, res: express.Response) => {
         try {
-            const result = await mongoUsersDetails.updateElement(
-                {
-                    login: req.body.login,
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    gender: req.body.gender,
-                    age: req.body.age,
-                    phone: req.body.phone,
-                    email: req.body.email,
-                    address: {
-                        street: req.body.address.street,
-                        postcode: req.body.address.postcode,
-                        city: req.body.address.city
-                    },
-                    specializations: req.body.specializations
-                });
-            res.json(result);
+            if (req.param('param') === 'doctor') {
+                await Promise.all([ 
+                    mongoUsersDetails.updateElement(
+                        {
+                            login: req.body.login,
+                            firstName: req.body.firstName,
+                            lastName: req.body.lastName,
+                            gender: req.body.gender,
+                            PESEL: req.body.PESEL,
+                            age: req.body.age,
+                            phone: req.body.phone,
+                            email: req.body.email,
+                            address: {
+                                street: req.body.address.street,
+                                postcode: req.body.address.postcode,
+                                city: req.body.address.city
+                            },
+                            specializations: req.body.specializations,
+                            workingHours: {
+                                monday: {
+                                    start: req.body.workingHours.monday.start,
+                                    end: req.body.workingHours.monday.end
+                                },
+                                tuesday: {
+                                    start: req.body.workingHours.tuesday.start,
+                                    end: req.body.workingHours.tuesday.end
+                                },
+                                wednesday: {
+                                    start: req.body.workingHours.wednesday.start,
+                                    end: req.body.workingHours.wednesday.end
+                                },
+                                thursday: {
+                                    start: req.body.workingHours.thursday.start,
+                                    end: req.body.workingHours.thursday.end
+                                },
+                                friday: {
+                                    start: req.body.workingHours.friday.start,
+                                    end: req.body.workingHours.friday.end
+                                }
+                            }
+                        }
+                    )
+                ]);
+            } else if (req.param('param') === 'patient') {
+                await Promise.all([
+                    mongoUsersDetails.updateElement(
+                        {
+                            login: req.body.login,
+                            firstName: req.body.firstName,
+                            lastName: req.body.lastName,
+                            gender: req.body.gender,
+                            PESEL: req.body.PESEL,
+                            age: req.body.age,
+                            phone: req.body.phone,
+                            email: req.body.email,
+                            address: {
+                                street: req.body.address.street,
+                                postcode: req.body.address.postcode,
+                                city: req.body.address.city
+                            },
+                        }
+                    )
+                ]);
+            }
+            res.status(200).json('Updates');
         } catch (err) {
             res.send(err);
         }
@@ -134,6 +182,7 @@ app.post('/insert-user/:param', async (req: express.Request, res: express.Respon
                             login: req.body.login,
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
+                            role: req.body.role,
                             gender: req.body.gender,
                             PESEL: req.body.PESEL,
                             age: req.body.age,
@@ -184,6 +233,7 @@ app.post('/insert-user/:param', async (req: express.Request, res: express.Respon
                             login: req.body.login,
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
+                            role: req.body.role,
                             gender: req.body.gender,
                             PESEL: req.body.PESEL,
                             age: req.body.age,
@@ -206,48 +256,6 @@ app.post('/insert-user/:param', async (req: express.Request, res: express.Respon
     }
 });
 
-// ------------- register -----------------------------------------------------------------------////////////////////////
-app.post('/register', async (req: express.Request, res: express.Response) => {
-    try {
-        console.log('recived' + JSON.stringify(req.body));
-
-        const user = await mongoUsers.findElement({ login: req.body.login });
-        console.log(user);
-        if (user[0] !== undefined) {
-            res.json(`Login ${req.body.login} is in use!`).end();
-        } else {
-            await Promise.all([
-                mongoUsers.insertElements([
-                    {
-                        login: req.body.login,
-                        password: req.body.password,
-                        role: 'patient'
-                    }
-                ]),
-                mongoUsersDetails.insertElements([
-                    {
-                        login: req.body.login,
-                        firstName: req.body.firstName,
-                        lastName: req.body.lastName,
-                        gender: req.body.gender,
-                        age: req.body.age,
-                        phone: req.body.phone,
-                        email: req.body.email,
-                        dateOfBirth: {
-                            year: req.body.dateOfBirth.year,
-                            month: req.body.dateOfBirth.month,
-                            day: req.body.dateOfBirth.day
-                        },
-                        PESEL: req.body.PESEL
-                    }
-                ])
-            ]);
-            res.status(200).json('OK').end();
-        }
-    } catch (err) {
-        res.send(err);
-    }
-});
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!')

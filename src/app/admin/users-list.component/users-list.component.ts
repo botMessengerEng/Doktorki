@@ -13,8 +13,8 @@ export class UsersListComponent implements OnInit {
     url: string;
     selectedUser: any;
     doctorFilter: string = '';
-    onlyDoctors=true;
-    onlyPatients=true;
+    onlyDoctors= true;
+    onlyPatients= true;
 
     constructor(private appService: AppService, private router: Router) {}
 
