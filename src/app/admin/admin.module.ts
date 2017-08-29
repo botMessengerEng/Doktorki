@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AdminRoutingModule } from 'app/admin/admin-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { UsersListComponent } from 'app/admin/users-list.component/users-list.component';
+import { AdminService } from 'app/admin/admin.service';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,6 @@ import { UsersListComponent } from 'app/admin/users-list.component/users-list.co
         SharedModule
     ],
     exports: [],
-    providers: [],
+    providers: [AdminService],
 })
 export class AdminModule {}

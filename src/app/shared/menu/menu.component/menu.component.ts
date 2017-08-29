@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLinkActive } from '@angular/router';
 
 import { AppService } from 'app/app.service';
-import { MenuService } from 'app/shared/menu/menu.service';
+import { AuthService } from 'app/auth/auth.service';
 
 @Component({
     selector: 'app-menu',
@@ -12,14 +12,35 @@ import { MenuService } from 'app/shared/menu/menu.service';
 
 export class MenuComponent implements OnInit {
     url: string;
-    menuContext= new Array();
-    menuLinks=new Array();
-    constructor(private appService: AppService, private menuService: MenuService, private router: Router) { }
+    menuContext = new Array();
+    menuLinks = new Array();
+    userLogin: string;
+
+    constructor(private appService: AppService, private authService: AuthService, private router: Router) {
+        this.userLogin=this.authService.user.login;
+     }
 
     ngOnInit() {
-        // setTimeout(() => this.url = this.appService.url, 0);
-        this.menuContext = this.menuService.menuContext;
-        this.menuLinks = this.menuService.menuLinks;
+
+        try {
+            if (this.authService.user.role == "admin") {
+                this.menuContext = [" ", " ", "USER'S LIST", "ADD USER", "LOG OUT"]
+                this.menuLinks = [" ", " ", "/users-list", "/add-user", "/login"]
+            }
+            else if (this.authService.user.role == "doctor") {
+                this.menuContext = [" ", "CHECK SCHEDULE", "USER'S LIST", "ADD PATIENT", "MY PROFILE", "LOG OUT"]
+                this.menuLinks = [" ", " ", "/my-appointments", "/add-patient", "/users-list/" + this.userLogin, "/login"]
+            }
+            else if (this.authService.user.role == "patient") {
+                this.menuContext = [" ", " ", "MY APPOINTMENTS", "NEW APPOINTMENTS", "MY PROFILE", "LOG OUT"]
+                this.menuLinks = [" ", " " , "/my-appointments", "/new-appointment", "/my-profile/" + this.userLogin, "/login"]
+
+            }
+        }
+        catch (err) {
+            this.router.navigate(['login']);
+        }
     }
+
 
 }

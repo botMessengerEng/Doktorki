@@ -5,16 +5,25 @@
     <div *ngIf='invalid' class='invalid'>Login is taken</div>
 
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-
-        <div *ngIf='url=="register" || url=="admin/add-user"'>
+        <div *ngIf='url=="register" || url=="add-user"'>
             <div class='radio-buttons' *ngIf='url!="register"'>
-                <span><input type="radio" value="doctor" formControlName="role" (click)='detectRoleChange()' > add doctor</span>
-                <span><input type="radio" value="patient"  formControlName="role"  (click)='detectRoleChange()' > add el pacjente</span>
-    
+                <span>                      
+                    <label class='label-radio' for="doctor">
+                        <input type="radio" value="doctor" id="doctor" formControlName="role" (click)='detectRoleChange()'> 
+                        <span>add doctor</span>
+                    </label>
+                </span>
+                <span>
+                    <label class='label-radio' for="patient">
+                        <input type="radio" value="patient" id="patient" formControlName="role"  (click)='detectRoleChange()'> 
+                        <span>add patient</span>
+                    </label>
+                </span>
             </div>
         </div>
     </form>
-    <div *ngIf='url!="register"' class='role'> {{user[0]!=undefined ? user[0].role : user.role}}</div>
+
+    <div *ngIf='url!="register" && url!="add-patient"' class='role'> {{user[0]!=undefined ? user[0].role : user.role}}</div>
     <div class='short-profile'>
         <div class='names'>{{user[0]!=undefined ? user[0].firstName : user.firstName}} {{user[0]!=undefined ? user[0].lastName : user.lastName}}</div>
         <div class='specialization'>{{user[0]!=undefined ? user[0].PESEL : user.PESEL}}</div>
@@ -25,26 +34,24 @@
     </div>
     <br>
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-        <div class='form-divide' [ngStyle]='{"display" : (url=="register" || (url!="admin/add-user" && user[0].role=="patient")) ? "flex" : "grid", 
-                                            "justify-content" : (url=="register" || (url!="admin/add-user" && user[0].role=="patient"))  ? "center" : "none" }'>
+        <div class='form-divide' [ngStyle]='{"display" : (url=="register" || url=="add-patient" || (url!="add-user" && user[0].role=="patient")) ? "flex" : "grid", 
+                                            "justify-content" : (url=="register" || url=="add-patient" || (url!="add-user" && user[0].role=="patient"))  ? "center" : "none" }'>
 
 
-
-
-            <div class='form-style' [ngStyle]='{"grid-template-columns" : (url=="register" ||(url!="admin/add-user" && user[0].role=="patient")) ? "40% 250px" : "20% 250px"}'>
+            <div class='form-style' [ngStyle]='{"grid-template-columns" : (url=="register" || url=="add-patient" ||(url!="add-user" && user[0].role=="patient")) ? "40% 250px" : "20% 250px"}'>
 
                 <div><label for="login">login: </label></div>
-                <div *ngIf='url=="register" || url=="admin/add-user"'><input class='input-style' type='text' formControlName="login" placeholder="login" />
+                <div *ngIf='url=="register" || url=="add-user" || url=="add-patient"'><input class='input-style' type='text' formControlName="login" placeholder="login" />
                     <div class='info' *ngIf='userForm.get("login").errors && (userForm.get("login").touched || userForm.get("login").dirty)'>
                         <div class='to-fill' [hidden]="!userForm.get('login').errors.required">Login is required </div>
                         <div class='to-fill' [hidden]="!userForm.get('login').errors.minlength">At least 3 characters required </div>
                     </div>
                 </div>
-                <div *ngIf='url!="register" &&  url!="admin/add-user"' style='color: #660000'> {{userLogin}} </div>
+                <div *ngIf='url!="register" &&  url!="add-user" && url!="add-patient"' style='color: #660000'> {{userLogin}} </div>
 
 
-      <div *ngIf='user[0]==undefined' ><label for="password">password: </label></div>
-                <div *ngIf='user[0]==undefined'><input  class='input-style' type='text' formControlName="password" placeholder="password">
+                <div *ngIf='user[0]==undefined'><label for="password">password: </label></div>
+                <div *ngIf='user[0]==undefined'><input class='input-style' type='password' formControlName="password" placeholder="password">
                     <div class='info' *ngIf='userForm.get("password").errors && (userForm.get("password").touched || userForm.get("password").dirty)'>
                         <div class='to-fill' [hidden]="!userForm.get('password').errors.required">Password is required </div>
                         <div class='to-fill' [hidden]="!userForm.get('password').errors.minlength">At least 8 characters required </div>
@@ -126,10 +133,9 @@
                 </div>
 
 
+           </div>
 
-            </div>
-
-            <div *ngIf="userForm.get('role').value=='doctor' && url!='register'">
+             <div *ngIf="userForm.get('role').value=='doctor' && url!='register' && url!='add-patient'">
                 <div formArrayName="specializations" *ngFor="let spec of specializations.controls; let i=index">
                     <div [formGroupName]="i">
                         <div class='table-of-specializations'>
@@ -162,13 +168,12 @@
                                     <option value="" disabled selected hidden>from</option>
                   <option *ngFor="let hour of dateArrays.hoursArray" [value]="hour">{{hour}}</option>
                             </select>
-
                                 </div>
                                 <div> - </div>
 
                                 <div><select class='hour-select-style' type='text' formControlName="end">
-                                 <option value="" disabled selected hidden>to</option>
-                  <option *ngFor="let hour of dateArrays.hoursArray" [value]="hour">{{hour}}</option>
+                                <option value="" disabled selected hidden>to</option>
+                                <option *ngFor="let hour of dateArrays.hoursArray" [value]="hour">{{hour}}</option>
                             </select>
 
                                 </div>
@@ -178,19 +183,13 @@
 
                     </div>
 
-
                 </div>
-
             </div>
-
         </div>
-
-
         <div style="text-align: right">
             <button type="submit" class='option-button' [disabled]="!userForm.valid">Submit</button>
         </div>
     </form>
 </div>
 
-
-{{userForm.value |json}}
+{{user |json}}

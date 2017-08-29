@@ -58,10 +58,10 @@ export class LoginComponent implements OnInit {
 
     redirectAfterLogin(): void {
         if (this.resMessage.role === 'admin') {
-            this.router.navigate(['/admin/users-list']);
+            this.router.navigate(['/users-list']);
         }
         else if (this.resMessage.role === 'doctor') {
-            this.router.navigate(['/doctor', this.resMessage.login]);
+            this.router.navigate(['/users-list']);
         }
         else if (this.resMessage.role === 'patient') {
             this.router.navigate(['/new-appointment']);

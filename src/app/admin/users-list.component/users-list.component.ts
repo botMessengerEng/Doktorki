@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AppService } from 'app/app.service';
+import { AdminService } from 'app/admin/admin.service';
+import { AuthService } from 'app/auth/auth.service';
 
 @Component({
     templateUrl: './users-list.component.html',
@@ -15,11 +17,13 @@ export class UsersListComponent implements OnInit {
     doctorFilter: string = '';
     onlyDoctors= true;
     onlyPatients= true;
+    userRole: string;
 
-    constructor(private appService: AppService, private router: Router) {}
+    constructor(private appService: AppService, private adminService: AdminService, private authService: AuthService, private router: Router) {}
 
     ngOnInit(): void {
         this.getUsers();
+        this.userRole=this.authService.user.role;
     }
 
     getUsers() {
@@ -39,19 +43,19 @@ export class UsersListComponent implements OnInit {
     }
 
     checkSchedule() {
-        this.router.navigate(['admin/edit/doctor', this.selectedUser.login, 'schedule']);
+        this.router.navigate(['edit/doctor', this.selectedUser.login, 'schedule']);
     }
 
 
     editUser() {
-            this.router.navigate(['admin/users-list', this.selectedUser.login/*name.replace(/ /g, '').toLowerCase()*/]);
+            this.router.navigate(['users-list', this.selectedUser.login/*name.replace(/ /g, '').toLowerCase()*/]);
     }
 
-        // deleteAndBackToAdminPage() {
-        //     this.appService.deleteQuery({ login: this.selectedDoctor.login })
-        //         .subscribe(() => this.getDoctors(),
-        //         error => this.errorMessage = <any>error);
-        // }
+    deleteUser() {
+            this.adminService.deleteUser( this.selectedUser.login )
+                .subscribe(() => this.getUsers(),
+                error => this.errorMessage = <any>error);
+        }
 
 
 }

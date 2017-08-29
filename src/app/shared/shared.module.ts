@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 
 import { MenuComponent } from 'app/shared/menu/menu.component/menu.component';
 import { ManageUserComponent } from 'app/shared/manage-user/manage-user.component/manage-user.component';
-import { MenuService } from 'app/shared/menu/menu.service';
 import { NameFilterPipe } from 'app/shared/pipes/name-filter.pipe';
 import { DoctorFilter } from 'app/shared/pipes/doctor-filter.pipe';
 import { PatientFilter } from 'app/shared/pipes/patient-filter.pipe';
@@ -21,7 +20,7 @@ import { PatientFilter } from 'app/shared/pipes/patient-filter.pipe';
     imports: [ 
         CommonModule,
         ReactiveFormsModule,
-        RouterModule
+        RouterModule,
      ],
     exports: [
         MenuComponent,
@@ -30,6 +29,6 @@ import { PatientFilter } from 'app/shared/pipes/patient-filter.pipe';
         DoctorFilter,
         PatientFilter
     ],
-    providers: [ MenuService ],
+    providers: [  ],
 })
 export class SharedModule {}

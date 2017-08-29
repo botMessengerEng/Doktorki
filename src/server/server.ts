@@ -150,8 +150,8 @@ app.route('/user-details/:param?')
 app.delete('/delete-user/:login', async (req: express.Request, res: express.Response) => {
     try {
         const result = await Promise.all([
-            mongoUsersDetails.removeElement(req.body),
-            mongoUsers.removeElement(req.body)
+            mongoUsersDetails.removeElement({ login: req.param('login') }),
+            mongoUsers.removeElement({ login: req.param('login') })
         ]);
         res.json(result);
     } catch (err) {

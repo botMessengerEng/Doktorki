@@ -5,9 +5,11 @@ import { ManageUserComponent } from 'app/shared/manage-user/manage-user.componen
 import { UsersListComponent } from 'app/admin/users-list.component/users-list.component';
 
 const routes: Routes = [
-    { path: 'admin/users-list', component: UsersListComponent },
-    { path: 'admin/add-user', component: ManageUserComponent },
-    { path: 'admin/users-list/:login', component: ManageUserComponent }
+    { path: 'users-list', component: UsersListComponent },
+    { path: 'add-user', component: ManageUserComponent },
+    { path: 'add-patient', component: ManageUserComponent },
+    { path: 'users-list/:login', component: ManageUserComponent },
+    { path: 'my-profile', component: ManageUserComponent }
 ];
 
 @NgModule({

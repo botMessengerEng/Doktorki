@@ -14,17 +14,17 @@ export class AdminService {
 
     constructor (private _http: Http) {}
 
-    updateDoctor(param): Observable<string> {
-        return this._http.put(this._dataBaseUrlDoctorDetails, param)
-            .map((response: Response) => response.json())
-            .do(data => console.log('All: ' + JSON.stringify(data)))
-            .catch(this.handlerError);
-    }
+    // updateDoctor(param): Observable<string> {
+    //     return this._http.put(this._dataBaseUrlDoctorDetails, param)
+    //         .map((response: Response) => response.json())
+    //         .do(data => console.log('All: ' + JSON.stringify(data)))
+    //         .catch(this.handlerError);
+    // }
 
     deleteUser(param): Observable<string> {
-        return this._http.delete(this._dataBaseUrlDeleteDoctor + '/' + param, param)
+        return this._http.delete(this._dataBaseUrlDeleteDoctor + '/' + param)
             .map((response: Response) => response.json())
-        .do(data => console.log('All: ' + JSON.stringify(data)))
+        .do(data => console.log('Deleted: ' + JSON.stringify(data)))
             .catch(this.handlerError);
     }
 

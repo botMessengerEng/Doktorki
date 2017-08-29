@@ -133,6 +133,11 @@
     background-color: #006fad;
 }
 
+.user-edit-button:disabled{
+  opacity: 0.1;
+    cursor: not-allowed;
+}
+
 p{
     text-align: left;
     margin-left: 1%;

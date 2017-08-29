@@ -22,17 +22,15 @@ export class ManageUserComponent implements OnInit {
     url: any;
     genders = ['male', 'female'];
     dateArrays = new DateArrays();
-    roleTmp = "doctor";
     userLogin: string;
     userEdit: any;
     canView = false;
-
     get specializations(): FormArray {
         return <FormArray>this.userForm.get('specializations');
     }
 
     constructor(private appService: AppService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder) {
-        this.url = appService.url;
+        // this.url = appService.url;
         this.user = new UserDetails('', '', '', '', undefined, undefined, undefined, '', '', '', '', '');
         this.userForm = formBuilder(this.fb, this.user, 'add');
     }
@@ -42,44 +40,9 @@ export class ManageUserComponent implements OnInit {
         this.url = this.route.snapshot.url.join('/');
         this.appService.url = this.url;
         this.userLogin = this.route.snapshot.params['login'];
-
+        
         return new Promise(resolve => resolve(true));
     }
-
-    // ngOnInit() {
-
-        // this.setURL()
-        //     .then(() => {
-        //         if (this.userLogin != undefined) {
-        //             this.appService.getUserDetails({ login: this.userLogin })
-        //                 .toPromise()
-        //                 .then(user => this.user = user)
-        //         }
-        //         return new Promise(resolve => resolve(true));
-        //     })
-        //     .then(() => {
-        //         if (this.userLogin == undefined) {
-        //             this.setRole();
-        //         }
-
-        //         this.dateArrays.setDate();
-        //         this.invalid = false;
-
-        //         this.canView = true;
-        //         return new Promise(resolve => resolve(true));
-        //     })
-    //         .then(() => {
-    //             if (this.user[0] != undefined) {
-    //                 this.userForm = formBuilder(this.fb, this.user[0], 'edit');
-    //             }
-
-    //         })
-    //         .then(() => {
-    //             setContent(this.userForm, this.user[0] != undefined ? this.user[0] : this.user);
-    //             if(this.userLogin!=undefined) {this.deletePasswordValidation();}
-    //         });
-    // }
-
 
     ngOnInit() {
 
@@ -96,7 +59,6 @@ export class ManageUserComponent implements OnInit {
                 if (this.userLogin == undefined) {
                     this.setRole();
                 }
-
                 this.dateArrays.setDate();
                 this.canView = true;
                 return new Promise(resolve => resolve(true));
@@ -105,11 +67,16 @@ export class ManageUserComponent implements OnInit {
                 if (this.user[0] != undefined) {
                     this.userForm = formBuilder(this.fb, this.user[0], 'edit');
                 }
-
             })
             .then(() => {
                 setContent(this.userForm, this.user[0] != undefined ? this.user[0] : this.user);
-                this.deletePasswordValidation();
+                if(this.authService.user==undefined || this.authService.user.role=="doctor")
+                {
+                    this.user.role="patient";
+                }
+                if (this.userLogin!=undefined){
+                     this.deletePasswordValidation();
+                }
             });
     }
 
@@ -180,13 +147,16 @@ export class ManageUserComponent implements OnInit {
         }
         else {
             this.appService.updateUser(this.user[0], this.user[0].role)
-                .subscribe((result) =>  this.router.navigate(['admin/users-list']),
-                err => this.errMessage = err);
+                .subscribe((result) =>  {
+                    if(this.authService.user.role=="patient") {
+                        this.router.navigate(['new-appointment'])
+                    }
+                    else {
+                        this.router.navigate(['users-list']);
+                    }
+                    err => this.errMessage = err
+                });
         }
-    }
-
-    back() {
-        this.router.navigate(['admin/users-list']);
     }
 
 

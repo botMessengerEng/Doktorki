@@ -147,13 +147,12 @@ select {
 
 .radio-buttons{
     margin-bottom:3%;
-    font-size: 20px;
+    margin-left:1.2%;
 }
 
 .radio-buttons span{
-    padding-right:3%;
+    padding-right:1%;
 }
-
 
 .table-of-specializations {
     margin-left: 3%;
@@ -165,12 +164,9 @@ select {
     font-size: 20px;
 }
 
-
 .table-of-specializations div:nth-child(3n){
     text-align: left;
 }
-
-
 
 .buttonAdd {
     color:#bfff80;
@@ -204,15 +200,11 @@ select {
     margin-bottom:20px;
 }
 
-
 .hour-select-style{
     width: 80px;
     height: 40px;
 }
 
-/*.hour-input-style:nth-child(3n){
-    align-self: left;
-}*/
 
 .working-hours div{
     text-align: right !important;
@@ -222,10 +214,8 @@ select {
     text-align: left !important;
 }
 
-
 .short-profile{
     padding-left:2%;
-    /*border: 1px solid #fafafa;*/
     width:40%;
     border-radius: 5px;
 }
@@ -236,25 +226,40 @@ select {
     color: #004d80;
 }
 
-input[type='radio'] {
-     transform: scale(1.5); 
-}
-
-
-input[type=radio]:checked ~ .check {
-  border: 5px solid #0DFF92;
-}
-
-input[type=radio]:checked ~ .check::before{
-  background: #0DFF92;
-}
-
-input[type=radio]:checked ~ label{
-  color: #0DFF92;
-}
-
-
 p{
     margin-bottom:0px;
 }
+
+[type="radio"] {
+    border-width: 1px; 
+    clip: rect(0 0 0 0); 
+    height: 1px; margin: -1px; 
+    padding: 0; 
+    width: 1px;
+}
+
+.label-radio {
+    cursor: pointer;
+    font-size: 22px;
+}
+
+[type="radio"] + span:before {
+    transform: scale(0.55); 
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.25em;
+    border-radius: 1em;
+    border: 0.125em solid #fafafa;
+    box-shadow: 0 0 0 0.1em #ddd;
+    margin-right: 0.35em;
+    transition: 0.5s ease all;
+}
+
+[type="radio"]:checked + span:before {
+    background: #002e4d;
+    box-shadow: 0 0 0 0.2em #002e4d;
+}
+
 
