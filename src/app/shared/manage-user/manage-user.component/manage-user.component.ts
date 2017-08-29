@@ -46,41 +46,6 @@ export class ManageUserComponent implements OnInit {
         return new Promise(resolve => resolve(true));
     }
 
-    // ngOnInit() {
-
-        // this.setURL()
-        //     .then(() => {
-        //         if (this.userLogin != undefined) {
-        //             this.appService.getUserDetails({ login: this.userLogin })
-        //                 .toPromise()
-        //                 .then(user => this.user = user)
-        //         }
-        //         return new Promise(resolve => resolve(true));
-        //     })
-        //     .then(() => {
-        //         if (this.userLogin == undefined) {
-        //             this.setRole();
-        //         }
-
-        //         this.dateArrays.setDate();
-        //         this.invalid = false;
-
-        //         this.canView = true;
-        //         return new Promise(resolve => resolve(true));
-        //     })
-    //         .then(() => {
-    //             if (this.user[0] != undefined) {
-    //                 this.userForm = formBuilder(this.fb, this.user[0], 'edit');
-    //             }
-
-    //         })
-    //         .then(() => {
-    //             setContent(this.userForm, this.user[0] != undefined ? this.user[0] : this.user);
-    //             if(this.userLogin!=undefined) {this.deletePasswordValidation();}
-    //         });
-    // }
-
-
     ngOnInit() {
 
         this.setURL()
@@ -96,7 +61,6 @@ export class ManageUserComponent implements OnInit {
                 if (this.userLogin == undefined) {
                     this.setRole();
                 }
-
                 this.dateArrays.setDate();
                 this.canView = true;
                 return new Promise(resolve => resolve(true));
@@ -105,7 +69,6 @@ export class ManageUserComponent implements OnInit {
                 if (this.user[0] != undefined) {
                     this.userForm = formBuilder(this.fb, this.user[0], 'edit');
                 }
-
             })
             .then(() => {
                 setContent(this.userForm, this.user[0] != undefined ? this.user[0] : this.user);
