@@ -75,23 +75,22 @@
                 </div>
 
                 <div><label for="gender">gender: </label></div>
-                <div><select formControlName="gender" placeholder="gender">
-                 <option value="" disabled selected hidden>select gender</option>
-                  <option *ngFor="let gen of genders" [value]="gen">{{gen}}</option>
-                  </select>
+                <div>
+                    <select formControlName="gender" placeholder="gender">
+                        <option value="" disabled selected hidden>select gender</option>
+                        <option *ngFor="let gen of genders" [value]="gen">{{gen}}</option>
+                    </select>
                     <div class='info' *ngIf='userForm.get("gender").errors && (userForm.get("gender").touched || userForm.get("gender").dirty)'>
                         <div class='to-fill' [hidden]="!userForm.get('gender').errors.required">Gender is required </div>
                     </div>
                 </div>
 
-
                 <div><label for="age">age: </label></div>
-                <div> <input class='input-style' type='text' formControlName="age" placeholder="age">
+                <div><input class='input-style' type='text' formControlName="age" placeholder="age">
                     <div class='info' *ngIf='userForm.get("age").errors && (userForm.get("age").touched || userForm.get("age").dirty)'>
                         <div class='to-fill' [hidden]="!userForm.get('age').errors.pattern">Age must be a number</div>
                     </div>
                 </div>
-
 
                 <div><label for="phone">phone: </label></div>
                 <div> <input class='input-style' type='text' formControlName="phone" placeholder="phone">
@@ -111,16 +110,12 @@
                 <div><label for="street">street: </label></div>
                 <div> <input class='input-style' type='text' formControlName="street" placeholder="street"></div>
 
-
                 <div><label for="postcode">postcode: </label></div>
                 <div> <input class='input-style' type='text' formControlName="postcode" placeholder="postcode"></div>
-
 
                 <div><label for="city">city: </label></div>
 
                 <div> <input class='input-style' type='text' formControlName="city" placeholder="city"></div>
-
-
 
                 <div style='margin-bottom:20px'><label for="PESEL">PESEL: </label></div>
                 <div style='margin-bottom:20px'> <input class='input-style' type='text' formControlName="PESEL" placeholder="PESEL">
@@ -133,9 +128,9 @@
                 </div>
 
 
-           </div>
+            </div>
 
-             <div *ngIf="userForm.get('role').value=='doctor' && url!='register' && url!='add-patient'">
+            <div *ngIf="userForm.get('role').value=='doctor' && url!='register' && url!='add-patient'">
                 <div formArrayName="specializations" *ngFor="let spec of specializations.controls; let i=index">
                     <div [formGroupName]="i">
                         <div class='table-of-specializations'>
@@ -154,8 +149,6 @@
                     </div>
                 </div>
 
-
-
                 <p style='font-size:24px; text-decoration: underline'>Working hours:</p>
 
                 <div formGroupName="workingHours" *ngFor="let day of dateArrays.dayOfWeek">
@@ -165,31 +158,29 @@
                             <div class='working-hours'>
                                 <div>
                                     <select class='hour-select-style' type='text' formControlName="start">
-                                    <option value="" disabled selected hidden>from</option>
-                  <option *ngFor="let hour of dateArrays.hoursArray" [value]="hour">{{hour}}</option>
-                            </select>
+                                        <option value="" disabled selected hidden>from</option>
+                                        <option *ngFor="let hour of dateArrays.hoursArray" [value]="hour">{{hour}}</option>
+                                    </select>
                                 </div>
+
                                 <div> - </div>
 
-                                <div><select class='hour-select-style' type='text' formControlName="end">
-                                <option value="" disabled selected hidden>to</option>
-                                <option *ngFor="let hour of dateArrays.hoursArray" [value]="hour">{{hour}}</option>
-                            </select>
-
+                                <div>
+                                    <select class='hour-select-style' type='text' formControlName="end">
+                                        <option value="" disabled selected hidden>to</option>
+                                        <option *ngFor="let hour of dateArrays.hoursArray" [value]="hour">{{hour}}</option>
+                                    </select>
                                 </div>
-
-                            </div>
+                             </div>
                         </div>
-
                     </div>
-
                 </div>
+
             </div>
+
         </div>
         <div style="text-align: right">
             <button type="submit" class='option-button' [disabled]="!userForm.valid">Submit</button>
         </div>
     </form>
 </div>
-
-{{user |json}}

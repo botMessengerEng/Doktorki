@@ -33,6 +33,12 @@ export class DateArrays {
         this.hoursArray[64] = '22:00';
     }
 
+     hoursGeneratorForSchedule() {
+        for (let i = 0, j = 6; j <= 21; j++) {
+            this.minutes.forEach(element => this.hoursArray[i++] = (j < 10 ? '0' + j : j) + element);
+        } 
+    }
+
     setDate() {
         this.yearsGenerator();
         this.daysGenerator();

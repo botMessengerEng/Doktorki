@@ -1,0 +1,32 @@
+  <div class='schedule'>
+
+    <div class='minutes'>
+      <div></div>
+      <div *ngFor="let min of minutes; let i = index">{{min}} </div>
+
+    </div>
+
+    <div class='hours' *ngFor="let hour of hours; let i = index">
+
+      <div>{{hour}} </div>
+
+      <div attr.id="{{hour}}:00" [ngStyle]='setButtons(hour, "00")'>
+        <a>
+        </a>
+      </div>
+
+      <div attr.id="{{hour}}:15" [ngStyle]='setButtons(hour, "15")'>
+        <a>
+          </a>
+      </div>
+      <div attr.id="{{hour}}:30" [ngStyle]='setButtons(hour, "30")'>
+        <a>
+          </a></div>
+      <div attr.id="{{hour}}:45" [ngStyle]='setButtons(hour, "45")'>
+        <a>
+          </a> </div>
+
+    </div>
+
+
+</div>

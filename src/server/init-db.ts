@@ -1068,8 +1068,8 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "date": {
                     "year":2017,
                     "month": 8,
-                    "day": 24,
-                    "hour": "21:15"
+                    "day": 30,
+                    "hour": "12:15"
                 },
                 "patient": {
                     "login": "synJacka",
@@ -1081,8 +1081,8 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "date": {
                     "year":2017,
                     "month": 8,
-                    "day": 24,
-                    "hour": "19:15"
+                    "day": 30,
+                    "hour": "08:30"
                 },
                 "patient": {
                     "login": "synJacka",

@@ -8,6 +8,10 @@ import { ManageUserComponent } from 'app/shared/manage-user/manage-user.componen
 import { NameFilterPipe } from 'app/shared/pipes/name-filter.pipe';
 import { DoctorFilter } from 'app/shared/pipes/doctor-filter.pipe';
 import { PatientFilter } from 'app/shared/pipes/patient-filter.pipe';
+import { CalendarComponent } from 'app/shared/schedule/calendar/calendar.component';
+import { ScheduleComponent } from 'app/shared/schedule/schedule-component/schedule.component';
+import { ScheduleService } from 'app/shared/schedule/schedule.service';
+import { AgendaComponent } from 'app/shared/schedule/agedna/agenda.component';
 
 @NgModule({
     declarations: [
@@ -15,7 +19,10 @@ import { PatientFilter } from 'app/shared/pipes/patient-filter.pipe';
         ManageUserComponent,
         NameFilterPipe,
         DoctorFilter,
-        PatientFilter
+        PatientFilter,
+        ScheduleComponent,
+        CalendarComponent,
+        AgendaComponent
     ],
     imports: [ 
         CommonModule,
@@ -27,8 +34,11 @@ import { PatientFilter } from 'app/shared/pipes/patient-filter.pipe';
         ManageUserComponent,
         NameFilterPipe,
         DoctorFilter,
-        PatientFilter
+        PatientFilter,
+        CalendarComponent,
+        ScheduleComponent,
+        AgendaComponent
     ],
-    providers: [  ],
+    providers: [ ScheduleService ],
 })
 export class SharedModule {}
