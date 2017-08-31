@@ -1,32 +1,33 @@
-  <div class='schedule'>
-
+<div *ngIf="canView">
+  {{doctor[0].firstName}} {{doctor[0].lastName}}'s schedule' {{scheduleService.date.day}}
+  <div class='schedule' >
     <div class='minutes'>
       <div></div>
       <div *ngFor="let min of minutes; let i = index">{{min}} </div>
 
     </div>
 
-    <div class='hours' *ngFor="let hour of hours; let i = index">
+    <div class='hours' *ngFor="let hour of hours; let i = index" >
 
       <div>{{hour}} </div>
 
       <div attr.id="{{hour}}:00" [ngStyle]='setButtons(hour, "00")'>
-        <a>
+        <a>{{hour}}:00
         </a>
       </div>
 
       <div attr.id="{{hour}}:15" [ngStyle]='setButtons(hour, "15")'>
-        <a>
+        <a>{{hour}}:15
           </a>
       </div>
       <div attr.id="{{hour}}:30" [ngStyle]='setButtons(hour, "30")'>
-        <a>
+        <a>{{hour}}:30
           </a></div>
       <div attr.id="{{hour}}:45" [ngStyle]='setButtons(hour, "45")'>
-        <a>
+        <a>{{hour}}:45
           </a> </div>
 
     </div>
-
+</div>
 
 </div>

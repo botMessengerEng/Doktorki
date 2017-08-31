@@ -860,7 +860,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "date": {
                     "year":2017,
                     "month": 8,
-                    "day": 21,
+                    "day": 31,
                     "hour": "08:00"
                 },
                 "patient": {
@@ -873,7 +873,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "date": {
                     "year":2017,
                     "month": 8,
-                    "day": 21,
+                    "day": 31,
                     "hour": "10:00"
                 },
                 "patient": {
@@ -885,8 +885,8 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "login": "doctor",
                 "date": {
                     "year":2017,
-                    "month": 8,
-                    "day": 21,
+                    "month": 9,
+                    "day": 1,
                     "hour": "13:30"
                 },
                 "patient": {
@@ -898,9 +898,9 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "login": "doctor",
                 "date": {
                     "year":2017,
-                    "month": 8,
-                    "day": 21,
-                    "hour": "12:00"
+                    "month": 9,
+                    "day": 4,
+                    "hour": "09:15"
                 },
                 "patient": {
                     "login": "Hulk",
@@ -911,9 +911,9 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "login": "doctor",
                 "date": {
                     "year":2017,
-                    "month": 8,
-                    "day": 21,
-                    "hour": "12:30"
+                    "month": 9,
+                    "day": 4,
+                    "hour": "09:30"
                 },
                 "patient": {
                     "login": "Mark",
@@ -924,9 +924,9 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "login": "doctor",
                 "date": {
                     "year":2017,
-                    "month": 8,
-                    "day": 21,
-                    "hour": "12:45"
+                    "month": 9,
+                    "day": 4,
+                    "hour": "13:45"
                 },
                 "patient": {
                     "login": "Robinio",
@@ -937,8 +937,8 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "login": "doctor",
                 "date": {
                     "year":2017,
-                    "month": 8,
-                    "day": 21,
+                    "month": 9,
+                    "day": 5,
                     "hour": "11:15"
                 },
                 "patient": {
@@ -950,8 +950,8 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "login": "doctor",
                 "date": {
                     "year":2017,
-                    "month": 8,
-                    "day": 21,
+                    "month": 9,
+                    "day": 5,
                     "hour": "09:15"
                 },
                 "patient": {
@@ -963,9 +963,9 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "login": "doctor",
                 "date": {
                     "year":2017,
-                    "month": 8,
-                    "day": 21,
-                    "hour": "09:45"
+                    "month": 9,
+                    "day": 5,
+                    "hour": "13:45"
                 },
                 "patient": {
                     "login": "Jesse",
@@ -1081,8 +1081,8 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "date": {
                     "year":2017,
                     "month": 8,
-                    "day": 30,
-                    "hour": "08:30"
+                    "day": 31,
+                    "hour": "17:45"
                 },
                 "patient": {
                     "login": "synJacka",
@@ -1094,7 +1094,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "date": {
                     "year":2017,
                     "month": 8,
-                    "day": 24,
+                    "day": 31,
                     "hour": "20:15"
                 },
                 "patient": {
@@ -1107,7 +1107,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "date": {
                     "year":2017,
                     "month": 8,
-                    "day": 24,
+                    "day": 31,
                     "hour": "20:30"
                 },
                 "patient": {
@@ -1119,7 +1119,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "login": "Brooke",
                 "date": {
                     "year":2017,
-                    "month": 8,
+                    "month": 9,
                     "day": 25,
                     "hour": "14:30"
                 },

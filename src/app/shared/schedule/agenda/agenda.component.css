@@ -4,6 +4,8 @@
     margin-right:15%;
     /*border: 1px solid cyan;*/
     font-size:16px;
+            
+
 }
 
 .minutes {
@@ -40,8 +42,9 @@
     text-align: center;
     padding:3%;
     background-color: white;
+    color: white;
+}               
 
-}
 .hours div:first-child{
     border-top: none;
     border-left:none;
@@ -52,14 +55,3 @@
     color: #008ae6;
     background-color: white;
 }
-
-
-
-
-
-/*.hours div a{
-    text-align: center;
-    padding:3%;
-    color: #002e4d;
-    text-decoration: none;
-}*/

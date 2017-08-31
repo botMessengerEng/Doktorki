@@ -3,6 +3,7 @@
     margin-right: 10%;
     /*border: 2px solid #002e4d;*/
     height: fixed;
+    user-select: none;
 }
 
 .content {

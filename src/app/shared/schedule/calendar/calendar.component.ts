@@ -49,7 +49,7 @@ export class CalendarComponent {
 
 
     setBackGroundStyle(day, i) {
-        if (day === this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year) {
+        if (day === this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year &&  !(i<10 && day>20)) {
             return { "background-color": "#003d66" }
         }
         else {
@@ -58,7 +58,7 @@ export class CalendarComponent {
     }
 
     setInactiveDays(day, i) {
-        if (day === this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year) {
+        if (day === this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year &&  !(i<10 && day>20) ) {
             return { "color": "white",
                      "background-color": "#003d66"
             }
@@ -76,18 +76,12 @@ export class CalendarComponent {
         }
     }
 
-    setDate(year, month,day){
-        this.scheduleService.date = new Date(year, month, day);
-        console.log(year, " ", month, " ", day);
+    setDate(year, month, day){
+        this.scheduleService.date.day=day;
+        this.scheduleService.date.year=year;
+        this.scheduleService.date.month=month;
+
+        console.log(year, month,  day);
     }
-
-
-//   ngDoCheck() {
-//    if(this.date.getMonth() != this.dateTmp) {
-//       this.dateTmp = this.date;
-//       console.log('ee')
-//    }
-// }
-
 
 }

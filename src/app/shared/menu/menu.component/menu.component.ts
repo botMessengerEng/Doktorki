@@ -29,7 +29,7 @@ export class MenuComponent implements OnInit {
         //     }
         //     else if (this.authService.user.role == "doctor") {
                 this.menuContext = [" ", "CHECK SCHEDULE", "USER'S LIST", "ADD PATIENT", "MY PROFILE", "LOG OUT"]
-                this.menuLinks = [" ", "/my-appointments", "/new-appointment", "/add-patient", "/users-list/" /*+ this.userLogin,*/, "/login"]
+                this.menuLinks = [" ", "/my-appointments", "/users-list/", "/add-patient", "/users-list/Brooke", "/login"]
         //     }
         //     else if (this.authService.user.role == "patient") {
         //         this.menuContext = [" ", " ", "MY APPTS", "NEW APPT", "MY PROFILE", "LOG OUT"]

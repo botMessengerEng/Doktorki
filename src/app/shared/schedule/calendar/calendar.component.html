@@ -1,12 +1,18 @@
 <div class='calender'>
  <!--<button type="button" (click)="back()">tył</button>-->
-                <div class='arrows'>
-                     <div class='arrow'>
+                  
+
+    <div class='year-with-arrows'>
+
+                    <div class='arrow'>
                     <div *ngIf='currentMonth!=calendar.month || (currentMonth==calendar.month && currentYear!=calendar.year)' (click)="back()">&#171;</div>
                     <div *ngIf='currentMonth==calendar.month && currentYear==calendar.year'></div></div>
-                     <div class='arrow'><div (click)="forward()">&#187;</div></div>
+                    <div class='year'>{{year}}</div>
+                    <div class='arrow'><div (click)="forward()">&#187;</div></div>
+
                 </div>
-    <div class='year'>{{year}}</div>
+
+
     <div class='month'>{{monthName}}</div>
     <div class='days'>      
         <div>Mon</div>
@@ -22,7 +28,7 @@
             <div *ngFor="let day of days; let i = index">
                     <div attr.id="{{day}}" [ngStyle]="setBackGroundStyle(day,i)">
 
-                        <button  (click)='setDate(calendar.year, calendar.month+1, day)'  [ngStyle]="setInactiveDays(day,i)" >
+                        <button  (click)='setDate(calendar.year, calendar.month, day)'  [ngStyle]="setInactiveDays(day,i)" >
                         {{day}}</button></div>
             </div>       
         </div>

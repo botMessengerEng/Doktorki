@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
+import { CustomDate } from '../classes/custom-date';
+
 
 @Injectable()
+
 export class ScheduleService {
-    date: Date;
+    currentDate= new Date();
+    date = new CustomDate(this.currentDate);
 }

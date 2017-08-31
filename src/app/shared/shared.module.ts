@@ -11,7 +11,8 @@ import { PatientFilter } from 'app/shared/pipes/patient-filter.pipe';
 import { CalendarComponent } from 'app/shared/schedule/calendar/calendar.component';
 import { ScheduleComponent } from 'app/shared/schedule/schedule-component/schedule.component';
 import { ScheduleService } from 'app/shared/schedule/schedule.service';
-import { AgendaComponent } from 'app/shared/schedule/agedna/agenda.component';
+import { AgendaComponent } from 'app/shared/schedule/agenda/agenda.component';
+import { AppointmentDetailsComponent } from 'app/shared/schedule/appointment-details/appointment-details.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { AgendaComponent } from 'app/shared/schedule/agedna/agenda.component';
         PatientFilter,
         ScheduleComponent,
         CalendarComponent,
-        AgendaComponent
+        AgendaComponent,
+        AppointmentDetailsComponent
     ],
     imports: [ 
         CommonModule,
@@ -37,7 +39,8 @@ import { AgendaComponent } from 'app/shared/schedule/agedna/agenda.component';
         PatientFilter,
         CalendarComponent,
         ScheduleComponent,
-        AgendaComponent
+        AgendaComponent,
+        AppointmentDetailsComponent
     ],
     providers: [ ScheduleService ],
 })

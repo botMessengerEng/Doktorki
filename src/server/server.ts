@@ -283,10 +283,10 @@ app.route('/schedule')
         try {
             const result = await mongoSchedule.findElement({
                 login: req.body.login,
-                'date.hour': req.body.date.hour ? req.body.date.hour : { $regex: /.*?/ },
                 'date.year': req.body.date.year ? req.body.date.year : { $regex: /.*?/ },
                 'date.month': req.body.date.month ? req.body.date.month : { $regex: /.*?/ },
-                'date.day': req.body.date.day ? req.body.date.day : { $regex: /.*?/ }
+                'date.day': req.body.date.day ? req.body.date.day : { $regex: /.*?/ },
+                'date.hour': req.body.date.hour ? req.body.date.hour : { $regex: /.*?/ }
             }
             );
             res.json(result);
