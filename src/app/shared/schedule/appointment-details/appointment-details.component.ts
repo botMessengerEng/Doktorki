@@ -6,6 +6,7 @@ import { Calendar } from '../../classes/calendar';
 import { dayMonthCheck } from '../../manage-user/day-month-check.directives';
 import { DateArrays } from '../../classes/date-arrays';
 import { AppointmentTerm } from '../../classes/appointment-term';
+import { ScheduleService } from 'app/shared/schedule/schedule.service';
 
 @Component({
     selector: 'app-appontment-details',
@@ -14,11 +15,7 @@ import { AppointmentTerm } from '../../classes/appointment-term';
 })
 
 export class AppointmentDetailsComponent implements OnInit {
-    doctor;
-    patient;
-    appointments;
-    allAppointments;
-    singleAppointment;
+
     appointmentForm: FormGroup;
     yearsArray = new Array(107);
     daysArray = new Array(31);
@@ -27,19 +24,22 @@ export class AppointmentDetailsComponent implements OnInit {
     errMessage: any;
     genders = ['male', 'female'];
     dateArrays = new DateArrays;
+    canView=false;
 
-    constructor(private fb: FormBuilder, private appService: AppService) {
+    constructor(private fb: FormBuilder, private appService: AppService, private scheduleService: ScheduleService) {
         this.appointmentTerm = new AppointmentTerm(undefined, '', undefined, '');
     }
 
     ngOnInit() {
-        
+        if (this.scheduleService.selectedAppointment!=undefined){
+        this.appService.getUserDetails({login: this.scheduleService.selectedAppointment.patient.login})
+            .subscribe(patient => this.scheduleService.patient = patient);
+            this.canView=true;
+        }
 
 
 
-        // this.dateArrays.daysGenerator();
-        // this.dateArrays.yearsFutureGenerator();
-        // this.dateArrays.hoursGenerator()
+
         this.appointmentForm = this.fb.group({
             // description: [this.singleAppointment.patient.description],
             // dayMonthGroup: this.fb.group({

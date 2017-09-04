@@ -1,5 +1,5 @@
 <div *ngIf="canView">
-  {{doctor[0].firstName}} {{doctor[0].lastName}}'s schedule' {{scheduleService.date.day}}
+  <!--{{doctor[0].firstName}} {{doctor[0].lastName}}'s schedule' {{scheduleService.date.day}}-->
   <div class='schedule' >
     <div class='minutes'>
       <div></div>
@@ -7,25 +7,24 @@
 
     </div>
 
-    <div class='hours' *ngFor="let hour of hours; let i = index" >
+    <div class='hours' *ngFor="let hour of dateArrays.hoursArray; let i = index" >
 
       <div>{{hour}} </div>
 
-      <div attr.id="{{hour}}:00" [ngStyle]='setButtons(hour, "00")'>
-        <a>{{hour}}:00
-        </a>
+      <div [ngStyle]='setButtons(hour, "00")'>
+        <button (click)='selectAppointment(hour, "00")' [ngStyle]='setButtons(hour, "00")'>{{hour}}:00 </button>
       </div>
 
-      <div attr.id="{{hour}}:15" [ngStyle]='setButtons(hour, "15")'>
-        <a>{{hour}}:15
-          </a>
+      <div [ngStyle]='setButtons(hour, "15")'>
+        <button (click)='selectAppointment(hour, "15")' [ngStyle]='setButtons(hour, "15")'>{{hour}}:15</button>
       </div>
-      <div attr.id="{{hour}}:30" [ngStyle]='setButtons(hour, "30")'>
-        <a>{{hour}}:30
-          </a></div>
-      <div attr.id="{{hour}}:45" [ngStyle]='setButtons(hour, "45")'>
-        <a>{{hour}}:45
-          </a> </div>
+
+      <div [ngStyle]='setButtons(hour, "30")'>
+        <button (click)='selectAppointment(hour, "30")' [ngStyle]='setButtons(hour, "30")'>{{hour}}:30 </button></div>
+
+      <div [ngStyle]='setButtons(hour, "45")'>
+        <button (click)='selectAppointment(hour, "45")' [ngStyle]='setButtons(hour, "45")'>{{hour}}:45 </button> 
+      </div>
 
     </div>
 </div>

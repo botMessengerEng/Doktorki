@@ -49,7 +49,7 @@ export class CalendarComponent {
 
 
     setBackGroundStyle(day, i) {
-        if (day === this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year &&  !(i<10 && day>20)) {
+        if (day === this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year &&  !(i<10 && day>20) && !(day<10 && i>20)) {
             return { "background-color": "#003d66" }
         }
         else {
@@ -58,7 +58,7 @@ export class CalendarComponent {
     }
 
     setInactiveDays(day, i) {
-        if (day === this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year &&  !(i<10 && day>20) ) {
+        if (day === this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year &&  !(i<10 && day>20) && !(day<10 && i>20)) {
             return { "color": "white",
                      "background-color": "#003d66"
             }

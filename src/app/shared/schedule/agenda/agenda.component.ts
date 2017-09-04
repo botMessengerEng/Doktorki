@@ -7,6 +7,7 @@ import { ScheduleService } from '../schedule.service';
 import { AppService } from 'app/app.service';
 import { CustomDate } from 'app/shared/classes/custom-date';
 import { AuthService } from 'app/auth/auth.service';
+import { DateArrays } from 'app/shared/classes/date-arrays';
 
 @Component({
     selector: 'app-agenda',
@@ -14,94 +15,58 @@ import { AuthService } from 'app/auth/auth.service';
     styleUrls: ['agenda.component.css']
 })
 export class AgendaComponent implements OnInit, DoCheck {
-    dayOfWeek: any;
     daysArray = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-    allAppointments = new Array();
-    hoursOfDailyAppointments = new Array();
     minutes = ['00', '15', '30', '45'];
     hours = [];
-    date: Date;
-    currentDate = new Date();
-    dailyAppointments: any;
-    doctor: any;
     canView = false;
-    dateTmp = new CustomDate(this.currentDate);
-    // rerender = false;
-
-    constructor(private scheduleService: ScheduleService, private appService: AppService, private authService: AuthService) {
-        for (let i = 6; i < 22; i++) {
-            this.hours[i - 6] = i;
-        }
-
-    }
+    dateTmp = new CustomDate(new Date());
+    dateArrays = new DateArrays();
+    
+    constructor(private scheduleService: ScheduleService, private appService: AppService, private authService: AuthService) {}
 
     ngOnInit() {
         Promise.all([
             this.getVisits(),
             this.getUserDetails()
         ])
-            .then(() => this.dayOfWeek = this.getdayOfWeek())
-            .then(() => this.appointmentHoursGenerator())
-            .then(() => this.canView = true);
+            .then(() => this.scheduleService.getDailyAppts())
+            .then(result => this.scheduleService.dailyAppointments = result)
+            .then(() => this.scheduleService.selectedDayOfWeek = this.getdayOfWeek())
+            .then(() => this.scheduleService.dailyAppointmentsHours = this.scheduleService.apptsToArray(this.scheduleService.dailyAppointments))
+            .then(() => this.canView = true)
+            .catch(err => {throw(err)})
     }
- 
+
     private getVisits() {
         return this.appService.getVisits({
-            // login: this.authService.user.login,
-            login: "Brooke",
-            date: {
-                year: this.currentDate.getFullYear(),
-                month: this.currentDate.getMonth() + 1,
-                day: this.currentDate.getDate()
-            }
-        })
-            .toPromise().then(appointments => this.dailyAppointments = appointments)
+            login: 'Brooke',
+        }, '0')
+            .toPromise().then(appointments => this.scheduleService.allAppointments = appointments);
     }
 
     private getUserDetails() {
-        return this.appService.getUserDetails({ /*login: this.authService.user.login */ login: "Brooke"})
-            .toPromise().then((user => this.doctor = user))
+        return this.appService.getUserDetails({ /*login: this.authService.user.login */ login: "Brooke" })
+            .toPromise().then((user => this.scheduleService.doctor = user))
     }
 
-
-    appointmentHoursGenerator() {
-        for (let i = 0; i < this.dailyAppointments.length; i++) {
-            this.hoursOfDailyAppointments[i] = this.dailyAppointments[i].date.hour;
-        }
-
-    }
 
     getdayOfWeek() {
-        let date = new Date(this.dateTmp.year, this.dateTmp.month, this.dateTmp.day)
+        let date = new Date(this.scheduleService.date.year, this.scheduleService.date.month, this.scheduleService.date.day);
         return date.getDay();
-        // console.log(date.getDay());
-    }
-
-    getScheduleServiceDate() {
-        console.log(this.scheduleService.date.day, this.scheduleService.date.month, this.scheduleService.date.year);
-        console.log(this.dateTmp.day, this.dateTmp.month, this.dateTmp.year);
-        console.log(this.dateTmp);
-        console.log(this.scheduleService.date);
-
     }
 
     ngDoCheck() {
         if (!_.isEqual(this.dateTmp, this.scheduleService.date)) {
             console.log('ive changed');
-            this.hoursOfDailyAppointments = new Array();
-            // this.rerender = !this.rerender;
-            this.appService.getVisits({
-                login: "Brooke",
-                date: {
-                    year: this.scheduleService.date.year,
-                    month: (this.scheduleService.date.month + 1),
-                    day: this.scheduleService.date.day
-                }
-            }).toPromise().then(appointments => this.dailyAppointments = appointments)
-                .then(() => this.dayOfWeek = this.getdayOfWeek())
-                .then(() => this.appointmentHoursGenerator())
+            this.scheduleService.dailyAppointmentsHours = new Array();
+
+            this.scheduleService.getDailyAppts()
+                .then(result => this.scheduleService.dailyAppointments = result)
+                .then(() => this.scheduleService.selectedDayOfWeek = this.getdayOfWeek())
+                .then(() => console.log(this.scheduleService.selectedDayOfWeek)
+                )
+                .then(() => this.scheduleService.dailyAppointmentsHours = this.scheduleService.apptsToArray(this.scheduleService.dailyAppointments))
                 .then(() => {
-                    // this.rerender = !this.rerender;
                     Object.assign(this.dateTmp, this.scheduleService.date);
 
                 });
@@ -112,14 +77,14 @@ export class AgendaComponent implements OnInit, DoCheck {
         if (i < 10) {
             i = '0' + i;
         }
-        let hour = i + ':' + m;
-        let transformedHour = parseInt(i + m);
-        var re = /:/gi;
-        let transformedStartHour = parseInt(this.doctor[0].workingHours[(this.daysArray[this.dayOfWeek == 0 ? 6 : this.dayOfWeek - 1]).toString()].start.replace(re, ""));
-        let transformedEndHour = parseInt(this.doctor[0].workingHours[(this.daysArray[this.dayOfWeek == 0 ? 6 : this.dayOfWeek - 1]).toString()].end.replace(re, ""));
+        const hour = i + ':' + m;
+        const transformedHour = parseInt(i + m);
+        const re = /:/gi;
+        const transformedStartHour = parseInt(this.scheduleService.doctor[0].workingHours[(this.daysArray[this.scheduleService.selectedDayOfWeek == 0 ? 6 : this.scheduleService.selectedDayOfWeek - 1]).toString()].start.replace(re, ""));
+        const transformedEndHour = parseInt(this.scheduleService.doctor[0].workingHours[(this.daysArray[this.scheduleService.selectedDayOfWeek == 0 ? 6 : this.scheduleService.selectedDayOfWeek - 1]).toString()].end.replace(re, ""));
 
 
-        if (this.dailyAppointments != undefined && this.hoursOfDailyAppointments != undefined) {
+        if (this.scheduleService.dailyAppointments != undefined && this.scheduleService.dailyAppointmentsHours != undefined) {
             let styles;
             if (transformedHour < transformedStartHour || transformedHour >= transformedEndHour || (!transformedEndHour && !transformedStartHour)) {
                 return {
@@ -127,7 +92,7 @@ export class AgendaComponent implements OnInit, DoCheck {
                 };
             }
 
-            else if (this.hoursOfDailyAppointments.find((element) => hour == element)) {
+            else if (this.scheduleService.dailyAppointmentsHours.find((element) => hour == element)) {
                 return { 'background-color': '#660000' };
             }
 
@@ -137,9 +102,15 @@ export class AgendaComponent implements OnInit, DoCheck {
         }
     }
 
+    selectAppointment(i: any, m: string) {
+        if (i < 10) {
+            i = '0' + i;
+        }
+        const hour = i + ':' + m;
 
-    sprawdz() {
-        console.log(_.isEqual(this.scheduleService.date, this.dateTmp));
+        
+        this.scheduleService.selectedAppointment = this.scheduleService.dailyAppointments.find(element => element.date.hour === hour);
+        console.log(this.scheduleService.selectedAppointment);
     }
 
 }

@@ -55,3 +55,12 @@
     color: #008ae6;
     background-color: white;
 }
+
+.hours div button {
+    color:white;
+    border: none;
+    font-family: 'Quicksand', sans-serif;
+    font-size:18px;
+    cursor: pointer;
+    outline:0;
+}

@@ -59,7 +59,6 @@ export class ManageUserComponent implements OnInit {
                 if (this.userLogin == undefined) {
                     this.setRole();
                 }
-                this.dateArrays.setDate();
                 this.canView = true;
                 return new Promise(resolve => resolve(true));
             })

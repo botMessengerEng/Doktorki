@@ -36,19 +36,19 @@ export class AppService {
             .catch(this.handlerError);
     }
 
-    getVisits(param): Observable<string> {
-        return this._http.post(this._dataBaseUrlSchedule, param)
-            .map((response: Response) => response.json())
-            .do(data => console.log('Found visits: ' + JSON.stringify(data)))
-            .catch(this.handlerError);
-    }
-
-    // findVisits(param, params?): Observable<string> {
-    //     return this._http.post(params ? this._dataBaseUrlSchedule + '/' + params : this._dataBaseUrlSchedule, param)
+    // getVisits(param): Observable<string> {
+    //     return this._http.post(this._dataBaseUrlSchedule, param)
     //         .map((response: Response) => response.json())
-    //         .do(data => console.log('All: ' + JSON.stringify(data)))
+    //         .do(data => console.log('Found visits: ' + JSON.stringify(data)))
     //         .catch(this.handlerError);
     // }
+
+    getVisits(param, params?): Observable<string> {
+        return this._http.post(params ? this._dataBaseUrlSchedule + '/' + params : this._dataBaseUrlSchedule, param)
+            .map((response: Response) => response.json())
+            .do(data => console.log('All: ' + JSON.stringify(data)))
+            .catch(this.handlerError);
+    }
 
     private handlerError(error: Response) {
         console.error(error);

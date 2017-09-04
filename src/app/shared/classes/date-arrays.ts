@@ -2,11 +2,20 @@ export class DateArrays {
     yearsArray = new Array(107);
     nowAndFutureYearsArray = new Array(10);
     daysArray = new Array(31);
-    hoursArray = new Array(65);
+    hoursWithMinutesArray = new Array(65);
+    hoursArray = new Array(16);
     monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'Novermber', 'December']
     minutes = [':00', ':15', ':30', ':45'];
     dayOfWeek= ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
     date = new Date;
+
+    constructor(){
+        this.yearsGenerator();
+        this.daysGenerator();
+        this.hoursWithMinutesGenerator();
+        this.yearsFutureGenerator();
+        this.hoursGenerator();
+    }
 
     private yearsGenerator() {
         for (let i = 0; i <= 107; i++) {
@@ -14,7 +23,7 @@ export class DateArrays {
         }
     }
 
-    yearsFutureGenerator() {
+    private yearsFutureGenerator() {
         for (let i = 0; i <= 10; i++) {
             this.nowAndFutureYearsArray[i] = this.date.getFullYear() + i;
         }
@@ -26,22 +35,26 @@ export class DateArrays {
         }
     }
 
-    private hoursGenerator() {
+    private hoursWithMinutesGenerator() {
         for (let i = 0, j = 6; j <= 21; j++) {
-            this.minutes.forEach(element => this.hoursArray[i++] = (j < 10 ? '0' + j : j) + element);
+            this.minutes.forEach(element => this.hoursWithMinutesArray[i++] = (j < 10 ? '0' + j : j) + element);
         } 
-        this.hoursArray[64] = '22:00';
+        this.hoursWithMinutesArray[64] = '22:00';
     }
 
-     hoursGeneratorForSchedule() {
+    private hoursGeneratorForSchedule() {
         for (let i = 0, j = 6; j <= 21; j++) {
-            this.minutes.forEach(element => this.hoursArray[i++] = (j < 10 ? '0' + j : j) + element);
-        } 
+            this.minutes.forEach(element => this.hoursWithMinutesArray[i++] = (j < 10 ? '0' + j : j) + element);
+        }
     }
 
-    setDate() {
-        this.yearsGenerator();
-        this.daysGenerator();
-        this.hoursGenerator();
+    private hoursGenerator(){
+        for(let i=6; i<22; i++){
+            this.hoursArray[i-6]=i;
+        }
+
     }
+
+
+
 }
