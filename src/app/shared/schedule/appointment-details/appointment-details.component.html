@@ -4,15 +4,15 @@
             <div *ngIf='scheduleService.patient[0]!=undefined'><strong>Name:</strong> {{scheduleService.patient[0].firstName}} {{scheduleService.patient[0].lastName}} </div>
             <div *ngIf='scheduleService.patient[0]!=undefined'><strong>PESEL:</strong>{{scheduleService.patient[0].PESEL}} </div>
            
-            <div *ngIf='scheduleService.patient[0]==undefined'><strong>Name:</strong>
+            <div *ngIf='scheduleService.patient[0]==undefined'>
             
                     <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
-
-                <div><input class='input-style' type='text' formControlName="login" placeholder="patient's login">
-
+                        <div class='login-style'>
+                <div> <strong>Login:</strong></div>
+                <div><input class='input-login-style' type='text' formControlName="login" placeholder="patient's login">
+                </div>
             
              </div>
-            <div *ngIf='editAppointment._id==""'><strong>PESEL:</strong> </div>
                     </form>
 
         </div>
@@ -69,7 +69,5 @@
         </form>
 
         <div *ngIf='invalid' class='invalid'>{{invalidMessage}}</div>
-
-{{editAppointment |json}}
     </div>
 

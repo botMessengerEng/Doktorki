@@ -28,12 +28,12 @@ export class Appointment {
         this.date.hour = appt.date.hour;
     }
 
-    setNewAppointment(doctor, date){
+    setNewAppointment(doctor, date, hour){
         this.login=doctor.login;
-        this.date.year = date.date.year;
-        this.date.month = date.date.month;
-        this.date.day = date.date.day;
-        this.date.hour = date.date.hour;
+        this.date.year = date.year;
+        this.date.month = date.month+1;
+        this.date.day = date.day;
+        this.date.hour = hour;
     }
 
 }

@@ -40,7 +40,7 @@ export class ManageUserComponent implements OnInit {
         this.url = this.route.snapshot.url.join('/');
         this.appService.url = this.url;
         this.userLogin = this.route.snapshot.params['login'];
-        
+
         return new Promise(resolve => resolve(true));
     }
 
@@ -68,12 +68,11 @@ export class ManageUserComponent implements OnInit {
             })
             .then(() => {
                 setContent(this.userForm, this.user[0] != undefined ? this.user[0] : this.user);
-                if(this.authService.user==undefined || this.authService.user.role=="doctor")
-                {
-                    this.user.role="patient";
+                if (this.authService.user == undefined || this.authService.user.role == "doctor") {
+                    this.user.role = "patient";
                 }
-                if (this.userLogin!=undefined){
-                     this.deletePasswordValidation();
+                if (this.userLogin != undefined) {
+                    this.deletePasswordValidation();
                 }
             });
     }
@@ -127,8 +126,6 @@ export class ManageUserComponent implements OnInit {
         login.updateValueAndValidity();
     }
 
-
-
     onSubmit() {
         if (this.userLogin == undefined) {
             this.authService.addUser(this.user, this.user.role)
@@ -145,8 +142,8 @@ export class ManageUserComponent implements OnInit {
         }
         else {
             this.appService.updateUser(this.user[0], this.user[0].role)
-                .subscribe((result) =>  {
-                    if(this.authService.user.role=="patient") {
+                .subscribe((result) => {
+                    if (this.authService.user.role == "patient") {
                         this.router.navigate(['new-appointment'])
                     }
                     else {
@@ -156,7 +153,5 @@ export class ManageUserComponent implements OnInit {
                 });
         }
     }
-
-
 
 }

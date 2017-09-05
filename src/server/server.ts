@@ -2,7 +2,8 @@ import * as express from 'express';
 import * as _ from 'lodash';                        // czy to jest w ogóle potrzebne ? ... ---ale wygląda spoko ta biblioteka
 import * as bodyParser from 'body-parser';
 import { MongoCollection } from '../mongo/mongo';
-import { initDB } from './init-db'
+import { initDB } from './init-db';
+import * as bcrypt from 'bcrypt';
 /*
  "In general, the rule of thumb is:
  If you’re installing something that you want to use
@@ -13,6 +14,7 @@ import { initDB } from './init-db'
  end up in your PATH environment variable" ~XiaoPeng
 */
 
+const saltRounds = 10;
 const app = express();
 const collectionUsers = 'Users';
 const collectionUsersDetails = 'UsersDetails';
@@ -40,20 +42,27 @@ app.get('/', (req, res) =>
 // ------------- login   ------------------------------------------------------------------------////////////////////////
 app.post('/login', async (req: express.Request, res: express.Response) => {
     console.log(JSON.stringify(req.body));
+    try {
+        const user = await mongoUsers.findElement({
+            login: req.body.login
+        });
 
-    const user = await mongoUsers.findElement({
-        login: req.body.login,
-        password: req.body.password
-    });
-    if (user[0] !== undefined) {
-        res.status(200).json(user[0]).end();
-        console.log('tak');
+        if (user[0] != undefined) {
+            const validation = await bcrypt.compare(req.body.password, user[0].password);
+            if (validation) {
+                res.status(200).json(user[0]).end();
+            }
+            else {
+                res.json('bledne haslo');
+            }
+        }
+        else {
+            res.json('bledny login');
+            console.log(user);
+        }
+    } catch (err) {
+        res.send(err);
     }
-    else {
-        res.json('bledny login lub haslo');
-        console.log('nie');
-        console.log(user);
-    };
 });
 
 // ------------- user  ------------------------------------------------------------------------////////////////////////
@@ -168,12 +177,13 @@ app.post('/insert-user/:param', async (req: express.Request, res: express.Respon
         if (user[0] !== undefined) {
             res.json(`Login ${req.body.login} is in use!`)
         } else {
+            const hash = await bcrypt.hash(req.body.password, saltRounds);
             if (req.param('param') === 'doctor') {
                 await Promise.all([
                     mongoUsers.insertElements([
                         {
                             login: req.body.login,
-                            password: req.body.password,
+                            password: hash,
                             role: 'doctor'
                         }
                     ]),
@@ -224,7 +234,7 @@ app.post('/insert-user/:param', async (req: express.Request, res: express.Respon
                     mongoUsers.insertElements([
                         {
                             login: req.body.login,
-                            password: req.body.password,
+                            password: hash,
                             role: 'patient'
                         }
                     ]),
@@ -248,7 +258,6 @@ app.post('/insert-user/:param', async (req: express.Request, res: express.Respon
                     ])
                 ]);
             }
-
             res.json('OK')
         }
     } catch (err) {
@@ -262,39 +271,6 @@ app.listen(3000, function () {
 });
 
 // ------------- schedule -----------------------------------------------------------------------////////////////////////
-// app.route('/schedule')
-//     .get(async (req: express.Request, res: express.Response) => {
-//         try {
-//             const result = await mongoSchedule.showElements();
-//             res.json(result);
-//         } catch (err) {
-//             res.send(err);
-//         }
-//     })
-//     .put(async (req: express.Request, res: express.Response) => {
-//         try {
-//             const result = await mongoSchedule.updateElement(req.body);
-//             res.json(result)
-//         } catch (err) {
-//             res.send(err);
-//         }
-//     })
-//     .post(async (req: express.Request, res: express.Response) => {
-//         try {
-//             const result = await mongoSchedule.findElement({
-//                 login: req.body.login,
-//                 'date.year': req.body.date.year ? req.body.date.year : { $regex: /.*?/ },
-//                 'date.month': req.body.date.month ? req.body.date.month : { $regex: /.*?/ },
-//                 'date.day': req.body.date.day ? req.body.date.day : { $regex: /.*?/ },
-//                 'date.hour': req.body.date.hour ? req.body.date.hour : { $regex: /.*?/ }
-//             }
-//             );
-//             res.json(result);
-//         } catch (err) {
-//             res.send(err);
-//         }
-//     });
-
 app.route('/schedule/:param')
     .post(async (req: express.Request, res: express.Response) => {
         try {
@@ -303,7 +279,7 @@ app.route('/schedule/:param')
         } catch (err) {
             res.send(err);
         }
-    })  
+    })
     .put(async (req: express.Request, res: express.Response) => {
         try {
             console.log(req.body)
@@ -313,10 +289,19 @@ app.route('/schedule/:param')
             res.send(err);
         }
     });
-///-----------------DataBase Init path -----------------///
+
+///----------------- Session auth -------------------------------------------------///
+
+app.post('/auth', async (req: express.Request, res: express.Response) => {
+
+});
+
+
+
+///-----------------DataBase Init path-----------------///
 app.get('/init-db', async (req: express.Request, res: express.Response) => {
     try {
-        const result = await initDB(mongoUsers, mongoUsersDetails, mongoSchedule);
+        const result = await initDB(mongoUsers, mongoUsersDetails, mongoSchedule, saltRounds, bcrypt);
         res.json(result);
     } catch (err) {
         res.json(err);

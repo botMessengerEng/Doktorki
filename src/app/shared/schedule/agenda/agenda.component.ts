@@ -22,8 +22,8 @@ export class AgendaComponent implements OnInit, DoCheck {
     canView = false;
     dateTmp = new CustomDate(new Date());
     dateArrays = new DateArrays();
-    
-    constructor(private scheduleService: ScheduleService, private appService: AppService, private authService: AuthService) {}
+
+    constructor(private scheduleService: ScheduleService, private appService: AppService, private authService: AuthService) { }
 
     ngOnInit() {
         Promise.all([
@@ -32,7 +32,7 @@ export class AgendaComponent implements OnInit, DoCheck {
         ])
             .then(() => this.scheduleService.getAllApptsAndThenDailyAppts())
             .then(() => this.canView = true)
-            .catch(err => {throw(err)})
+            .catch(err => { throw (err) })
     }
 
     private getVisits() {
@@ -100,12 +100,19 @@ export class AgendaComponent implements OnInit, DoCheck {
         }
 
         const hour = i + ':' + m;
-        this.scheduleService.selectedAppointment.setAppointmentDetails(this.scheduleService.dailyAppointments.find(element => element.date.hour === hour) ? this.scheduleService.dailyAppointments.find(element => element.date.hour === hour) : new Appointment());
-        
-        
-        if(this.scheduleService.selectedAppointment._id==""){
-        this.scheduleService.selectedAppointment.setNewAppointment(this.scheduleService.doctor[0].login, this.scheduleService.selectedAppointment.date);
-        }
+
+        this.setAppointment(hour)
+            .then(() => {
+                if (this.scheduleService.selectedAppointment._id == "") {
+                    console.log(JSON.stringify(this.scheduleService.dailyAppointments));
+                    this.scheduleService.selectedAppointment.setNewAppointment(this.scheduleService.doctor[0].login, this.scheduleService.date, hour);
+                }
+            });
+    }
+
+    setAppointment(hour) {
+        this.scheduleService.selectedAppointment.setAppointmentDetails(this.scheduleService.dailyAppointments.find(element => element.date.hour === hour) ? this.scheduleService.dailyAppointments.find(element => element.date.hour === hour) : new Appointment())
+        return new Promise(resolve => resolve(true));
     }
 
 }

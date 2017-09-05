@@ -39,7 +39,6 @@ export class AppointmentDetailsComponent implements OnInit, DoCheck {
     }
 
     ngDoCheck(): void {
-        // console.log(JSON.stringify(this.scheduleService.selectedAppointment.date) + "  " + JSON.stringify(this.selectedAppointmentTmp.date));
         if (!_.isEqual(this.selectedAppointmentTmp.date, this.scheduleService.selectedAppointment.date)) {
             this.appService.getUserDetails({ login: this.scheduleService.selectedAppointment.patient.login })
                 .toPromise()
@@ -47,6 +46,11 @@ export class AppointmentDetailsComponent implements OnInit, DoCheck {
                 .then(() => this.appointmentForm = formBuilder(this.fb, this.scheduleService.selectedAppointment))
                 .then(() => _.merge(this.editAppointment, this.scheduleService.selectedAppointment))
                 .then(() => setContent(this.appointmentForm, this.editAppointment))
+                .then(() => {
+                    if(this.scheduleService.patient[0]!=undefined){
+                        this.deleteLoginValidation();
+                    }
+                })
                 .then(() => this.canView = true)
                 .then(() => _.merge(this.selectedAppointmentTmp, this.scheduleService.selectedAppointment));
         }
@@ -82,6 +86,12 @@ export class AppointmentDetailsComponent implements OnInit, DoCheck {
             console.log(err);
         }
 
+    }
+
+    deleteLoginValidation(): void {
+        const login = this.appointmentForm.get('login');
+        login.clearValidators();
+        login.updateValueAndValidity();
     }
 
 

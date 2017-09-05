@@ -78,6 +78,29 @@ select {
     outline:0;
 }
 
+
+.login-style{
+    display:grid;
+    grid-template-columns: 25% 70%;
+}
+
+.input-login-style{
+    outline:0px;
+    border:none;
+    border-bottom: 0.3px solid grey;
+    width: 90%;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 16px;
+
+}
+
+.input-login-style:hover{
+    -webkit-animation: swing 1s ease;
+    animation: swing 1s ease;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    border-bottom: 0.3px solid #660000;
+}
 .option-button {
     width:70px;
     height:50px;
@@ -116,3 +139,37 @@ select {
     margin-top: 2%;
     margin-bottom: 4%;
  }
+
+ @-webkit-keyframes swing
+{
+    15%
+    {
+        -webkit-transform: translateX(5px);
+        transform: translateX(5px);
+    }
+    30%
+    {
+        -webkit-transform: translateX(-5px);
+       transform: translateX(-5px);
+    } 
+    50%
+    {
+        -webkit-transform: translateX(3px);
+        transform: translateX(3px);
+    }
+    65%
+    {
+        -webkit-transform: translateX(-3px);
+        transform: translateX(-3px);
+    }
+    80%
+    {
+        -webkit-transform: translateX(2px);
+        transform: translateX(2px);
+    }
+    100%
+    {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
