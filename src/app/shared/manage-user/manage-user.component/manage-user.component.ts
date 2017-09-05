@@ -45,7 +45,6 @@ export class ManageUserComponent implements OnInit {
     }
 
     ngOnInit() {
-
         this.setURL()
             .then(async () => {
                 if (this.userLogin != undefined) {

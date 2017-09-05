@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import 'rxjs/add/operator/toPromise';
 
 import { Calendar } from '../../classes/calendar';
+import { Appointment } from '../../classes/appointment';
 import { ScheduleService } from '../schedule.service';
 import { AppService } from 'app/app.service';
 import { CustomDate } from 'app/shared/classes/custom-date';
@@ -29,16 +30,13 @@ export class AgendaComponent implements OnInit, DoCheck {
             this.getVisits(),
             this.getUserDetails()
         ])
-            .then(() => this.scheduleService.getDailyAppts())
-            .then(result => this.scheduleService.dailyAppointments = result)
-            .then(() => this.scheduleService.selectedDayOfWeek = this.getdayOfWeek())
-            .then(() => this.scheduleService.dailyAppointmentsHours = this.scheduleService.apptsToArray(this.scheduleService.dailyAppointments))
+            .then(() => this.scheduleService.getAllApptsAndThenDailyAppts())
             .then(() => this.canView = true)
             .catch(err => {throw(err)})
     }
 
     private getVisits() {
-        return this.appService.getVisits({
+        return this.scheduleService.getVisits({
             login: 'Brooke',
         }, '0')
             .toPromise().then(appointments => this.scheduleService.allAppointments = appointments);
@@ -50,11 +48,6 @@ export class AgendaComponent implements OnInit, DoCheck {
     }
 
 
-    getdayOfWeek() {
-        let date = new Date(this.scheduleService.date.year, this.scheduleService.date.month, this.scheduleService.date.day);
-        return date.getDay();
-    }
-
     ngDoCheck() {
         if (!_.isEqual(this.dateTmp, this.scheduleService.date)) {
             console.log('ive changed');
@@ -62,9 +55,8 @@ export class AgendaComponent implements OnInit, DoCheck {
 
             this.scheduleService.getDailyAppts()
                 .then(result => this.scheduleService.dailyAppointments = result)
-                .then(() => this.scheduleService.selectedDayOfWeek = this.getdayOfWeek())
-                .then(() => console.log(this.scheduleService.selectedDayOfWeek)
-                )
+                .then(() => this.scheduleService.selectedDayOfWeek = this.scheduleService.getdayOfWeek())
+                .then(() => console.log(this.scheduleService.selectedDayOfWeek))
                 .then(() => this.scheduleService.dailyAppointmentsHours = this.scheduleService.apptsToArray(this.scheduleService.dailyAppointments))
                 .then(() => {
                     Object.assign(this.dateTmp, this.scheduleService.date);
@@ -106,11 +98,14 @@ export class AgendaComponent implements OnInit, DoCheck {
         if (i < 10) {
             i = '0' + i;
         }
-        const hour = i + ':' + m;
 
+        const hour = i + ':' + m;
+        this.scheduleService.selectedAppointment.setAppointmentDetails(this.scheduleService.dailyAppointments.find(element => element.date.hour === hour) ? this.scheduleService.dailyAppointments.find(element => element.date.hour === hour) : new Appointment());
         
-        this.scheduleService.selectedAppointment = this.scheduleService.dailyAppointments.find(element => element.date.hour === hour);
-        console.log(this.scheduleService.selectedAppointment);
+        
+        if(this.scheduleService.selectedAppointment._id==""){
+        this.scheduleService.selectedAppointment.setNewAppointment(this.scheduleService.doctor[0].login, this.scheduleService.selectedAppointment.date);
+        }
     }
 
 }

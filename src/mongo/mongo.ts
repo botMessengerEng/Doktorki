@@ -1,5 +1,6 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import * as assert from 'assert';
+
 
 
 export class MongoCollection {
@@ -27,8 +28,30 @@ export class MongoCollection {
       return new Promise(resolve => resolve(result));
     }
 
+    async findElement2(parameter) {
+      const result = await this.collection.find({_id: ObjectId.createFromHexString(parameter)}).toArray();
+      return new Promise(resolve => resolve(result));
+    }
+
     async updateElement(parameter) {
-      const result = await this.collection.updateOne({login: parameter.login}, { $set: parameter });
+      let result;
+      if (parameter._id!=undefined) {
+        const param = await this.collection.find({_id: ObjectId.createFromHexString(parameter._id)}).toArray();
+        result = await this.collection.updateOne(param[0], { $set: {
+                login: parameter.login,
+                date: {
+                    year:  +parameter.date.year,
+                    month: +parameter.date.month,
+                    day: +parameter.date.day,
+                    hour: parameter.date.hour,
+                },
+                patient: {
+                    login: parameter.patient.login,
+                    description: parameter.patient.description
+                } } });
+      } else {
+        result = await this.collection.updateOne({login: parameter.login}, { $set: parameter });
+      }
       return new Promise(resolve => resolve(result));
     }
 

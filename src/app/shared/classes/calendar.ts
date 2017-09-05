@@ -10,6 +10,7 @@ export class Calendar {
 
     constructor() {
         this.setDays();
+
     }
 
     private feebruaryValidator(): void {
@@ -38,7 +39,7 @@ export class Calendar {
         this.day = this.date.getDate() % 7;
         this.feebruaryValidator();
         this.firstDay = this.today - this.day;
-
+        this.firstDay = this.firstDay > 0 ? this.firstDay : this.firstDay + 7;
         this.monthViewLoop();
     }
 

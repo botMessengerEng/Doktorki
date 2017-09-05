@@ -9,12 +9,11 @@ import 'rxjs/add/operator/catch';
 
 export class AppService {
     private _dataBaseUrlUserDetails = 'http://localhost:3000/user-details';
-    private _dataBaseUrlSchedule = 'http://localhost:3000/schedule';
     url: string;
     constructor(private _http: Http) {
         this.url = "";
     }
- 
+
     getUsers(param?): Observable<string> {
         return this._http.get(param ? this._dataBaseUrlUserDetails + '/' + param : this._dataBaseUrlUserDetails)
             .map((response: Response) => response.json())
@@ -32,7 +31,7 @@ export class AppService {
     updateUser(user, param?): Observable<string> {
         return this._http.put(param ? this._dataBaseUrlUserDetails + '/' + param : this._dataBaseUrlUserDetails, user)
             .map((response: Response) => response.json())
-            .do(data => console.log("Users details changed:"  + JSON.stringify(user)))
+            .do(data => console.log("Users details changed:" + JSON.stringify(user)))
             .catch(this.handlerError);
     }
 
@@ -43,15 +42,10 @@ export class AppService {
     //         .catch(this.handlerError);
     // }
 
-    getVisits(param, params?): Observable<string> {
-        return this._http.post(params ? this._dataBaseUrlSchedule + '/' + params : this._dataBaseUrlSchedule, param)
-            .map((response: Response) => response.json())
-            .do(data => console.log('All: ' + JSON.stringify(data)))
-            .catch(this.handlerError);
-    }
+   
 
     private handlerError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
-     }
+    }
 }

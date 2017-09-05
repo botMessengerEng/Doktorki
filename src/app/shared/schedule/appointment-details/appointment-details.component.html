@@ -1,60 +1,75 @@
-<div class="details-of-what" *ngIf="canView">
+<div class="appointment-details-container" *ngIf="canView" >
+    <div class='details' >Patient's details:
+        <div class='normal-data'>
+            <div *ngIf='scheduleService.patient[0]!=undefined'><strong>Name:</strong> {{scheduleService.patient[0].firstName}} {{scheduleService.patient[0].lastName}} </div>
+            <div *ngIf='scheduleService.patient[0]!=undefined'><strong>PESEL:</strong>{{scheduleService.patient[0].PESEL}} </div>
+           
+            <div *ngIf='scheduleService.patient[0]==undefined'><strong>Name:</strong>
+            
+                    <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
 
-    <div class='details-of-something'>Patient's details:
-        <!--<div class='normal-data'>
-            <div>Name: {{patient.firstName}} {{patient.lastName}} </div>
-            <div>PESEL: {{patient.PESEL}} </div>
+                <div><input class='input-style' type='text' formControlName="login" placeholder="patient's login">
+
+            
+             </div>
+            <div *ngIf='editAppointment._id==""'><strong>PESEL:</strong> </div>
+                    </form>
+
         </div>
 
+        </div>
+
+        <div style="margin-top:2%;">Description:</div>
+        <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+            <div class='form-style'><label for="description"></label></div>
+            <div>
+                <textarea class='input-style' type='text' formControlName="description" placeholder="description"></textarea>
+            </div>
+        </form>
     </div>
-    <div class='details-of-something'>Appointment's details:
+
+    <div class='details'>Date's details:
         <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
 
             <div formGroupName="dayMonthGroup">
-                <div class='table-of-details'>
+                <div class='normal-data'>date:</div>
 
-                    <div class='normal-data'><label for="day">day: </label></div>
+                <div class='form-style-date'>
                     <div><select formControlName="day" placeholder="day">
-                <option *ngFor="let day of dataArrays.daysArray" [value]="day">{{day}}</option>
+                    <option *ngFor="let day of dateArrays.daysArray" [value]="day">{{day}}</option>
                   </select>
                     </div>
 
-                    <div class='normal-data'><label for="month">month: </label></div>
-                    <div><select formControlName="month" placeholder="month">
-                  <option *ngFor="let month of dataArrays.monthsArray" [value]="month">{{month}}</option>
+                    <div><select style="width:105px" formControlName="month" placeholder="month">
+                  <option *ngFor="let month of dateArrays.monthsArray" [value]="month">{{month}}</option>
                   </select>
                     </div>
 
-                    <div class='normal-data'><label for="year">year: </label></div>
-                    <div><select formControlName="year" placeholder="year">
-                  <option *ngFor="let year of dataArrays.nowAndFutureYearsArray" [value]="year">{{year}}</option>
+                    <div><select style="width:60px" formControlName="year" placeholder="year">
+                  <option *ngFor="let year of dateArrays.nowAndFutureYearsArray" [value]="year">{{year}}</option>
                   </select>
                     </div>
                 </div>
             </div>
 
-            <div class='table-of-details'>
+            <div class='form-style'>
                 <div class='normal-data'><label for="hour">hour: </label></div>
-                <div><select formControlName="hour" placeholder="hour">
-                <option *ngFor="let hour of dataArrays.hoursArray" [value]="hour">{{hour}}</option>
+                <div><select style="width:70px" formControlName="hour" placeholder="hour">
+                <option *ngFor="let hour of dateArrays.hoursWithMinutesArray" [value]="hour">{{hour}}</option>
                   </select>
                 </div>
             </div>
 
-            <div class='table-of-details'>
-                <div class='normal-data'><label for="description">description: </label></div>
-                <div>
-                    <textarea class='input-style' type='text' formControlName="description" placeholder="description"></textarea>
-                </div>
+            <div class='form-style'>
 
                 <div></div>
 
                 <div><button type="submit" class='option-button' [disabled]="!appointmentForm.valid" style="margin-top: 4%">save</button>                    </div>
             </div>
         </form>
-        
-    <div *ngIf='invalid' class='invalid'>Appointments date or hour is not valid</div>-->
 
+        <div *ngIf='invalid' class='invalid'>{{invalidMessage}}</div>
+
+{{editAppointment |json}}
     </div>
-</div>
 

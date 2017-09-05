@@ -16,6 +16,7 @@ export class CustomDate {
     set month(month) {
         this._month = month;
     }
+    
     set year(year) {
         this._year = year;
     }

@@ -1,12 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import * as _ from 'lodash';
+import 'rxjs/add/operator/toPromise';
 
 import { AppService } from 'app/app.service';
 import { Calendar } from '../../classes/calendar';
 import { dayMonthCheck } from '../../manage-user/day-month-check.directives';
 import { DateArrays } from '../../classes/date-arrays';
-import { AppointmentTerm } from '../../classes/appointment-term';
 import { ScheduleService } from 'app/shared/schedule/schedule.service';
+import { Appointment } from 'app/shared/classes/appointment';
+import { formBuilder, setContent } from './form-builder';
+import { ObjectId } from "bson";
 
 @Component({
     selector: 'app-appontment-details',
@@ -14,102 +18,95 @@ import { ScheduleService } from 'app/shared/schedule/schedule.service';
     styleUrls: ['appointment-details.component.css']
 })
 
-export class AppointmentDetailsComponent implements OnInit {
-
+export class AppointmentDetailsComponent implements OnInit, DoCheck {
     appointmentForm: FormGroup;
+    rerender = false;
     yearsArray = new Array(107);
     daysArray = new Array(31);
     invalid = false;
-    appointmentTerm;
+    invalidMessage = "";
     errMessage: any;
     genders = ['male', 'female'];
     dateArrays = new DateArrays;
-    canView=false;
-
+    canView = false;
+    selectedAppointmentTmp = new Appointment();
+    editAppointment = new Appointment();
     constructor(private fb: FormBuilder, private appService: AppService, private scheduleService: ScheduleService) {
-        this.appointmentTerm = new AppointmentTerm(undefined, '', undefined, '');
+        this.appointmentForm = formBuilder(this.fb, this.scheduleService.selectedAppointment);
     }
 
     ngOnInit() {
-        if (this.scheduleService.selectedAppointment!=undefined){
-        this.appService.getUserDetails({login: this.scheduleService.selectedAppointment.patient.login})
-            .subscribe(patient => this.scheduleService.patient = patient);
-            this.canView=true;
+    }
+
+    ngDoCheck(): void {
+        // console.log(JSON.stringify(this.scheduleService.selectedAppointment.date) + "  " + JSON.stringify(this.selectedAppointmentTmp.date));
+        if (!_.isEqual(this.selectedAppointmentTmp.date, this.scheduleService.selectedAppointment.date)) {
+            this.appService.getUserDetails({ login: this.scheduleService.selectedAppointment.patient.login })
+                .toPromise()
+                .then(patient => this.scheduleService.patient = patient)
+                .then(() => this.appointmentForm = formBuilder(this.fb, this.scheduleService.selectedAppointment))
+                .then(() => _.merge(this.editAppointment, this.scheduleService.selectedAppointment))
+                .then(() => setContent(this.appointmentForm, this.editAppointment))
+                .then(() => this.canView = true)
+                .then(() => _.merge(this.selectedAppointmentTmp, this.scheduleService.selectedAppointment));
         }
+    }
 
+    checkIfTermIsValid() {
+        const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        const d = new Date(
+            this.appointmentForm.get('dayMonthGroup.year').value,
+            (this.dateArrays.monthsArray.indexOf(this.appointmentForm.get('dayMonthGroup.month').value)),
+            this.appointmentForm.get('dayMonthGroup.day').value);
 
+        try {
+            const app = this.scheduleService.allAppointments.find(element => element.login == this.scheduleService.doctor[0].login &&
+                element.date.year == d.getFullYear() &&
+                element.date.month == d.getMonth() + 1 &&
+                element.date.day == d.getDate() &&
+                element.date.hour == this.appointmentForm.get('hour').value);
+            console.log(app);
 
-
-        this.appointmentForm = this.fb.group({
-            // description: [this.singleAppointment.patient.description],
-            // dayMonthGroup: this.fb.group({
-            //     month: [this.dateArrays.monthsArray[this.singleAppointment.date.month - 1], [Validators.required]],
-            //     day: [this.singleAppointment.date.day, [Validators.required]],
-            //     year: [this.singleAppointment.date.year, [Validators.required]]
-            // }, { validator: dayMonthCheck }),
-            // hour: [this.singleAppointment.date.hour, [Validators.required]],
-        });
-
-        // this.appointmentForm.get('dayMonthGroup.day').valueChanges.subscribe(value => this.appointmentTerm.day = this.appointmentForm.get('dayMonthGroup.day').value);
-        // this.appointmentForm.get('dayMonthGroup.month').valueChanges.subscribe(value => this.appointmentTerm.month = this.appointmentForm.get('dayMonthGroup.month').value);
-        // this.appointmentForm.get('dayMonthGroup.year').valueChanges.subscribe(value => this.appointmentTerm.year = this.appointmentForm.get('dayMonthGroup.year').value);
-        // this.appointmentForm.get('hour').valueChanges.subscribe(value => this.appointmentTerm.day = this.appointmentForm.get('hour').value);
-        // this.appointmentForm.get('description').valueChanges.subscribe(value => this.appointmentTerm.day = this.appointmentForm.get('description').value);
+            if (this.scheduleService.doctor[0].workingHours[days[d.getDay()]].start > this.appointmentForm.get('hour').value ||
+                this.scheduleService.doctor[0].workingHours[days[d.getDay()]].end < this.appointmentForm.get('hour').value) {
+                return true;
+            }
+            else if (app) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
 
     }
 
-    // checkIfTermIsValid() {
-    //     const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-    //     const d = new Date(
-    //         this.appointmentForm.get('dayMonthGroup.year').value,
-    //         (this.dateArrays.monthsArray.indexOf(this.appointmentForm.get('dayMonthGroup.month').value)),
-    //         this.appointmentForm.get('dayMonthGroup.day').value);
 
+    onSubmit() {
+        this.invalid=false;
+        if ((this.dateArrays.monthsArray[this.dateArrays.date.getMonth()] == this.appointmentForm.get('dayMonthGroup.month').value
+            && this.dateArrays.date.getDate() > this.appointmentForm.get('dayMonthGroup.day').value
+            && this.dateArrays.date.getFullYear() == this.appointmentForm.get('dayMonthGroup.year').value)
 
-    //     try {
-
-    //         const app = this.allAppointments.find(element => element.login == this.doctor.login &&
-    //             element.date.year == d.getFullYear() &&
-    //             element.date.month == d.getMonth() + 1 &&
-    //             element.date.day == d.getDate() &&
-    //             element.date.hour == this.appointmentForm.get('hour').value);
-    //         console.log(app);
-
-    //         if (this.doctor.workingHours[days[d.getDay()]].start > this.appointmentForm.get('hour').value ||
-    //             this.doctor.workingHours[days[d.getDay()]].end < this.appointmentForm.get('hour').value) {
-    //             return true;
-    //         }
-    //         else if (app) {
-    //             console.log('asdadadadasd');
-    //             return true;
-    //         }
-    //         else {
-    //             return false;
-    //         }
-    //     }
-    //     catch (err) {
-    //         console.log(err);
-    //     }
-
-    // }
-
-    // onSubmit() {
-    //     if ((this.dateArrays.monthsArray[this.dateArrays.date.getMonth()] == this.appointmentForm.get('dayMonthGroup.month').value
-    //         && this.dateArrays.date.getDate() > this.appointmentForm.get('dayMonthGroup.day').value
-    //         && this.dateArrays.date.getFullYear() == this.appointmentForm.get('dayMonthGroup.year').value)
-
-    //         || ((this.dateArrays.date.getMonth() + 1) > (this.dateArrays.monthsArray.indexOf(this.appointmentForm.get('dayMonthGroup.month').value) + 1) && this.dateArrays.date.getFullYear() == this.appointmentForm.get('dayMonthGroup.year').value)) {
-    //         this.invalid = true;
-    //     }
-    //     else if (this.checkIfTermIsValid()) {
-    //         console.log("imhere");
-    //         this.invalid = true;
-    //     }
-    //     else {
-    //         console.log('jestem w else');
-
-    //     }
-    // }
-
+            || ((this.dateArrays.date.getMonth() + 1) > (this.dateArrays.monthsArray.indexOf(this.appointmentForm.get('dayMonthGroup.month').value) + 1) && this.dateArrays.date.getFullYear() == this.appointmentForm.get('dayMonthGroup.year').value)) {
+            this.invalidMessage = "Choosen date passed";
+            this.invalid = true;
+        }
+        else if (this.checkIfTermIsValid()) {
+            this.invalidMessage = "Doctor is not working in choosen hour or hour is taken";
+            this.invalid = true;
+        }
+        else {
+            console.log('ja tu w edicie mozna');
+            this.scheduleService.updateVisit(this.editAppointment).toPromise()
+                .then(() => this.scheduleService.getVisits({ login: 'Brooke' }, '0')
+                    .toPromise())
+                .then(appointments => this.scheduleService.allAppointments = appointments)
+                .then(() => this.scheduleService.getAllApptsAndThenDailyAppts());
+        }
+    }
 
 }

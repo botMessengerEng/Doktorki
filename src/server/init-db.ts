@@ -1106,9 +1106,9 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "login": "Brooke",
                 "date": {
                     "year":2017,
-                    "month": 8,
-                    "day": 31,
-                    "hour": "20:30"
+                    "month": 9,
+                    "day": 4,
+                    "hour": "18:30"
                 },
                 "patient": {
                     "login": "synJacka",
@@ -1124,7 +1124,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                     "hour": "14:30"
                 },
                 "patient": {
-                    "login": "synJacka",
+                    "login": "Jesse",
                     "description": "choroba afrykańska(?)"
                 }
             },

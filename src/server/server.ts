@@ -60,7 +60,7 @@ app.post('/login', async (req: express.Request, res: express.Response) => {
 app.route('/user-details/:param?')
     .get(async (req: express.Request, res: express.Response) => {
         try {
-            const param = req.param('param') ? {role: req.param('param')} : {};
+            const param = req.param('param') ? { role: req.param('param') } : {};
             const result = await mongoUsersDetails.findElement(param)
             res.json(result);
         } catch (err) {
@@ -78,7 +78,7 @@ app.route('/user-details/:param?')
     .put(async (req: express.Request, res: express.Response) => {
         try {
             if (req.param('param') === 'doctor') {
-                await Promise.all([ 
+                await Promise.all([
                     mongoUsersDetails.updateElement(
                         {
                             login: req.body.login,
@@ -262,47 +262,57 @@ app.listen(3000, function () {
 });
 
 // ------------- schedule -----------------------------------------------------------------------////////////////////////
-app.route('/schedule')
-    .get(async (req: express.Request, res: express.Response) => {
-        try {
-            const result = await mongoSchedule.showElements();
-            res.json(result);
-        } catch (err) {
-            res.send(err);
-        }
-    })
-    .put(async (req: express.Request, res: express.Response) => {
-        try {
-            const result = await mongoSchedule.updateElement(req.body);
-            res.json(result)
-        } catch (err) {
-            res.send(err);
-        }
-    })
+// app.route('/schedule')
+//     .get(async (req: express.Request, res: express.Response) => {
+//         try {
+//             const result = await mongoSchedule.showElements();
+//             res.json(result);
+//         } catch (err) {
+//             res.send(err);
+//         }
+//     })
+//     .put(async (req: express.Request, res: express.Response) => {
+//         try {
+//             const result = await mongoSchedule.updateElement(req.body);
+//             res.json(result)
+//         } catch (err) {
+//             res.send(err);
+//         }
+//     })
+//     .post(async (req: express.Request, res: express.Response) => {
+//         try {
+//             const result = await mongoSchedule.findElement({
+//                 login: req.body.login,
+//                 'date.year': req.body.date.year ? req.body.date.year : { $regex: /.*?/ },
+//                 'date.month': req.body.date.month ? req.body.date.month : { $regex: /.*?/ },
+//                 'date.day': req.body.date.day ? req.body.date.day : { $regex: /.*?/ },
+//                 'date.hour': req.body.date.hour ? req.body.date.hour : { $regex: /.*?/ }
+//             }
+//             );
+//             res.json(result);
+//         } catch (err) {
+//             res.send(err);
+//         }
+//     });
+
+app.route('/schedule/:param')
     .post(async (req: express.Request, res: express.Response) => {
         try {
-            const result = await mongoSchedule.findElement({
-                login: req.body.login,
-                'date.year': req.body.date.year ? req.body.date.year : { $regex: /.*?/ },
-                'date.month': req.body.date.month ? req.body.date.month : { $regex: /.*?/ },
-                'date.day': req.body.date.day ? req.body.date.day : { $regex: /.*?/ },
-                'date.hour': req.body.date.hour ? req.body.date.hour : { $regex: /.*?/ }
-            }
-            );
+            const result = await mongoSchedule.findElement({ login: req.body.login }, { 'date.year': 1, 'date.month': 1, 'date.day': 1, 'date.hour': 1 }, +req.param('param'));
             res.json(result);
+        } catch (err) {
+            res.send(err);
+        }
+    })  
+    .put(async (req: express.Request, res: express.Response) => {
+        try {
+            console.log(req.body)
+            const result = await mongoSchedule.updateElement(req.body);
+             res.json(result);
         } catch (err) {
             res.send(err);
         }
     });
-
-app.post('/schedule/:param', async (req: express.Request, res: express.Response) => {
-    try {
-        const result = await mongoSchedule.findElement({ login: req.body.login }, { 'date.year': 1, 'date.month': 1, 'date.day': 1, 'date.hour': 1 }, +req.param('param'));
-        res.json(result);
-    } catch (err) {
-        res.send(err);
-    }
-});
 ///-----------------DataBase Init path -----------------///
 app.get('/init-db', async (req: express.Request, res: express.Response) => {
     try {
