@@ -1,5 +1,5 @@
 import * as express from 'express';
-import * as _ from 'lodash';                        // czy to jest w ogóle potrzebne ? ... ---ale wygląda spoko ta biblioteka
+import * as _ from 'lodash';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import { MongoCollection } from '../mongo/mongo';
@@ -9,13 +9,11 @@ import * as session from 'express-session';
 import * as connectMongo from 'connect-mongo';
 
 /*
- "In general, the rule of thumb is:
- If you’re installing something that you want to use
- in your program, using require('whatever'), then install
- it locally, at the root of your project. If you’re installing
- something that you want to use in your shell, on the command
- line or something, install it globally, so that its binaries
- end up in your PATH environment variable" ~XiaoPeng
+In general, the rule of thumb is:
+If you’re installing something that you want to use in your program,
+using require('whatever'), then install it locally, at the root of your project.
+If you’re installing something that you want to use in your shell,
+on the command line or something, install it globally, so that its binaries end up in your PATH environment variable.
 */
 
 const saltRounds = 10;
