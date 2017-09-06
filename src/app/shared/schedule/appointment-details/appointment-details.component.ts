@@ -47,11 +47,11 @@ export class AppointmentDetailsComponent implements OnInit, DoCheck {
                 .then(() => this.appointmentForm = formBuilder(this.fb, this.scheduleService.selectedAppointment))
                 .then(() => {
                     _.merge(this.editAppointment, this.scheduleService.selectedAppointment)
-                    console.log( this.editAppointment, this.scheduleService.selectedAppointment)
+                    // console.log(this.editAppointment, this.scheduleService.selectedAppointment)
                 })
                 .then(() => setContent(this.appointmentForm, this.editAppointment))
                 .then(() => {
-                    if(this.scheduleService.patient[0]!=undefined){
+                    if (this.scheduleService.patient[0] != undefined) {
                         this.deleteLoginValidation();
                     }
                 })
@@ -98,9 +98,14 @@ export class AppointmentDetailsComponent implements OnInit, DoCheck {
         login.updateValueAndValidity();
     }
 
+    deleteAppt() {
+        this.scheduleService.deleteAppt(this.editAppointment._id)
+            .subscribe(() => this.scheduleService.getVisits(),
+            error => this.errMessage = <any>error);
+    }
 
     onSubmit() {
-        this.invalid=false;
+        this.invalid = false;
         if ((this.dateArrays.monthsArray[this.dateArrays.date.getMonth()] == this.appointmentForm.get('dayMonthGroup.month').value
             && this.dateArrays.date.getDate() > this.appointmentForm.get('dayMonthGroup.day').value
             && this.dateArrays.date.getFullYear() == this.appointmentForm.get('dayMonthGroup.year').value)
@@ -115,14 +120,14 @@ export class AppointmentDetailsComponent implements OnInit, DoCheck {
         }
         else {
             console.log('ja tu w edicie mozna');
-            if(this.scheduleService.patient[0]!=undefined){
-            this.scheduleService.updateVisit(this.editAppointment).toPromise()
-                .then(() => this.scheduleService.getVisits());
+            if (this.scheduleService.patient[0] != undefined) {
+                this.scheduleService.updateVisit(this.editAppointment).toPromise()
+                    .then(() => this.scheduleService.getVisits());
             }
 
-            else{
+            else {
                 this.scheduleService.insertAppt(this.editAppointment).toPromise()
-                .then(() => this.scheduleService.getVisits());
+                    .then(() => this.scheduleService.getVisits());
             }
         }
     }

@@ -3,7 +3,8 @@
         <div class='normal-data'>
             <div *ngIf='scheduleService.patient[0]!=undefined'><strong>Name:</strong> {{scheduleService.patient[0].firstName}} {{scheduleService.patient[0].lastName}} </div>
             <div *ngIf='scheduleService.patient[0]!=undefined'><strong>PESEL:</strong>{{scheduleService.patient[0].PESEL}} </div>
-           
+            <div *ngIf='scheduleService.patient[0]!=undefined'><strong>Phone:</strong>{{scheduleService.patient[0].phone}} </div>
+
             <div *ngIf='scheduleService.patient[0]==undefined'>
             
                     <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
@@ -63,9 +64,14 @@
             <div class='form-style'>
 
                 <div></div>
-
-                <div><button type="submit" class='option-button' [disabled]="!appointmentForm.valid" style="margin-top: 4%">save</button>                    </div>
+                <div class='buttons'>
+                    <div> <button type="submit" class='option-button' [disabled]="!appointmentForm.valid" >save</button>  </div>
+                    <div *ngIf='scheduleService.patient[0]!=undefined'><button (click)='deleteAppt()' class='option-button' style="background-color:#660000" type='button'>delete</button>  </div>
+                
+                </div>
             </div>
+
+
         </form>
 
         <div *ngIf='invalid' class='invalid'>{{invalidMessage}}</div>

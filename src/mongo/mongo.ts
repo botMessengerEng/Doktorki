@@ -61,7 +61,12 @@ export class MongoCollection {
     }
 
     async removeElement(parameter) {
-      const result = await this.collection.deleteOne({login: parameter.login});
+       let result;
+      if (parameter._id!=undefined) {
+        result = await this.collection.deleteOne({_id: ObjectId.createFromHexString(parameter._id)});
+      } else {
+        result = await this.collection.deleteOne(parameter);
+      }
       return new Promise(resolve => resolve(result));
     }
 

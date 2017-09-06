@@ -13,6 +13,7 @@ import 'rxjs/add/operator/catch';
 export class ScheduleService {
     private _dataBaseUrlSchedule = 'http://localhost:3000/schedule';
     private _dataBaseUrlInsertAppt = 'http://localhost:3000/insert-appt';
+    private _dataBaseUrlDeleteAppt = 'http://localhost:3000/delete-appt/';
 
     doctor;
     patient;
@@ -48,6 +49,14 @@ export class ScheduleService {
         return this._http.post(this._dataBaseUrlInsertAppt, param)
             .map((response: Response) => response.json())
             .do(data => console.log('All: ' + JSON.stringify(data)))
+            .catch(this.handlerError);
+    }
+
+
+    deleteAppt(param): Observable<string> {
+        return this._http.delete(this._dataBaseUrlDeleteAppt + param)
+            .map((response: Response) => response.json())
+            .do(data => console.log('Deleted: ' + JSON.stringify(data)))
             .catch(this.handlerError);
     }
 

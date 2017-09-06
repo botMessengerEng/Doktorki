@@ -3,8 +3,7 @@ Obowiązkowe
         -check schedule,
         -delete appts
         
-    DOCTOR:
-        -delete appts
+    DOCTOR - JESTEM GOTOW, zmien mi tylko ten login po auth :)
 
     PATIENT:
         -search

@@ -306,6 +306,16 @@ app.post('/insert-appt', async (req: express.Request, res: express.Response) => 
     }
 });
 
+app.delete('/delete-appt/:param', async (req: express.Request, res: express.Response) => {
+    try {
+        const result = await Promise.all([
+            mongoSchedule.removeElement({_id: req.param('param')}),
+        ]);
+        res.json(result);
+    } catch (err) {
+        res.send(err);
+    }
+});
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!')
