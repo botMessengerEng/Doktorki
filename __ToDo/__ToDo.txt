@@ -1,0 +1,19 @@
+Obowiązkowe
+    ADMIN:
+        -check schedule,
+        -delete appts
+        
+    DOCTOR:
+        -delete appts
+
+    PATIENT:
+        -search
+
+Opcjonalnie:
+    DOCTOR, PATIENT: 
+        my comming appts
+    Server:
+        SESSION
+        BCRYPT
+        SOCKET(?)
+    guard

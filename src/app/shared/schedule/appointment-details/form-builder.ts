@@ -6,7 +6,7 @@ import { DateArrays } from '../../classes/date-arrays';
 export function formBuilder(fb: FormBuilder, appointmentDetails) {
     const dateArrays= new DateArrays();
     return fb.group({
-        login: ['', [Validators.required]],
+        login: [appointmentDetails.patient.login, [Validators.required]],
         description: [appointmentDetails.patient.description],
         dayMonthGroup: fb.group({
             month: [dateArrays.monthsArray[appointmentDetails.date.month - 1], [Validators.required]],
@@ -20,7 +20,7 @@ export function formBuilder(fb: FormBuilder, appointmentDetails) {
 
 
 export function setContent(appointmentForm: FormGroup, appointmentDetails) {
-        appointmentForm.get('login').valueChanges.subscribe(value => appointmentDetails.login = appointmentForm.get('login').value);
+        appointmentForm.get('login').valueChanges.subscribe(value => appointmentDetails.patient.login = appointmentForm.get('login').value);
         appointmentForm.get('description').valueChanges.subscribe(value => appointmentDetails.patient.description = appointmentForm.get('description').value);
         appointmentForm.get('dayMonthGroup.year').valueChanges.subscribe(value => appointmentDetails.date.year = appointmentForm.get('dayMonthGroup.year').value);
         appointmentForm.get('dayMonthGroup.month').valueChanges.subscribe(value => appointmentDetails.date.month = appointmentForm.get('dayMonthGroup.month').value);

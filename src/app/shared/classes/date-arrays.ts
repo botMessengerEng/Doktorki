@@ -6,10 +6,10 @@ export class DateArrays {
     hoursArray = new Array(16);
     monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'Novermber', 'December']
     minutes = [':00', ':15', ':30', ':45'];
-    dayOfWeek= ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+    dayOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
     date = new Date;
 
-    constructor(){
+    constructor() {
         this.yearsGenerator();
         this.daysGenerator();
         this.hoursWithMinutesGenerator();
@@ -38,19 +38,20 @@ export class DateArrays {
     private hoursWithMinutesGenerator() {
         for (let i = 0, j = 6; j <= 21; j++) {
             this.minutes.forEach(element => this.hoursWithMinutesArray[i++] = (j < 10 ? '0' + j : j) + element);
-        } 
+        }
         this.hoursWithMinutesArray[64] = '22:00';
     }
 
-    private hoursGeneratorForSchedule() {
+     hoursGeneratorForSchedule() {
+        this.hoursWithMinutesArray = new Array(64);
         for (let i = 0, j = 6; j <= 21; j++) {
             this.minutes.forEach(element => this.hoursWithMinutesArray[i++] = (j < 10 ? '0' + j : j) + element);
         }
     }
 
-    private hoursGenerator(){
-        for(let i=6; i<22; i++){
-            this.hoursArray[i-6]=i;
+    private hoursGenerator() {
+        for (let i = 6; i < 22; i++) {
+            this.hoursArray[i - 6] = i;
         }
 
     }

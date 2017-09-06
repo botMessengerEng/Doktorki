@@ -35,15 +35,6 @@ export class AppService {
             .catch(this.handlerError);
     }
 
-    // getVisits(param): Observable<string> {
-    //     return this._http.post(this._dataBaseUrlSchedule, param)
-    //         .map((response: Response) => response.json())
-    //         .do(data => console.log('Found visits: ' + JSON.stringify(data)))
-    //         .catch(this.handlerError);
-    // }
-
-   
-
     private handlerError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');

@@ -27,19 +27,11 @@ export class AgendaComponent implements OnInit, DoCheck {
 
     ngOnInit() {
         Promise.all([
-            this.getVisits(),
+            this.scheduleService.getVisits(),
             this.getUserDetails()
         ])
-            .then(() => this.scheduleService.getAllApptsAndThenDailyAppts())
             .then(() => this.canView = true)
             .catch(err => { throw (err) })
-    }
-
-    private getVisits() {
-        return this.scheduleService.getVisits({
-            login: 'Brooke',
-        }, '0')
-            .toPromise().then(appointments => this.scheduleService.allAppointments = appointments);
     }
 
     private getUserDetails() {
@@ -104,8 +96,7 @@ export class AgendaComponent implements OnInit, DoCheck {
         this.setAppointment(hour)
             .then(() => {
                 if (this.scheduleService.selectedAppointment._id == "") {
-                    console.log(JSON.stringify(this.scheduleService.dailyAppointments));
-                    this.scheduleService.selectedAppointment.setNewAppointment(this.scheduleService.doctor[0].login, this.scheduleService.date, hour);
+                    this.scheduleService.selectedAppointment.setNewAppointment(this.scheduleService.doctor[0], this.scheduleService.date, hour);
                 }
             });
     }

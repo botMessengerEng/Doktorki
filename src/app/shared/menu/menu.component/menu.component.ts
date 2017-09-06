@@ -17,28 +17,28 @@ export class MenuComponent implements OnInit {
     userLogin: string;
 
     constructor(private appService: AppService, private authService: AuthService, private router: Router) {
-        // this.userLogin=this.authService.user.login;
+        this.userLogin=this.authService.user.login;
      }
 
     ngOnInit() {
 
-        // try {
-        //     if (this.authService.user.role == "admin") {
-        //         this.menuContext = [" ", " ", "USER'S LIST", "ADD USER", "LOG OUT"]
-        //         this.menuLinks = [" ", " ", "/users-list", "/add-user", "/login"]
-        //     }
-        //     else if (this.authService.user.role == "doctor") {
+        try {
+            if (this.authService.user.role == "admin") {
+                this.menuContext = [" ", " ", "USER'S LIST", "ADD USER", "LOG OUT"]
+                this.menuLinks = [" ", " ", "/users-list", "/add-user", "/login"]
+            }
+            else if (this.authService.user.role == "doctor") {
                 this.menuContext = [" ", "CHECK SCHEDULE", "USER'S LIST", "ADD PATIENT", "MY PROFILE", "LOG OUT"]
-                this.menuLinks = [" ", "/my-appointments", "/users-list/", "/add-patient", "/users-list/Brooke", "/login"]
-        //     }
-        //     else if (this.authService.user.role == "patient") {
-        //         this.menuContext = [" ", " ", "MY APPTS", "NEW APPT", "MY PROFILE", "LOG OUT"]
-        //         this.menuLinks = [" ", " " , "/my-appointments", "/new-appointment", "/my-profile/" + this.userLogin, "/login"]
-        //     }
-        // }
-        // catch (err) {
-        //     this.router.navigate(['login']);
-        // }
+                this.menuLinks = [" ", "/my-appointments", "/users-list/", "/add-patient", "/users-list/" + this.userLogin, "/login"]
+            }
+            else if (this.authService.user.role == "patient") {
+                this.menuContext = [" ", " ", "MY APPTS", "NEW APPT", "MY PROFILE", "LOG OUT"]
+                this.menuLinks = [" ", " " , "/my-appointments", "/new-appointment", "/my-profile/" + this.userLogin, "/login"]
+            }
+        }
+        catch (err) {
+            this.router.navigate(['login']);
+        }
     }
 
 

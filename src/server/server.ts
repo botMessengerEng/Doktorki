@@ -2,8 +2,7 @@ import * as express from 'express';
 import * as _ from 'lodash';                        // czy to jest w ogóle potrzebne ? ... ---ale wygląda spoko ta biblioteka
 import * as bodyParser from 'body-parser';
 import { MongoCollection } from '../mongo/mongo';
-import { initDB } from './init-db';
-import * as bcrypt from 'bcrypt';
+import { initDB } from './init-db'
 /*
  "In general, the rule of thumb is:
  If you’re installing something that you want to use
@@ -14,7 +13,6 @@ import * as bcrypt from 'bcrypt';
  end up in your PATH environment variable" ~XiaoPeng
 */
 
-const saltRounds = 10;
 const app = express();
 const collectionUsers = 'Users';
 const collectionUsersDetails = 'UsersDetails';
@@ -42,27 +40,20 @@ app.get('/', (req, res) =>
 // ------------- login   ------------------------------------------------------------------------////////////////////////
 app.post('/login', async (req: express.Request, res: express.Response) => {
     console.log(JSON.stringify(req.body));
-    try {
-        const user = await mongoUsers.findElement({
-            login: req.body.login
-        });
 
-        if (user[0] != undefined) {
-            const validation = await bcrypt.compare(req.body.password, user[0].password);
-            if (validation) {
-                res.status(200).json(user[0]).end();
-            }
-            else {
-                res.json('bledne haslo');
-            }
-        }
-        else {
-            res.json('bledny login');
-            console.log(user);
-        }
-    } catch (err) {
-        res.send(err);
+    const user = await mongoUsers.findElement({
+        login: req.body.login,
+        password: req.body.password
+    });
+    if (user[0] !== undefined) {
+        res.status(200).json(user[0]).end();
+        console.log('tak');
     }
+    else {
+        res.json('bledny login lub haslo');
+        console.log('nie');
+        console.log(user);
+    };
 });
 
 // ------------- user  ------------------------------------------------------------------------////////////////////////
@@ -171,19 +162,18 @@ app.delete('/delete-user/:login', async (req: express.Request, res: express.Resp
 app.post('/insert-user/:param', async (req: express.Request, res: express.Response) => {
     console.log('recived' + JSON.stringify(req.body));
 
-    const user = await mongoUsers.findElement({ login: req.body.login })
     try {
+        const user = await mongoUsers.findElement({ login: req.body.login })
         console.log(user);
         if (user[0] !== undefined) {
             res.json(`Login ${req.body.login} is in use!`)
         } else {
-            const hash = await bcrypt.hash(req.body.password, saltRounds);
             if (req.param('param') === 'doctor') {
                 await Promise.all([
                     mongoUsers.insertElements([
                         {
                             login: req.body.login,
-                            password: hash,
+                            password: req.body.password,
                             role: 'doctor'
                         }
                     ]),
@@ -234,7 +224,7 @@ app.post('/insert-user/:param', async (req: express.Request, res: express.Respon
                     mongoUsers.insertElements([
                         {
                             login: req.body.login,
-                            password: hash,
+                            password: req.body.password,
                             role: 'patient'
                         }
                     ]),
@@ -265,11 +255,6 @@ app.post('/insert-user/:param', async (req: express.Request, res: express.Respon
     }
 });
 
-
-app.listen(3000, function () {
-    console.log('Example app listening on port 3000!')
-});
-
 // ------------- schedule -----------------------------------------------------------------------////////////////////////
 app.route('/schedule/:param')
     .post(async (req: express.Request, res: express.Response) => {
@@ -284,24 +269,51 @@ app.route('/schedule/:param')
         try {
             console.log(req.body)
             const result = await mongoSchedule.updateElement(req.body);
-             res.json(result);
+            res.json(result);
         } catch (err) {
             res.send(err);
         }
     });
 
-///----------------- Session auth -------------------------------------------------///
+app.post('/insert-appt', async (req: express.Request, res: express.Response) => {
+    try {
+        const user = await mongoUsers.findElement({ login: req.body.patient.login });
+        if (user[0] !== undefined) {
+            await mongoSchedule.insertElements([
+                {
+                    login: req.body.login,
+                    date: {
+                        year: req.body.date.year,
+                        month: req.body.date.month,
+                        day: req.body.date.day,
+                        hour: req.body.date.hour
+                    },
+                    patient: {
+                        login: req.body.patient.login,
+                        description: req.body.patient.description
+                    }
 
-app.post('/auth', async (req: express.Request, res: express.Response) => {
+                }
+            ])
 
+
+            res.json('OK')
+        } else {
+            res.json(`Login ${req.body.patient.login} does not exist!`)
+        }
+    } catch (err) {
+        res.send(err);
+    }
 });
 
 
-
-///-----------------DataBase Init path-----------------///
+app.listen(3000, function () {
+    console.log('Example app listening on port 3000!')
+});
+///-----------------DataBase Init path -----------------///
 app.get('/init-db', async (req: express.Request, res: express.Response) => {
     try {
-        const result = await initDB(mongoUsers, mongoUsersDetails, mongoSchedule, saltRounds, bcrypt);
+        const result = await initDB(mongoUsers, mongoUsersDetails, mongoSchedule);
         res.json(result);
     } catch (err) {
         res.json(err);

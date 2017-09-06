@@ -12,6 +12,7 @@ import 'rxjs/add/operator/catch';
 
 export class ScheduleService {
     private _dataBaseUrlSchedule = 'http://localhost:3000/schedule';
+    private _dataBaseUrlInsertAppt = 'http://localhost:3000/insert-appt';
 
     doctor;
     patient;
@@ -29,7 +30,7 @@ export class ScheduleService {
 
     constructor(private _http: Http) { }
 
-    getVisits(param, params?): Observable<string> {
+    private _getVisits(param, params?): Observable<string> {
         return this._http.post(params ? this._dataBaseUrlSchedule + '/' + params : this._dataBaseUrlSchedule, param)
             .map((response: Response) => response.json())
             .do(data => console.log('All: ' + JSON.stringify(data)))
@@ -43,9 +44,23 @@ export class ScheduleService {
             .catch(this.handlerError);
     }
 
+    insertAppt(param): Observable<string> {
+        return this._http.post(this._dataBaseUrlInsertAppt, param)
+            .map((response: Response) => response.json())
+            .do(data => console.log('All: ' + JSON.stringify(data)))
+            .catch(this.handlerError);
+    }
+
     private handlerError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
+    }
+
+
+    getVisits (): Promise<any> {
+        return this._getVisits({ login: 'Brooke' }, '0').toPromise()
+        .then(appointments => this.allAppointments = appointments)
+        .then(() => this.getAllApptsAndThenDailyAppts());
     }
 
     apptsToArray(data) {

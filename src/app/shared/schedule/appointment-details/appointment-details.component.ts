@@ -36,6 +36,7 @@ export class AppointmentDetailsComponent implements OnInit, DoCheck {
     }
 
     ngOnInit() {
+        this.dateArrays.hoursGeneratorForSchedule();
     }
 
     ngDoCheck(): void {
@@ -44,7 +45,10 @@ export class AppointmentDetailsComponent implements OnInit, DoCheck {
                 .toPromise()
                 .then(patient => this.scheduleService.patient = patient)
                 .then(() => this.appointmentForm = formBuilder(this.fb, this.scheduleService.selectedAppointment))
-                .then(() => _.merge(this.editAppointment, this.scheduleService.selectedAppointment))
+                .then(() => {
+                    _.merge(this.editAppointment, this.scheduleService.selectedAppointment)
+                    console.log( this.editAppointment, this.scheduleService.selectedAppointment)
+                })
                 .then(() => setContent(this.appointmentForm, this.editAppointment))
                 .then(() => {
                     if(this.scheduleService.patient[0]!=undefined){
@@ -111,11 +115,15 @@ export class AppointmentDetailsComponent implements OnInit, DoCheck {
         }
         else {
             console.log('ja tu w edicie mozna');
+            if(this.scheduleService.patient[0]!=undefined){
             this.scheduleService.updateVisit(this.editAppointment).toPromise()
-                .then(() => this.scheduleService.getVisits({ login: 'Brooke' }, '0')
-                    .toPromise())
-                .then(appointments => this.scheduleService.allAppointments = appointments)
-                .then(() => this.scheduleService.getAllApptsAndThenDailyAppts());
+                .then(() => this.scheduleService.getVisits());
+            }
+
+            else{
+                this.scheduleService.insertAppt(this.editAppointment).toPromise()
+                .then(() => this.scheduleService.getVisits());
+            }
         }
     }
 
