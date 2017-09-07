@@ -1,11 +1,18 @@
+<<<<<<< HEAD
 import { ObjectId } from 'mongodb';
 
 export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
+=======
+import * as data from './doktorki-data';
+
+export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule, saltRounds, bcrypt) {
+>>>>>>> 644b3c55275169ce7f09db5d6c6740d2af0dbff1
     await Promise.all([
         mongoUsers.drop(),
         mongoUsersDetails.drop(),
         mongoSchedule.drop()
     ]);
+<<<<<<< HEAD
     const result = await Promise.all([
         mongoUsers.insertElements([
             {
@@ -1171,5 +1178,18 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
             },
         ])
     ]);
+=======
+    let result;
+    data.users.forEach(async (element) => {
+        element.password = await bcrypt.hash(element.password, saltRounds);
+        result += await mongoUsers.insertElements([element]);
+    });
+
+    result += await Promise.all(
+        [mongoUsersDetails.insertElements(data.usersDetails),
+        mongoSchedule.insertElements(data.schedule)
+        ]);
+>>>>>>> 644b3c55275169ce7f09db5d6c6740d2af0dbff1
     return new Promise(resolve => resolve(result));
 }
+
