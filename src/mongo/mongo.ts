@@ -24,7 +24,12 @@ export class MongoCollection {
     }
 
     async findElement(parameter, sortParam?, limitParam?: number) {
-      const result = await this.collection.find(parameter).sort(sortParam ? sortParam : { lastName: 1, firstName: 1}).limit(limitParam ? limitParam : 0).toArray();
+      let result;
+      if (parameter._id!=undefined) {
+        result = await this.collection.find({_id: ObjectId.createFromHexString(parameter._id)}).sort(sortParam ? sortParam : { lastName: 1, firstName: 1}).limit(limitParam ? limitParam : 0).toArray();
+      } else {
+        result = await this.collection.find(parameter).sort(sortParam ? sortParam : { lastName: 1, firstName: 1}).limit(limitParam ? limitParam : 0).toArray();
+      }
       return new Promise(resolve => resolve(result));
     }
 

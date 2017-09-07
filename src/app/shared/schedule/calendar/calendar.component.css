@@ -1,8 +1,8 @@
 .calender{
     /*border:2px solid red;*/
     justify-content:center; 
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 8%;
+    margin-right: 8%;
     /*background-color: #fafafa;*/
 }
 
@@ -63,17 +63,19 @@
     width:100%;
     display: grid;
     grid-template-columns: 14.28% 14.28% 14.28% 14.28% 14.28% 14.28% 14.28%; 
-    text-align: center;
+
 }
 
 .calender .day div {
     font-size: 20px;
     color: #004d80;
-    padding-top:15%;
-    padding-bottom:15%;
+    width: 95px;
+    height: 70px;
 
 }
 .calender .day div button{
+    width:55px;
+    height:55px;
     font-size: 20px;
     color: #004d80;
     text-decoration: none;
@@ -84,3 +86,6 @@
     outline:0;
 }
 
+.calender .day div button:hover{
+ opacity:0.3;
+}

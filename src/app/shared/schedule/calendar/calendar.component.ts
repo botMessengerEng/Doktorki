@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { AppService } from 'app/app.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Calendar } from '../../classes/calendar';
 import { ScheduleService } from 'app/shared/schedule/schedule.service';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'app-calendar',
@@ -10,10 +11,9 @@ import { ScheduleService } from 'app/shared/schedule/schedule.service';
     styleUrls: ['./calendar.component.css']
 })
 
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
     days = new Array();
     date = new Date();
-    dateTmp;
     currentDay: any;
     currentMonth: any;
     currentYear: any;
@@ -33,6 +33,14 @@ export class CalendarComponent {
         this.setYearAndMonth();
     }
 
+    ngOnInit(){
+        this.scheduleService.date.day = this.currentDay;
+        this.scheduleService.date.year = this.currentYear;
+        this.scheduleService.date.month = this.currentMonth;
+
+        console.log(JSON.stringify(this.scheduleService.date));
+    }
+
     setYearAndMonth() {
         this.monthName = this.monthArray[this.calendar.month];
         this.year = this.calendar.year;
@@ -47,27 +55,29 @@ export class CalendarComponent {
         this.setYearAndMonth();
     }
 
+    setDaysStyle(day, i) {
+        if (day === this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year && !(i < 10 && day > 20) && !(day < 10 && i > 20)) {
+            return {
+                "color": "white",
+                                "-webkit-transition": "opacity 0.3s ease-in-out",
 
-    setBackGroundStyle(day, i) {
-        if (day === this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year &&  !(i<10 && day>20) && !(day<10 && i>20)) {
-            return { "background-color": "#003d66" }
-        }
-        else {
-            return { "background-color": "white" }
-        }
-    }
-
-    setInactiveDays(day, i) {
-        if (day === this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year &&  !(i<10 && day>20) && !(day<10 && i>20)) {
-            return { "color": "white",
-                     "background-color": "#003d66"
+                "background-color": "#003d66",
+                "border-radius": "50%",
             }
         }
+        else if (day === this.scheduleService.date.day && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year && !(i < 10 && day > 20) && !(day < 10 && i > 20)) {
+            return {
+                "-webkit-transition": "opacity 0.3s ease-in-out",
+                "border": "2px solid #003d66",
+                "border-radius": "50%"
+            }
+        }
+
         else if ((day < this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year)
             || (day > this.currentDay && i < 6 && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year)
-            || (day < this.currentDay && i > 29 && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year) 
-            || (day>10 && i<8) 
-            || (day<15 && i>29)) {
+            || (day < this.currentDay && i > 29 && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year)
+            || (day > 10 && i < 8)
+            || (day < 15 && i > 29)) {
             return {
                 "color": "#d9d9d9",
                 "pointer-events": "none",
@@ -76,12 +86,12 @@ export class CalendarComponent {
         }
     }
 
-    setDate(year, month, day){
-        this.scheduleService.date.day=day;
-        this.scheduleService.date.year=year;
-        this.scheduleService.date.month=month;
-
-        console.log(year, month,  day);
+    setDate(year, month, day) {
+        this.scheduleService.date.day = day;
+        this.scheduleService.date.year = year;
+        this.scheduleService.date.month = month;
+        this.scheduleService.dataUpdated('date');
+        console.log(year, month, day);
     }
 
 }

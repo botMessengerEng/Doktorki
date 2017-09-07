@@ -47,7 +47,7 @@
                         <div class='to-fill' [hidden]="!userForm.get('login').errors.minlength">At least 3 characters required </div>
                     </div>
                 </div>
-                <div *ngIf='url!="register" &&  url!="add-user" && url!="add-patient"' style='color: #660000'> {{userLogin}} </div>
+                <div *ngIf='url!="register" &&  url!="add-user" && url!="add-patient"' style='color: #660000'> {{user[0].login}} </div>
 
 
                 <div *ngIf='user[0]==undefined'><label for="password">password: </label></div>

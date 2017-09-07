@@ -7,7 +7,7 @@ import { ManageUserComponent } from 'app/shared/manage-user/manage-user.componen
 
 const routes: Routes = [
     { path: 'new-appointment', component: DoctorsListComponent },
-    { path: 'my-profile/:login', component: ManageUserComponent },
+    { path: 'my-profile/:id', component: ManageUserComponent },
 ];
 
 @NgModule({

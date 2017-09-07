@@ -1,12 +1,30 @@
 <app-menu></app-menu>
+<div *ngIf='can'>
 <div class='content'>
     <div style="margin-bottom:1%"> List of Doctors:</div>
 
     <div class='search-style'>
-        <div>search: </div>
+        <div>search by name: </div>
         <div><input type='text' class='search' [(ngModel)]='doctorFilter' placeholder="doctor's name" />
+         </div>
+
+<!--
+         <div>search ny specialization: </div>
+         <div><input type='text' class='search' [(ngModel)]='specFilter' placeholder="doctor's specialization" />
+ 
+         </div>-->
+
+
+    </div>
+
+    <div *ngFor='let city of cities, let i=index'>
+        <div class="checkbox">
+            <input type="checkbox" [(ngModel)]="cityFilter[i]" id='{{city}}' name="" />{{city}}
+            <label for='{{city}}'></label>
         </div>
     </div>
+
+
     <div class='table-header'>
         <div class='table-header-content'>
             <div> DOCTOR'S NAME</div>
@@ -16,7 +34,7 @@
     </div>
 
 
-    <div *ngFor='let doctor of doctors | firstlastNameFilter:doctorFilter  | paginate: { itemsPerPage: 10, currentPage: p }'>
+    <div *ngFor='let doctor of doctors | cityFilter:cityFilter:cities'>
         <table class='table-of-doctor' *ngIf='doctors && doctors.length' [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#003d66" : "#fafafa",
                                  "border-color": (doctor === selectedDoctor) ? "#003d66" : "#fafafa"} '>
             <thead>
@@ -50,7 +68,7 @@
                                 <p><strong>Age: </strong>{{doctor.age}}</p>
                                 <p><strong>Email: </strong>{{doctor.email}}</p>
                             </td>
-                            <td class='make-appointment'><button class='make-appointment-button' (click)='editDoctor()'>make an appointment</button></td>
+                            <td class='make-appointment'><button class='make-appointment-button' (click)='checkSchedule()'>make an appointment</button></td>
                         </tr>
                     </table>
                 </tr>
@@ -61,3 +79,6 @@
         <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
     </div>
 </div>
+</div>
+
+{{cityFilter}}

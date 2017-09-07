@@ -3,6 +3,7 @@ import { AppService } from 'app/app.service';
 import { Router } from '@angular/router';
 
 import { NameFilterPipe } from '../../shared/pipes/name-filter.pipe';
+import { ScheduleService } from 'app/shared/schedule/schedule.service';
 
 @Component({
     templateUrl: './doctor-list.component.html',
@@ -14,16 +15,41 @@ export class DoctorsListComponent implements OnInit {
   doctors: any;
   selectedDoctor: any;
   doctorFilter: string = '';
+can=false;
+cityFilter = new Array<boolean>();
+  cities = new Array<string>();
 
-  constructor(private appService: AppService, private router: Router) {}
+  constructor(private appService: AppService, private scheduleService: ScheduleService, private router: Router) {}
 
   ngOnInit(): void {
-    this.getUsers();
+    this.getUsers()
+      .then(() => this.getCities())
+      .then(() => this.can=true)
   }
 
+  private getCities() {
+    this.doctors.forEach(doctor => {
+      let cityExistance = false;
+      try {
+        this.cities.forEach(city => {
+          if (city === doctor.address.city) {
+            cityExistance = true;
+            throw cityExistance;
+          }
+        });
+      } catch (error) {}
+      if (!cityExistance) {
+        this.cities.push(doctor.address.city);
+        this.cityFilter.push(true);
+      }
+    });
+    console.log(this.cities);
+  }
+
+
   getUsers() {
-    this.appService.getUsers('doctor')
-      .subscribe(kroliczki => this.doctors = kroliczki,
+    return this.appService.getUsers('doctor')
+      .toPromise().then(kroliczki => this.doctors = kroliczki,
       error => this.errorMessage = <any>error
       );
   }
@@ -38,7 +64,9 @@ export class DoctorsListComponent implements OnInit {
   }
 
   checkSchedule() {
-      this.router.navigate(['admin/edit/doctor', this.selectedDoctor.login, 'schedule']);
+      this.scheduleService.doctorLogin=this.selectedDoctor.login;
+      this.router.navigate(['schedule/' + this.selectedDoctor._id], { queryParams: { 'refresh': 1 } });
+      
   }
 
 }

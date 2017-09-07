@@ -86,7 +86,7 @@
 
                             </td>
                             <td class='user-edit'><button class='user-edit-button' (click)='editUser()' [disabled]='userRole=="admin" ? false : (selectedUser.role=="doctor" ? true : false)'>edit {{user.role}}</button></td>
-                            <td class='user-edit'><button class='user-edit-button' (click)='checkSchedule()'>check {{user.role=="doctor" ? "schedule" : "appointments"}}</button></td>
+                            <td class='user-edit'><button class='user-edit-button' (click)='checkSchedule()' [disabled]='selectedUser.role=="patient" ? true : false'>check {{user.role=="doctor" ? "schedule" : "appointments"}}</button></td>
                             <td class='user-edit'><button class='user-edit-button' style="background-color: #660000" (click)='deleteUser()' [disabled]='userRole=="admin" ? false : true'>delete {{user.role}}</button></td>
                         </tr>
                     </table>

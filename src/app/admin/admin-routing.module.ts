@@ -9,9 +9,9 @@ const routes: Routes = [
     { path: 'users-list', component: UsersListComponent },
     { path: 'add-user', component: ManageUserComponent },
     { path: 'add-patient', component: ManageUserComponent },
-    { path: 'users-list/:login', component: ManageUserComponent },
+    { path: 'users-list/:id', component: ManageUserComponent },
     { path: 'my-profile', component: ManageUserComponent },
-    { path: 'my-appointments', component: ScheduleComponent }
+    { path: 'schedule/:id', component: ScheduleComponent }
 ];
 
 @NgModule({

@@ -9,6 +9,7 @@ import { AppService } from 'app/app.service';
 import { CustomDate } from 'app/shared/classes/custom-date';
 import { AuthService } from 'app/auth/auth.service';
 import { DateArrays } from 'app/shared/classes/date-arrays';
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
     selector: 'app-agenda',
@@ -23,10 +24,11 @@ export class AgendaComponent implements OnInit, DoCheck {
     dateTmp = new CustomDate(new Date());
     dateArrays = new DateArrays();
 
-    constructor(private scheduleService: ScheduleService, private appService: AppService, private authService: AuthService) { }
+    constructor(private scheduleService: ScheduleService, private appService: AppService, private authService: AuthService, private route: ActivatedRoute, ) { }
 
     ngOnInit() {
         Promise.all([
+            this.scheduleService.selectedAppointment = new Appointment(),
             this.scheduleService.getVisits(),
             this.getUserDetails()
         ])
@@ -35,7 +37,7 @@ export class AgendaComponent implements OnInit, DoCheck {
     }
 
     private getUserDetails() {
-        return this.appService.getUserDetails({ /*login: this.authService.user.login */ login: "Brooke" })
+        return this.appService.getUserDetails({ _id: this.route.snapshot.params['id'] })
             .toPromise().then((user => this.scheduleService.doctor = user))
     }
 
@@ -77,7 +79,10 @@ export class AgendaComponent implements OnInit, DoCheck {
             }
 
             else if (this.scheduleService.dailyAppointmentsHours.find((element) => hour == element)) {
-                return { 'background-color': '#660000' };
+                return {
+                    'background-color': '#660000',
+                    "pointer-events": this.authService.user.role=='patient' ? 'none' : 'default'
+                };
             }
 
             else {

@@ -8,6 +8,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 
+import { AuthService } from 'app/auth/auth.service';
+
 @Injectable()
 
 export class ScheduleService {
@@ -15,6 +17,7 @@ export class ScheduleService {
     private _dataBaseUrlInsertAppt = 'http://localhost:3000/insert-appt';
     private _dataBaseUrlDeleteAppt = 'http://localhost:3000/delete-appt/';
 
+    doctorLogin;
     doctor;
     patient;
 
@@ -29,7 +32,7 @@ export class ScheduleService {
 
     date = new CustomDate(new Date());
 
-    constructor(private _http: Http) { }
+    constructor(private _http: Http, private authService: AuthService) { }
 
     private _getVisits(param, params?): Observable<string> {
         return this._http.post(params ? this._dataBaseUrlSchedule + '/' + params : this._dataBaseUrlSchedule, param)
@@ -67,7 +70,7 @@ export class ScheduleService {
 
 
     getVisits (): Promise<any> {
-        return this._getVisits({ login: 'Brooke' }, '0').toPromise()
+        return this._getVisits({login: this.authService.user.role=="doctor" ? this.authService.user.login :this.doctorLogin}, '0').toPromise()
         .then(appointments => this.allAppointments = appointments)
         .then(() => this.getAllApptsAndThenDailyAppts());
     }
@@ -107,4 +110,18 @@ export class ScheduleService {
         return date.getDay();
     }
 
+    dataUpdated(param) {
+        this.subscribers.forEach(s => s(param));
+    }
+
+    subscribe(fn: (string) => void) {
+        this.subscribers.push(fn);
+    }
+
+    unsubscribe(fn) {
+        const idx = this.subscribers.indexOf(fn);
+        this.subscribers.splice(idx, 1);
+    }
+
+    private subscribers: Array<(string) => void> = [];
 }

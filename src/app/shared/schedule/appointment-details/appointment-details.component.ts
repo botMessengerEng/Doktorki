@@ -1,6 +1,8 @@
-import { Component, OnInit, Input, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as _ from 'lodash';
+
 import 'rxjs/add/operator/toPromise';
 
 import { AppService } from 'app/app.service';
@@ -10,7 +12,7 @@ import { DateArrays } from '../../classes/date-arrays';
 import { ScheduleService } from 'app/shared/schedule/schedule.service';
 import { Appointment } from 'app/shared/classes/appointment';
 import { formBuilder, setContent } from './form-builder';
-import { ObjectId } from "bson";
+import { AuthService } from 'app/auth/auth.service';
 
 @Component({
     selector: 'app-appontment-details',
@@ -18,9 +20,8 @@ import { ObjectId } from "bson";
     styleUrls: ['appointment-details.component.css']
 })
 
-export class AppointmentDetailsComponent implements OnInit, DoCheck {
+export class AppointmentDetailsComponent implements OnInit {
     appointmentForm: FormGroup;
-    rerender = false;
     yearsArray = new Array(107);
     daysArray = new Array(31);
     invalid = false;
@@ -31,32 +32,34 @@ export class AppointmentDetailsComponent implements OnInit, DoCheck {
     canView = false;
     selectedAppointmentTmp = new Appointment();
     editAppointment = new Appointment();
-    constructor(private fb: FormBuilder, private appService: AppService, private scheduleService: ScheduleService) {
+    
+    constructor(private fb: FormBuilder, private appService: AppService, private scheduleService: ScheduleService, private authService: AuthService, private route: ActivatedRoute) {
         this.appointmentForm = formBuilder(this.fb, this.scheduleService.selectedAppointment);
+        this.scheduleService.subscribe((param) => this.fn(param));
     }
 
     ngOnInit() {
         this.dateArrays.hoursGeneratorForSchedule();
     }
 
-    ngDoCheck(): void {
-        if (!_.isEqual(this.selectedAppointmentTmp.date, this.scheduleService.selectedAppointment.date)) {
+    fn(updatedItem): void {
+        if(updatedItem=="date"){
+        // if (!_.isEqual(this.selectedAppointmentTmp.date, this.scheduleService.selectedAppointment.date)) {
             this.appService.getUserDetails({ login: this.scheduleService.selectedAppointment.patient.login })
                 .toPromise()
                 .then(patient => this.scheduleService.patient = patient)
                 .then(() => this.appointmentForm = formBuilder(this.fb, this.scheduleService.selectedAppointment))
                 .then(() => {
                     _.merge(this.editAppointment, this.scheduleService.selectedAppointment)
-                    // console.log(this.editAppointment, this.scheduleService.selectedAppointment)
                 })
                 .then(() => setContent(this.appointmentForm, this.editAppointment))
                 .then(() => {
-                    if (this.scheduleService.patient[0] != undefined) {
+                    if (this.scheduleService.patient[0] != undefined || this.authService.user.role == "patient") {
                         this.deleteLoginValidation();
                     }
                 })
                 .then(() => this.canView = true)
-                .then(() => _.merge(this.selectedAppointmentTmp, this.scheduleService.selectedAppointment));
+                // .then(() => _.merge(this.selectedAppointmentTmp, this.scheduleService.selectedAppointment));
         }
     }
 
@@ -104,6 +107,10 @@ export class AppointmentDetailsComponent implements OnInit, DoCheck {
             error => this.errMessage = <any>error);
     }
 
+    insertLoginToEditAppointmentVariable() {
+        this.editAppointment.patient.login = this.authService.user.login;
+    }
+
     onSubmit() {
         this.invalid = false;
         if ((this.dateArrays.monthsArray[this.dateArrays.date.getMonth()] == this.appointmentForm.get('dayMonthGroup.month').value
@@ -118,18 +125,29 @@ export class AppointmentDetailsComponent implements OnInit, DoCheck {
             this.invalidMessage = "Doctor is not working in choosen hour or hour is taken";
             this.invalid = true;
         }
+        else if (this.authService.user.role == "patient") {
+            this.insertLoginToEditAppointmentVariable();
+            this.scheduleService.insertAppt(this.editAppointment).subscribe(() => this.scheduleService.getVisits());
+
+        }
         else {
-            console.log('ja tu w edicie mozna');
             if (this.scheduleService.patient[0] != undefined) {
-                this.scheduleService.updateVisit(this.editAppointment).toPromise()
-                    .then(() => this.scheduleService.getVisits());
+                this.scheduleService.updateVisit(this.editAppointment).subscribe(() => this.scheduleService.getVisits());
             }
 
             else {
-                this.scheduleService.insertAppt(this.editAppointment).toPromise()
-                    .then(() => this.scheduleService.getVisits());
+                this.scheduleService.insertAppt(this.editAppointment).subscribe(result => {
+                    if (result === 'OK') {
+                        this.scheduleService.getVisits();
+                    }
+                    else {
+                        this.invalid = true;
+                        this.invalidMessage = "Patient does not exist";
+                    }
+
+                });
             }
         }
-    }
 
+    }
 }

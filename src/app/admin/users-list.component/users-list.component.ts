@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AppService } from 'app/app.service';
 import { AdminService } from 'app/admin/admin.service';
 import { AuthService } from 'app/auth/auth.service';
+import { ScheduleService } from "app/shared/schedule/schedule.service";
 
 @Component({
     templateUrl: './users-list.component.html',
@@ -19,7 +20,7 @@ export class UsersListComponent implements OnInit {
     onlyPatients= true;
     userRole: string;
 
-    constructor(private appService: AppService, private adminService: AdminService, private authService: AuthService, private router: Router) {}
+    constructor(private appService: AppService, private adminService: AdminService, private authService: AuthService, private scheduleService: ScheduleService, private router: Router) {}
 
     ngOnInit(): void {
         this.getUsers();
@@ -43,12 +44,13 @@ export class UsersListComponent implements OnInit {
     }
 
     checkSchedule() {
-        this.router.navigate(['edit/doctor', this.selectedUser.login, 'schedule']);
+        this.scheduleService.doctorLogin=this.selectedUser.login;
+        this.router.navigate(['schedule', this.selectedUser._id]);
     }
 
 
     editUser() {
-            this.router.navigate(['users-list', this.selectedUser.login/*name.replace(/ /g, '').toLowerCase()*/]);
+            this.router.navigate(['users-list', this.selectedUser._id/*name.replace(/ /g, '').toLowerCase()*/]);
     }
 
     deleteUser() {

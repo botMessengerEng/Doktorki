@@ -26,13 +26,12 @@
 
         <div class='day'>
             <div *ngFor="let day of days; let i = index">
-                    <div attr.id="{{day}}" [ngStyle]="setBackGroundStyle(day,i)">
+                    <div attr.id="{{day}}" >
 
-                        <button  (click)='setDate(calendar.year, calendar.month, day)'  [ngStyle]="setInactiveDays(day,i)" >
+                        <button  (click)='setDate(calendar.year, calendar.month, day)'  [ngStyle]="setDaysStyle(day,i)" >
                         {{day}}</button></div>
             </div>       
         </div>
 
 
 </div>
-

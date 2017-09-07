@@ -1,12 +1,11 @@
 Obowiązkowe
-    ADMIN:
-        -check schedule,
-        -delete appts
+    ADMIN:- JESTEM GOTOW
         
-    DOCTOR - JESTEM GOTOW, zmien mi tylko ten login po auth :)
+    DOCTOR - JESTEM GOTOW
 
     PATIENT:
         -search
+        -dorobic umawianie
 
 Opcjonalnie:
     DOCTOR, PATIENT: 

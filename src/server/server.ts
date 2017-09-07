@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as _ from 'lodash';                        // czy to jest w ogóle potrzebne ? ... ---ale wygląda spoko ta biblioteka
 import * as bodyParser from 'body-parser';
 import { MongoCollection } from '../mongo/mongo';
+import { ObjectId } from 'mongodb';
 import { initDB } from './init-db'
 /*
  "In general, the rule of thumb is:
@@ -69,7 +70,7 @@ app.route('/user-details/:param?')
     })
     .post(async (req: express.Request, res: express.Response) => {
         try {
-            const result = await mongoUsersDetails.findElement({ login: req.body.login });
+            const result = await mongoUsersDetails.findElement(req.body);
             res.json(result);
         } catch (err) {
             res.send(err);
@@ -168,10 +169,12 @@ app.post('/insert-user/:param', async (req: express.Request, res: express.Respon
         if (user[0] !== undefined) {
             res.json(`Login ${req.body.login} is in use!`)
         } else {
+            const _id = new ObjectId();
             if (req.param('param') === 'doctor') {
                 await Promise.all([
                     mongoUsers.insertElements([
                         {
+                            _id: _id,
                             login: req.body.login,
                             password: req.body.password,
                             role: 'doctor'
@@ -179,6 +182,7 @@ app.post('/insert-user/:param', async (req: express.Request, res: express.Respon
                     ]),
                     mongoUsersDetails.insertElements([
                         {
+                            _id: _id,
                             login: req.body.login,
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
@@ -223,6 +227,7 @@ app.post('/insert-user/:param', async (req: express.Request, res: express.Respon
                 await Promise.all([
                     mongoUsers.insertElements([
                         {
+                            _id: _id,
                             login: req.body.login,
                             password: req.body.password,
                             role: 'patient'
@@ -230,6 +235,7 @@ app.post('/insert-user/:param', async (req: express.Request, res: express.Respon
                     ]),
                     mongoUsersDetails.insertElements([
                         {
+                            _id: _id,
                             login: req.body.login,
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,

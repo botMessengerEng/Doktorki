@@ -4,7 +4,7 @@
     grid-template-columns: 48% 48%; 
     grid-gap: 10px;
     justify-content: center; 
-    margin-left:23%;
+    margin-left:20%;
     margin-right:15%;
     border-radius: 12px;
     padding:1%;
@@ -33,7 +33,7 @@
 
 .form-style-date{
     display: grid;
-    grid-template-columns: 23.5% 51.5% 25%;
+    grid-template-columns: 23% 53% 24%;
     grid-row-gap: 5px;
 }
 
@@ -46,6 +46,11 @@ select {
     border-radius: 5px;
     list-style-type: none;  
     font-family: 'Quicksand', sans-serif;
+    outline:none;
+}
+
+select:active, select:hover, select:focus {
+  border: 1px solid #002e4d;
 }
 
 .form-style div{
@@ -55,6 +60,7 @@ select {
     align-self: center;
     padding-bottom: 2%;
 }
+
 
 .input-style {
     height: 40px;
@@ -103,6 +109,7 @@ select {
 }
 
 .buttons{
+    margin-top:3%;
     display: grid;
     grid-template-columns: 40% 40%;
 }

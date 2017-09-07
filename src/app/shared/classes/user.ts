@@ -1,10 +1,12 @@
 export class User {
+    _id: string;
     login: string;
     password: string;
     role: string;
 }
 
 export class UserDetails {
+    _id: string;
     role = "doctor";
     login: string;
     password: string;
@@ -43,7 +45,8 @@ export class UserDetails {
         }
     }
 
-        constructor(login, password, firstName, lastName, PESEL, gender, age, phone, email, street, postcode, city) {
+        constructor(_id, login, password, firstName, lastName, PESEL, gender, age, phone, email, street, postcode, city) {
+        this._id=_id;
         this.login = login;
         this.password = password;
         this.firstName = name;

@@ -30,8 +30,7 @@ export class ManageUserComponent implements OnInit {
     }
 
     constructor(private appService: AppService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder) {
-        // this.url = appService.url;
-        this.user = new UserDetails('', '', '', '', undefined, undefined, undefined, '', '', '', '', '');
+        this.user = new UserDetails('', '', '', '', '', undefined, undefined, undefined, '', '', '', '', '');
         this.userForm = formBuilder(this.fb, this.user, 'add');
     }
 
@@ -39,7 +38,7 @@ export class ManageUserComponent implements OnInit {
     private setURL(): Promise<boolean> {
         this.url = this.route.snapshot.url.join('/');
         this.appService.url = this.url;
-        this.userLogin = this.route.snapshot.params['login'];
+        this.userLogin = this.route.snapshot.params['id'];
 
         return new Promise(resolve => resolve(true));
     }
@@ -48,7 +47,7 @@ export class ManageUserComponent implements OnInit {
         this.setURL()
             .then(async () => {
                 if (this.userLogin != undefined) {
-                    await this.appService.getUserDetails({ login: this.userLogin })
+                    await this.appService.getUserDetails({ _id: this.userLogin })
                         .toPromise()
                         .then(user => this.user = user)
                 }
@@ -131,7 +130,14 @@ export class ManageUserComponent implements OnInit {
             this.authService.addUser(this.user, this.user.role)
                 .subscribe((result) => {
                     if (result === 'OK') {
-                        this.router.navigate(['login']);
+                        {
+                            if (this.authService.user.role != "patient") {
+                                this.router.navigate(['users-list']);
+                            }
+                            else {
+                                this.router.navigate(['login']);
+                            }
+                        }
                     }
                     else {
                         this.invalid = true;

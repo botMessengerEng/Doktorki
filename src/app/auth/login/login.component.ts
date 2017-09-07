@@ -11,6 +11,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { AuthService } from 'app/auth/auth.service';
 import { AppService } from 'app/app.service';
+import { User } from "app/shared/classes/user";
 
 
 @Component({
@@ -81,6 +82,7 @@ export class LoginComponent implements OnInit {
     //     this.url= 'register'
     //     this.appService.url = this.url;
     // }
+
 
 }
 

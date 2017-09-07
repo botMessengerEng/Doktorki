@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
     await Promise.all([
         mongoUsers.drop(),
@@ -12,116 +14,133 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "role": "admin"
             },
             {
+                "_id": new Object("59afe927b0161155c8f105f2"),
                 "login": "doctor",
                 "password": "doctor",
                 "role": "doctor"
             },
             {
-                "login": "patient",
-                "password": "patient",
-                "role": "patient"
-            },
-            {
+                "_id" : new ObjectId("59afe927b0161155c8f105f4"),
                 "login": "doktorek",
                 "password": "prawilny",
                 "role": "doctor"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f105f5"),
                 "login": "doktorBezUprawnien",
                 "password": "jakRowerzystaBezUprawnien",
                 "role": "doctor"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f105f6"),
                 "login": "Brooke",
                 "password": "1234",
                 "role": "doctor"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f105f7"),
                 "login": "elekarz",
                 "password": "@als",
                 "role": "doctor"
             },
             {
+                 "_id" : new ObjectId("59afe927b0161155c8f105f8"),
                 "login": "monicaC",
                 "password": "anteny",
                 "role": "doctor"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f105f9"),
                 "login": "eve63",
                 "password": "eve63",
                 "role": "doctor"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f105fa"),
                 "login": "pawelKrakow",
                 "password": "wawel",
                 "role": "doctor"
             },
             {
+                 "_id" : new ObjectId("59afe927b0161155c8f105fb"),
                 "login": "leo_z_tarnowa",
                 "password": "ananas@66",
                 "role": "doctor"
             },
             {
+                 "_id" : new ObjectId("59afe927b0161155c8f105fc"),
                 "login": "doktorro",
                 "password": "paprykarz_szczecisnski",
                 "role": "doctor"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f105fd"),
                 "login": "medicziKasia",
                 "password": "traktor77",
                 "role": "doctor"
             },
             {
+                "_id": new ObjectId("59afa368d5a0c31db44b572f"),
                 "login": "lolek",
                 "password": "bolek",
                 "role": "doctor"
             },
             {
+                "_id": new ObjectId("59afe927b0161155c8f105f3"),
                 "login": "patient",
                 "password": "admin",
                 "role": "patient"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f105ff"),
                 "login": "wpiszLogin",
                 "password": "admin",
                 "role": "patient"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f10600"),
                 "login": "synJacka",
                 "password": "admin",
                 "role": "patient"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f10601"),
                 "login": "Hulk",
                 "password": "admin",
                 "role": "patient"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f10602"),
                 "login": "SpeedyGonzales",
                 "password": "admin",
                 "role": "patient"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f10603"),
                 "login": "Mark",
                 "password": "admin",
                 "role": "patient"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f10604"),
                 "login": "Robinio",
                 "password": "admin",
                 "role": "patient"
             },
             {
+                 "_id" : new ObjectId("59afe927b0161155c8f10605"),
                 "login": "Jess",
                 "password": "admin",
                 "role": "patient"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f10606"),
                 "login": "Heisenberg",
                 "password": "Werner",
                 "role": "patient"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f10607"),
                 "login": "Jesse",
                 "password": "admin",
                 "role": "patient"
@@ -129,6 +148,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
         ]),
         mongoUsersDetails.insertElements([
             {
+                "_id": new ObjectId("59afe927b0161155c8f105f3"),
                 "role": "patient",
                 "login": "patient",
                 "firstName": "Leopold",
@@ -145,6 +165,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "PESEL": "77082410610"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f105ff"),
                 "role": "patient",
                 "login": "wpiszLogin",
                 "firstName": "Zygfryd",
@@ -161,6 +182,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "PESEL": "02123102319"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f10600"),
                 "role": "patient",
                 "login": "synJacka",
                 "firstName": "Skalbimierz",
@@ -177,6 +199,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "PESEL": "82031118433"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f10601"),
                 "role": "patient",
                 "login": "Hulk",
                 "firstName": "Bruce",
@@ -193,6 +216,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "PESEL": "62050211094"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f10603"),
                 "role": "patient",
                 "login": "Mark",
                 "firstName": "Marek",
@@ -209,6 +233,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "PESEL": "82050218792"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f10604"),
                 "role": "patient",
                 "login": "Robinio",
                 "firstName": "Robert",
@@ -225,6 +250,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "PESEL": "93050816835"
             },
             {
+                 "_id" : new ObjectId("59afe927b0161155c8f10605"),
                 "role": "patient",
                 "login": "Jess",
                 "firstName": "Justyna",
@@ -241,6 +267,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "PESEL": "92100308786"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f10606"),
                 "role": "patient",
                 "login": "Heisenberg",
                 "firstName": "Walter",
@@ -257,6 +284,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "PESEL": "59090719558"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f10607"),
                 "role": "patient",
                 "login": "Jesse",
                 "firstName": "Jesse",
@@ -273,6 +301,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 "PESEL": "84091713058"
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f10602"),
                 "role": "patient",
                 "login": "SpeedyGonzales",
                 "firstName": "Wacław",
@@ -290,6 +319,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
             },
             // ---------------- Doctors --------------///////////////////
             {
+                "_id" : new ObjectId("59afe927b0161155c8f105f5"),
                 "role": "doctor",
                 'PESEL': "83022114618",
                 'login': 'doktorBezUprawnien',
@@ -337,6 +367,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 }
             },
             {
+                "_id": new Object("59afe927b0161155c8f105f2"),
                 "role": "doctor",
                 'PESEL': "83082112618",
                 'login': 'doctor',
@@ -384,6 +415,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 }
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f105f4"),
                 "role": "doctor",
                 'PESEL': "03022134618",
                 'login': 'doktorek',
@@ -431,6 +463,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 }
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f105f6"),
                 "role": "doctor",
                 'PESEL': "89022114658",
                 'login': 'Brooke',
@@ -478,6 +511,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 }
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f105f7"),
                 "role": "doctor",
                 'PESEL': "99022234688",
                 'login': 'elekarz',
@@ -525,6 +559,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 } 
             },
             {
+                 "_id" : new ObjectId("59afe927b0161155c8f105f8"),
                 "role": "doctor",
                 'PESEL': "83946114618",
                 'login': 'monicaC',
@@ -572,6 +607,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 }   
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f105f9"),
                 "role": "doctor",
                 'PESEL': "83022993718",
                 'login': 'eve63',
@@ -580,7 +616,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 'gender': 'female',
                 'age': 62,
                 'phone': '+48 773456789',
-                'email': 'doktorek@gmail.com',
+                'email': 'evee@gmail.com',
                 'address': {
                     'street': 'Limonkowa 24',
                     'postcode': '35-083',
@@ -619,6 +655,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 }  
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f105fa"),
                 "role": "doctor",
                 'PESEL': "83022029836",
                 'login': 'pawelKrakow',
@@ -666,6 +703,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 }
             },
             {
+                 "_id" : new ObjectId("59afe927b0161155c8f105fb"),
                 "role": "doctor",
                 'PESEL': "83736514618",
                 'login': 'leo_z_tarnowa',
@@ -713,6 +751,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 }
             },
             {
+                 "_id" : new ObjectId("59afe927b0161155c8f105fc"),
                 "role": "doctor",
                 'PESEL': "83000982218",
                 'login': 'doktorro',
@@ -760,6 +799,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 }
             },
             {
+                "_id" : new ObjectId("59afe927b0161155c8f105fd"),
                 "role": "doctor",
                 'PESEL': "11922114618",
                 'login': 'medicziKasia',
@@ -807,6 +847,7 @@ export async function initDB(mongoUsers, mongoUsersDetails, mongoSchedule) {
                 }
             },
             {
+                "_id": new ObjectId("59afa368d5a0c31db44b572f"),
                 "role": "doctor",
                 'PESEL': "89927114618",
                 'login': 'lolek',
