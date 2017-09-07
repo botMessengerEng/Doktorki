@@ -1,0 +1,112 @@
+<div class='content'>
+    <div class='names'>{{patient.firstName}} {{patient.lastName}}</div>
+
+    <div class='specialization'>{{patient.PESEL}}</div><br>
+    <form [formGroup]="patientAddForm" (ngSubmit)="onSubmit()">
+        <div class='table-of-details'>
+
+            <div><label for="firstName">first name: </label></div>
+            <div><input class='input-style' type='text' formControlName="firstName" placeholder="first name">
+                <div class='info' *ngIf='patientAddForm.get("firstName").errors && (patientAddForm.get("firstName").touched || patientAddForm.get("firstName").dirty)'>
+                    <div class='to-fill' [hidden]="!patientAddForm.get('firstName').errors.required">First name is required </div>
+                </div>
+            </div>
+
+            <div><label for="lastName">last name: </label></div>
+            <div><input class='input-style' type='text' formControlName="lastName" placeholder="last name">
+                <div class='info' *ngIf='patientAddForm.get("lastName").errors && (patientAddForm.get("lastName").touched || patientAddForm.get("lastName").dirty)'>
+                    <div class='to-fill' [hidden]="!patientAddForm.get('lastName').errors.required">Last name is required </div>
+                </div>
+            </div>
+
+            <div><label for="login">login: </label></div>
+            <div><input class='input-style' type='text' formControlName="login" placeholder="login">
+                <div class='info' *ngIf='patientAddForm.get("login").errors && (patientAddForm.get("login").touched || patientAddForm.get("login").dirty)'>
+                    <div class='to-fill' [hidden]="!patientAddForm.get('login').errors.required">Login is required </div>
+                    <div class='to-fill' [hidden]="!patientAddForm.get('login').errors.minlength">At least 3 characters required </div>
+                </div>
+            </div>
+
+            <div><label for="password">password: </label></div>
+            <div><input class='input-style' type='text' formControlName="password" placeholder="password">
+                <div class='info' *ngIf='patientAddForm.get("password").errors && (patientAddForm.get("password").touched || patientAddForm.get("password").dirty)'>
+                    <div class='to-fill' [hidden]="!patientAddForm.get('password').errors.required">Password is required </div>
+                    <div class='to-fill' [hidden]="!patientAddForm.get('password').errors.minlength">At least 8 characters required </div>
+                </div>
+            </div>
+
+            <div><label for="gender">gender: </label></div>
+            <div><select formControlName="gender" placeholder="gender">
+                 <option value="" disabled selected hidden>select gender</option>
+                  <option *ngFor="let gen of genders" [value]="gen">{{gen}}</option>
+                  </select>
+                <div class='info' *ngIf='patientAddForm.get("gender").errors && (patientAddForm.get("gender").touched || patientAddForm.get("gender").dirty)'>
+                    <div class='to-fill' [hidden]="!patientAddForm.get('gender').errors.required">Gender is required </div>
+                </div>
+            </div>
+
+            <div><label for="phone">phone: </label></div>
+            <div> <input class='input-style' type='text' formControlName="phone" placeholder="phone">
+                <div class='info' *ngIf='patientAddForm.get("phone").errors && (patientAddForm.get("phone").touched || patientAddForm.get("phone").dirty)'>
+                    <div class='to-fill' [hidden]="!patientAddForm.get('phone').errors.required">Phone is required </div>
+                </div>
+            </div>
+
+            <div style='margin-bottom:20px'><label for="email">email: </label></div>
+            <div style='margin-bottom:20px'> <input class='input-style' type='text' formControlName="email" placeholder="email">
+                <div class='info' *ngIf='patientAddForm.get("email").errors && (patientAddForm.get("email").touched || patientAddForm.get("email").dirty)'>
+                    <div class='to-fill' [hidden]="!patientAddForm.get('email').errors.pattern">Email is not valid</div>
+                    <div class='to-fill' [hidden]="!patientAddForm.get('email').errors.required">Email is required </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div formGroupName="dayMonthGroup">
+            <div class='table-of-details'>
+                <div><label for="year">year: </label></div>
+                <div><select formControlName="year" placeholder="year">
+                <option value="" disabled selected hidden>select year of birth</option>
+                  <option *ngFor="let year of dataArrays.yearsArray" [value]="year">{{year}}</option>
+                  </select></div>
+                <div><label for="month">month: </label></div>
+                <div><select formControlName="month" placeholder="month">
+                <option value="" disabled selected hidden>select month of birth</option>
+                  <option *ngFor="let month of dataArrays.monthsArray" [value]="month">{{month}}</option>
+                  </select></div>
+
+
+                <div style='margin-bottom:20px'><label for="day">day: </label></div>
+                <div><select formControlName="day" placeholder="day" style='margin-bottom:20px'>
+                 <option value="" disabled selected hidden>select day of birth</option>
+                <option *ngFor="let day of dataArrays.daysArray" [value]="day">{{day}}</option>
+                  </select>
+                    <div class='info' *ngIf='patientAddForm.get("dayMonthGroup").errors && (patientAddForm.get("dayMonthGroup").touched || patientAddForm.get("dayMonthGroup").dirty)'>
+                        <div class='to-fill' [hidden]="!patientAddForm.get('email').errors?.months">Bad</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class='table-of-details'>
+
+            <div><label for="PESEL">PESEL: </label></div>
+            <div> <input class='input-style' type='text' formControlName="PESEL" placeholder="PESEL">
+                <div class='info' *ngIf='patientAddForm.get("PESEL").errors && (patientAddForm.get("PESEL").touched || patientAddForm.get("PESEL").dirty)'>
+                    <div class='to-fill' [hidden]="!patientAddForm.get('PESEL').errors.maxlength">PESEL is too long</div>
+                    <div class='to-fill' [hidden]="!patientAddForm.get('PESEL').errors.minlength">PESEL is too short</div>
+                    <div class='to-fill' [hidden]="!patientAddForm.get('PESEL').errors.required">PESEL is required </div>
+                    <div class='to-fill' [hidden]="!patientAddForm.get('PESEL').errors.pattern">PESEL must be a number </div>
+                </div>
+            </div>
+            <div> </div>
+
+
+            <div style="text-align: right">
+                <button type="submit" class='option-button' [disabled]="!patientAddForm.valid">Submit</button>
+            </div>
+        </div>
+    </form>
+    <div *ngIf='invalid' class='invalid'>Login is taken</div>
+</div>

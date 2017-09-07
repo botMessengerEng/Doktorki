@@ -1,0 +1,86 @@
+.calender{
+    /*border:2px solid red;*/
+    justify-content:center; 
+    margin-left: 25%;
+    margin-right: 25%;
+    /*background-color: #fafafa;*/
+}
+
+.calender .month{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content:center; 
+    color: #004d80;
+    font-size: 30px;
+    text-align: center;
+    letter-spacing: 3px;
+}
+
+.calender .year{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content:center; 
+    color: #004d80;
+    font-size: 30px;
+    text-align: center;
+    letter-spacing: 3px;
+    font-size: 25px;
+    
+}
+
+.calender .days{
+    width:100%;
+    display: grid;
+    grid-template-columns: 14.28% 14.28% 14.28% 14.28% 14.28% 14.28% 14.28%; 
+    /*border:1px solid red;*/
+    text-align: center;
+    border-bottom: 1px solid #004d80;
+
+}
+
+.calender .days div{
+    /*border:1px solid yellow;*/
+    font-size: 20px;
+    color: #008ae6;
+    padding-bottom:10%;
+}
+
+.calender .day{
+    width:100%;
+    display: grid;
+    grid-template-columns: 14.28% 14.28% 14.28% 14.28% 14.28% 14.28% 14.28%; 
+    text-align: center;
+}
+
+.calender .day div {
+    /*border:1px solid yellow;*/
+    font-size: 20px;
+    color: #004d80;
+    padding-top:15%;
+    padding-bottom:15%;
+}
+.calender .day div a{
+    /*border:1px solid yellow;*/
+    font-size: 20px;
+    color: #004d80;
+    text-decoration: none;
+}
+
+.arrows{
+    width:100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    cursor: pointer;
+    color: #008ae6;
+}
+
+.arrows .arrow{
+    font-size: 40px;
+    text-align: left;
+}
+
+.arrows .arrow:last-child{
+    text-align: right;
+}

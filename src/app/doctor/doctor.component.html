@@ -1,0 +1,39 @@
+<div class='container'>
+    <nav class='menu'>
+        <div> Doktorki </div>
+        <div><a [routerLink]="['/doctor', login, 'schedule']">schedule</a> </div>
+        <div> <a routerLink="/login">find patient</a> </div>
+        <div> <a [routerLink]="['/doctor', login, 'edit']">edit profile</a> </div>
+        <div><a routerLink="/login">log out</a> </div>
+    </nav>
+    <div class='content'>
+
+        <div *ngIf='visits && visits.length'>
+            <div class="header">Comming appontments:</div>
+
+            <div *ngFor='let visit of visits, let i=index'>
+                <div *ngIf="i==0 || (i!=0 && visits[i].date.day!=visits[i-1].date.day)">
+                    <div class="new-day">{{visit.date.day}}.{{visit.date.month
+                        < 10 ? "0" + visit.date.month : visit.date.month}}.{{visit.date.year}} </div>
+                            <div class="appointment-list">
+                                <span>{{visit.date.hour}}</span>
+                                <span>{{visit.patient.login}}</span>
+                                <span>{{visit.patient.description}}</span>
+                            </div>
+                    </div>
+
+                    <div *ngIf="i!=0 && visits[i].date.day==visits[i-1].date.day">
+                        <div class="appointment-list">
+
+                            <span>{{visit.date.hour}}</span>
+                            <span>{{visit.patient.login}}</span>
+                            <span>{{visit.patient.description}}</span>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>

@@ -1,27 +1,19 @@
 import * as express from 'express';
-import * as _ from 'lodash';
+import * as _ from 'lodash';                        // czy to jest w ogóle potrzebne ? ... ---ale wygląda spoko ta biblioteka
 import * as bodyParser from 'body-parser';
-import * as cookieParser from 'cookie-parser';
 import { MongoCollection } from '../mongo/mongo';
-<<<<<<< HEAD
 import { ObjectId } from 'mongodb';
 import { initDB } from './init-db'
-=======
-import { initDB } from './init-db';
-import * as bcrypt from 'bcrypt';
-import * as session from 'express-session';
-import * as connectMongo from 'connect-mongo';
-
->>>>>>> 644b3c55275169ce7f09db5d6c6740d2af0dbff1
 /*
-In general, the rule of thumb is:
-If you’re installing something that you want to use in your program,
-using require('whatever'), then install it locally, at the root of your project.
-If you’re installing something that you want to use in your shell,
-on the command line or something, install it globally, so that its binaries end up in your PATH environment variable.
+ "In general, the rule of thumb is:
+ If you’re installing something that you want to use
+ in your program, using require('whatever'), then install
+ it locally, at the root of your project. If you’re installing
+ something that you want to use in your shell, on the command
+ line or something, install it globally, so that its binaries
+ end up in your PATH environment variable" ~XiaoPeng
 */
 
-const saltRounds = 10;
 const app = express();
 const collectionUsers = 'Users';
 const collectionUsersDetails = 'UsersDetails';
@@ -31,7 +23,6 @@ const url = 'mongodb://localhost:27017/DoktorkiDB';
 const mongoUsers = new MongoCollection(url, collectionUsers);
 const mongoUsersDetails = new MongoCollection(url, collectionUsersDetails);
 const mongoSchedule = new MongoCollection(url, collectionSchedule);
-const MongoStore = connectMongo(session);
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
@@ -42,19 +33,6 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(session(
-    {
-        secret: 'And did those feet in ancient time',
-        resave: false,
-        saveUninitialized: true,
-        store: new MongoStore({ url: url }),
-        cookie: { maxAge: 1 * 60 * 1000 }
-    }));
-app.use((req, res, next) => {
-    res.locals.session = req.session;
-    next();
-})
 
 app.get('/', (req, res) =>
     res.send('SERVER')
@@ -63,35 +41,20 @@ app.get('/', (req, res) =>
 // ------------- login   ------------------------------------------------------------------------////////////////////////
 app.post('/login', async (req: express.Request, res: express.Response) => {
     console.log(JSON.stringify(req.body));
-    try {
-        const user = await mongoUsers.findElement({
-            login: req.body.login
-        });
 
-        if (user[0] != undefined) {
-            const validation = await bcrypt.compare(req.body.password, user[0].password);
-            if (validation) {
-                res.status(202).json(user[0]).end();
-            }
-            else {
-                res.json('bledne haslo');
-            }
-        }
-        else {
-            res.json('bledny login');
-            console.log(user);
-        }
-    } catch (err) {
-        res.send(err);
+    const user = await mongoUsers.findElement({
+        login: req.body.login,
+        password: req.body.password
+    });
+    if (user[0] !== undefined) {
+        res.status(200).json(user[0]).end();
+        console.log('tak');
     }
-});
-
-app.get('/auth', async (req: express.Request, res: express.Response) => {
-    if (!req.session.user) {
-        return res.status(401).send('not logined');
-    } else {
-        return res.status(200).json(req.session.user);
-    }
+    else {
+        res.json('bledny login lub haslo');
+        console.log('nie');
+        console.log(user);
+    };
 });
 
 // ------------- user  ------------------------------------------------------------------------////////////////////////
@@ -200,24 +163,20 @@ app.delete('/delete-user/:login', async (req: express.Request, res: express.Resp
 app.post('/insert-user/:param', async (req: express.Request, res: express.Response) => {
     console.log('recived' + JSON.stringify(req.body));
 
-    const user = await mongoUsers.findElement({ login: req.body.login })
     try {
+        const user = await mongoUsers.findElement({ login: req.body.login })
         console.log(user);
         if (user[0] !== undefined) {
             res.json(`Login ${req.body.login} is in use!`)
         } else {
-<<<<<<< HEAD
             const _id = new ObjectId();
-=======
-            const hash = await bcrypt.hash(req.body.password, saltRounds);
->>>>>>> 644b3c55275169ce7f09db5d6c6740d2af0dbff1
             if (req.param('param') === 'doctor') {
                 await Promise.all([
                     mongoUsers.insertElements([
                         {
                             _id: _id,
                             login: req.body.login,
-                            password: hash,
+                            password: req.body.password,
                             role: 'doctor'
                         }
                     ]),
@@ -270,7 +229,7 @@ app.post('/insert-user/:param', async (req: express.Request, res: express.Respon
                         {
                             _id: _id,
                             login: req.body.login,
-                            password: hash,
+                            password: req.body.password,
                             role: 'patient'
                         }
                     ]),
@@ -301,7 +260,6 @@ app.post('/insert-user/:param', async (req: express.Request, res: express.Respon
         res.send(err);
     }
 });
-
 
 // ------------- schedule -----------------------------------------------------------------------////////////////////////
 app.route('/schedule/:param')
@@ -371,7 +329,7 @@ app.listen(3000, function () {
 ///-----------------DataBase Init path -----------------///
 app.get('/init-db', async (req: express.Request, res: express.Response) => {
     try {
-        const result = await initDB(mongoUsers, mongoUsersDetails, mongoSchedule, saltRounds, bcrypt);
+        const result = await initDB(mongoUsers, mongoUsersDetails, mongoSchedule);
         res.json(result);
     } catch (err) {
         res.json(err);
