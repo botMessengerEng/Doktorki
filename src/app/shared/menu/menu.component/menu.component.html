@@ -1,7 +1,7 @@
 
 <div *ngIf='url!="register"'>
     <nav class='menu'>
-        <div *ngFor='let mContext of menuContext, let i=index' [routerLinkActive]="['active-link']">
+        <div *ngFor='let mContext of menuContext, let i=index' [routerLinkActive]="['active-link']" [ngStyle]="setLogo(i)">
             <a [routerLink]="menuLinks[i]" [routerLinkActive]="['active-link-text']">{{mContext}}</a></div>
     </nav>
 </div>

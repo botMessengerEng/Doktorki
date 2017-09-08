@@ -15,9 +15,11 @@ export class DoctorsListComponent implements OnInit {
   doctors: any;
   selectedDoctor: any;
   doctorFilter: string = '';
-can=false;
-cityFilter = new Array<boolean>();
+  specFilter: string = '';
+  can=false;
+  cityFilter = new Array<boolean>();
   cities = new Array<string>();
+  citiesList=false;
 
   constructor(private appService: AppService, private scheduleService: ScheduleService, private router: Router) {}
 
@@ -54,6 +56,11 @@ cityFilter = new Array<boolean>();
       );
   }
 
+
+  activeCitiesList(){
+      this.citiesList=!this.citiesList;
+  }
+
   onSelect(doctor: any): void {
     if (doctor === this.selectedDoctor) {
       this.selectedDoctor = null;
@@ -66,7 +73,7 @@ cityFilter = new Array<boolean>();
   checkSchedule() {
       this.scheduleService.doctorLogin=this.selectedDoctor.login;
       this.router.navigate(['schedule/' + this.selectedDoctor._id], { queryParams: { 'refresh': 1 } });
-      
+  
   }
 
 }

@@ -1,46 +1,57 @@
 <app-menu></app-menu>
 <div *ngIf='can'>
-<div class='content'>
-    <div style="margin-bottom:1%"> List of Doctors:</div>
+    <div class='content'>
+        <div style="margin-bottom:1%"> List of Doctors:</div>
+        <div style="font-size:20px; color:#660000"> search by
+            :</div>
+        <div class='search-divide'>
+            <div class='search-style'>
+                <div> name: </div>
+                <div>
+                    <input type='text' class='search' [(ngModel)]='doctorFilter' placeholder="doctor's name" />
+                </div>
+            </div>
 
-    <div class='search-style'>
-        <div>search by name: </div>
-        <div><input type='text' class='search' [(ngModel)]='doctorFilter' placeholder="doctor's name" />
-         </div>
+            <div class='search-style' style="grid-template-columns: 50% 50%">
+                <div style="text-align:right">specialization: </div>
+                <div>
+                    <input type='text' class='search' [(ngModel)]='specFilter' placeholder="doctor's specialization" />
+                </div>
+            </div>
 
-<!--
-         <div>search ny specialization: </div>
-         <div><input type='text' class='search' [(ngModel)]='specFilter' placeholder="doctor's specialization" />
- 
-         </div>-->
+                <div class="search-dropdown">
+                    <div>
+                        <button (click)="activeCitiesList()" class="drop-button">cities     {{citiesList ?  "&#9650;" : "&#9660;"}} </button>
+                        <div *ngIf='citiesList' class="search-dropdown-content" id="search-scrollbar">
+                            <div *ngFor='let city of cities, let i=index'>
+                                <div class="checkbox">
+                                    <input type="checkbox" [(ngModel)]="cityFilter[i]" id='{{city}}' name="" />{{city}}
+                                    <label for='{{city}}'></label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
 
 
-    </div>
-
-    <div *ngFor='let city of cities, let i=index'>
-        <div class="checkbox">
-            <input type="checkbox" [(ngModel)]="cityFilter[i]" id='{{city}}' name="" />{{city}}
-            <label for='{{city}}'></label>
+        <div class='table-header'>
+            <div class='table-header-content'>
+                <div> DOCTOR'S NAME</div>
+                <div>SPECIALIZATIONS</div>
+                <div>CITY</div>
+            </div>
         </div>
-    </div>
 
 
-    <div class='table-header'>
-        <div class='table-header-content'>
-            <div> DOCTOR'S NAME</div>
-            <div>SPECIALIZATIONS</div>
-            <div>CITY</div>
-        </div>
-    </div>
-
-
-    <div *ngFor='let doctor of doctors | cityFilter:cityFilter:cities'>
-        <table class='table-of-doctor' *ngIf='doctors && doctors.length' [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#003d66" : "#fafafa",
+        <div *ngFor='let doctor of doctors | firstlastNameFilter:doctorFilter | specFilter:specFilter | cityFilter:cityFilter:cities | paginate: { itemsPerPage: 10, currentPage: p }'>
+            <table class='table-of-doctor' *ngIf='doctors && doctors.length' [ngStyle]='{"background-color" : (doctor === selectedDoctor) ? "#003d66" : "#fafafa",
                                  "border-color": (doctor === selectedDoctor) ? "#003d66" : "#fafafa"} '>
-            <thead>
-                <tr>
-                    <td>
-                        <button class='doctor-button' [class.selected]='doctor === selectedDoctor' (click)='onSelect(doctor)'>
+                <thead>
+                    <tr>
+                        <td>
+                            <button class='doctor-button' [class.selected]='doctor === selectedDoctor' (click)='onSelect(doctor)'>
 
 
 <div class='button-label'>
@@ -57,28 +68,28 @@
 </div>
 
 </button></td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="shortDetails" *ngIf='doctor === selectedDoctor'>
-                    <table class='show-details'>
-                        <tr>
-                            <td class='details-of-doctor'>
-                                <p><strong>Gender: </strong>{{doctor.gender}}</p>
-                                <p><strong>Age: </strong>{{doctor.age}}</p>
-                                <p><strong>Email: </strong>{{doctor.email}}</p>
-                            </td>
-                            <td class='make-appointment'><button class='make-appointment-button' (click)='checkSchedule()'>make an appointment</button></td>
-                        </tr>
-                    </table>
-                </tr>
-            </tbody>
-        </table>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="shortDetails" *ngIf='doctor === selectedDoctor'>
+                        <table class='show-details'>
+                            <tr>
+                                <td class='details-of-doctor'>
+                                    <p><strong>Gender: </strong>{{doctor.gender}}</p>
+                                    <p><strong>Age: </strong>{{doctor.age}}</p>
+                                    <p><strong>Email: </strong>{{doctor.email}}</p>
+                                </td>
+                                <td class='make-appointment'><button class='make-appointment-button' (click)='checkSchedule()'>make an appointment</button></td>
+                            </tr>
+                        </table>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+        </div>
     </div>
-    <div class="pagination">
-        <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
-    </div>
-</div>
 </div>
 
 {{cityFilter}}

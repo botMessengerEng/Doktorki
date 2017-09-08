@@ -8,10 +8,4 @@ export class ScheduleComponent implements OnInit {
     constructor() { }
 
     ngOnInit() { }
-
-    // @ViewChild(CalendarComponent) calendar;
-
-    // f() {
-    //     this.calendar.update
-    // }
 }

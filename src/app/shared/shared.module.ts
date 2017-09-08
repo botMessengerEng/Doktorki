@@ -14,6 +14,7 @@ import { ScheduleService } from 'app/shared/schedule/schedule.service';
 import { AgendaComponent } from 'app/shared/schedule/agenda/agenda.component';
 import { AppointmentDetailsComponent } from 'app/shared/schedule/appointment-details/appointment-details.component';
 import { CityFilter } from 'app/shared/pipes/city-filter.pipe';
+import { SpecFilter } from 'app/shared/pipes/spec-filter.pipe';
 
 @NgModule({
     declarations: [
@@ -23,12 +24,13 @@ import { CityFilter } from 'app/shared/pipes/city-filter.pipe';
         DoctorFilter,
         PatientFilter,
         CityFilter,
+        SpecFilter,
         ScheduleComponent,
         CalendarComponent,
         AgendaComponent,
         AppointmentDetailsComponent
     ],
-    imports: [ 
+    imports: [
         CommonModule,
         ReactiveFormsModule,
         RouterModule,
@@ -40,6 +42,7 @@ import { CityFilter } from 'app/shared/pipes/city-filter.pipe';
         DoctorFilter,
         PatientFilter,
         CityFilter,
+        SpecFilter,
         CalendarComponent,
         ScheduleComponent,
         AgendaComponent,

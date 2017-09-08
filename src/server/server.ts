@@ -265,7 +265,7 @@ app.post('/insert-user/:param', async (req: express.Request, res: express.Respon
 app.route('/schedule/:param')
     .post(async (req: express.Request, res: express.Response) => {
         try {
-            const result = await mongoSchedule.findElement({ login: req.body.login }, { 'date.year': 1, 'date.month': 1, 'date.day': 1, 'date.hour': 1 }, +req.param('param'));
+            const result = await mongoSchedule.findElement(req.body, { 'date.year': 1, 'date.month': 1, 'date.day': 1, 'date.hour': 1 }, +req.param('param'));
             res.json(result);
         } catch (err) {
             res.send(err);

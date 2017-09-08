@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, DoCheck } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as _ from 'lodash';
 import 'rxjs/add/operator/toPromise';
 
@@ -16,7 +16,7 @@ import { ActivatedRoute } from "@angular/router";
     templateUrl: 'agenda.component.html',
     styleUrls: ['agenda.component.css']
 })
-export class AgendaComponent implements OnInit, DoCheck {
+export class AgendaComponent implements OnInit, OnDestroy {
     daysArray = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
     minutes = ['00', '15', '30', '45'];
     hours = [];
@@ -24,7 +24,10 @@ export class AgendaComponent implements OnInit, DoCheck {
     dateTmp = new CustomDate(new Date());
     dateArrays = new DateArrays();
 
-    constructor(private scheduleService: ScheduleService, private appService: AppService, private authService: AuthService, private route: ActivatedRoute, ) { }
+    constructor(private scheduleService: ScheduleService, private appService: AppService, private authService: AuthService, private route: ActivatedRoute, ) { 
+        this.scheduleService.subscribe((param) => this.dateChange(param));
+
+    }
 
     ngOnInit() {
         Promise.all([
@@ -42,8 +45,8 @@ export class AgendaComponent implements OnInit, DoCheck {
     }
 
 
-    ngDoCheck() {
-        if (!_.isEqual(this.dateTmp, this.scheduleService.date)) {
+   dateChange(updatedItem): void {
+        if(updatedItem=="date"){
             console.log('ive changed');
             this.scheduleService.dailyAppointmentsHours = new Array();
 
@@ -103,6 +106,7 @@ export class AgendaComponent implements OnInit, DoCheck {
                 if (this.scheduleService.selectedAppointment._id == "") {
                     this.scheduleService.selectedAppointment.setNewAppointment(this.scheduleService.doctor[0], this.scheduleService.date, hour);
                 }
+                        this.scheduleService.dataUpdated('hour');
             });
     }
 
@@ -111,4 +115,8 @@ export class AgendaComponent implements OnInit, DoCheck {
         return new Promise(resolve => resolve(true));
     }
 
+
+      ngOnDestroy(): void {
+        this.scheduleService.unsubscribe(this.dateChange);    
+}
 }

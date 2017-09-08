@@ -59,13 +59,12 @@ export class CalendarComponent implements OnInit {
         if (day === this.currentDay && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year && !(i < 10 && day > 20) && !(day < 10 && i > 20)) {
             return {
                 "color": "white",
-                                "-webkit-transition": "opacity 0.3s ease-in-out",
-
+                "-webkit-transition": "opacity 0.3s ease-in-out",
                 "background-color": "#003d66",
                 "border-radius": "50%",
             }
         }
-        else if (day === this.scheduleService.date.day && this.monthName == this.monthArray[this.currentMonth] && this.currentYear == this.year && !(i < 10 && day > 20) && !(day < 10 && i > 20)) {
+        else if (day === this.scheduleService.date.day && this.monthName == this.monthArray[this.scheduleService.date.month] && this.currentYear == this.scheduleService.date.year  && !(i < 10 && day > 20) && !(day < 10 && i > 20)) {
             return {
                 "-webkit-transition": "opacity 0.3s ease-in-out",
                 "border": "2px solid #003d66",
@@ -79,6 +78,7 @@ export class CalendarComponent implements OnInit {
             || (day > 10 && i < 8)
             || (day < 15 && i > 29)) {
             return {
+                "border":"none",
                 "color": "#d9d9d9",
                 "pointer-events": "none",
                 "background-color": "white"

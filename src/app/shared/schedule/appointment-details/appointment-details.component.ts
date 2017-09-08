@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as _ from 'lodash';
@@ -20,7 +20,7 @@ import { AuthService } from 'app/auth/auth.service';
     styleUrls: ['appointment-details.component.css']
 })
 
-export class AppointmentDetailsComponent implements OnInit {
+export class AppointmentDetailsComponent implements OnInit, OnDestroy {
     appointmentForm: FormGroup;
     yearsArray = new Array(107);
     daysArray = new Array(31);
@@ -32,19 +32,18 @@ export class AppointmentDetailsComponent implements OnInit {
     canView = false;
     selectedAppointmentTmp = new Appointment();
     editAppointment = new Appointment();
-    
+
     constructor(private fb: FormBuilder, private appService: AppService, private scheduleService: ScheduleService, private authService: AuthService, private route: ActivatedRoute) {
         this.appointmentForm = formBuilder(this.fb, this.scheduleService.selectedAppointment);
-        this.scheduleService.subscribe((param) => this.fn(param));
+        this.scheduleService.subscribe((param) => this.hourChange(param));
     }
 
     ngOnInit() {
         this.dateArrays.hoursGeneratorForSchedule();
     }
 
-    fn(updatedItem): void {
-        if(updatedItem=="date"){
-        // if (!_.isEqual(this.selectedAppointmentTmp.date, this.scheduleService.selectedAppointment.date)) {
+    hourChange(updatedItem): void {
+        if (updatedItem == "hour") {
             this.appService.getUserDetails({ login: this.scheduleService.selectedAppointment.patient.login })
                 .toPromise()
                 .then(patient => this.scheduleService.patient = patient)
@@ -59,7 +58,6 @@ export class AppointmentDetailsComponent implements OnInit {
                     }
                 })
                 .then(() => this.canView = true)
-                // .then(() => _.merge(this.selectedAppointmentTmp, this.scheduleService.selectedAppointment));
         }
     }
 
@@ -149,5 +147,9 @@ export class AppointmentDetailsComponent implements OnInit {
             }
         }
 
+    }
+
+    ngOnDestroy(): void {
+        this.scheduleService.unsubscribe(this.hourChange);
     }
 }

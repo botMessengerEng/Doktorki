@@ -126,11 +126,18 @@ p{
     border-radius: 3px;    
 }
 
+
+.search-divide{
+    display:grid;
+    grid-template-columns: 33% 33% 33%;
+    /*border: 1px solid chocolate;*/
+}
+
 .search-style
 {
-    grid-template-columns: 5% 14%;
+    grid-template-columns: 10% 90%;
     display: grid;
-    grid-gap: 0px;
+    grid-gap: 20px;
     justify-content: left; 
     font-family: 'Quicksand', sans-serif;
     text-decoration: none;
@@ -141,7 +148,8 @@ p{
 
 .search-style div{
     align-self: center;
-    margin-bottom:5%;
+    justify-content: center;
+    /*border: 1px solid plum;*/
 }
 .search {
     height: 30px;
@@ -197,15 +205,10 @@ p{
     color: white;
 }
 
-/*.doktorki-logo {
-    background-image: url("../../assets/doktorki.png");
-    background-size: 200px 94px;
-    background-repeat: no-repeat;
-
-}*/
 
 .table-header{
     border-spacing:0;
+    margin-top: 3%;
     margin-left:20%;
     margin-right:20%;
     margin-bottom:0.4%;
@@ -226,13 +229,134 @@ p{
 
 .pagination /deep/ .ngx-pagination {
     text-align: center;
+    margin-right:60px;
     font-size: 14px;
     font-family: 'Quicksand', sans-serif;
   }
 
-  .pagination /deep/ .ngx-pagination .current {
+.pagination /deep/ .ngx-pagination .current {
     background: #002e4d;
     font-size: 14px;
     font-family: 'Quicksand', sans-serif;
   }
   
+
+
+#search-scrollbar::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #660000;
+}
+
+#search-scrollbar::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 46, 77, 0.2);
+	/*border-radius: 10px;*/
+	background-color: #F5F5F5;
+}
+
+#search-scrollbar::-webkit-scrollbar
+{
+	width: 8px;
+	background-color: #F5F5F5;
+}
+
+#search-scrollbar::-webkit-scrollbar-thumb
+{
+	border-radius: 5px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 46, 77, 0.2);
+	background-color: #660000;
+}
+
+
+.search-dropdown
+{
+    grid-template-columns: 200px;
+    display: grid;
+    grid-gap: 0px;
+    justify-content: end; 
+    font-family: 'Quicksand', sans-serif;
+    text-align: left;
+    font-size: 18px;
+    /*border: 1px solid slateblue;*/
+    height:100%;
+}
+
+
+.search-dropdown div{
+    align-self: center;
+    justify-content: end;
+    /*border: 1px solid steelblue;*/
+}
+
+.drop-button {
+    padding:2.5%;
+    background-color: #002e4d;
+    color: white;
+    font-size: 16px;
+    width:100%;
+    font-family: 'Quicksand', sans-serif;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline:0;
+}
+
+.drop-button:hover, .dropbtn:focus {
+    background-color: #006fad;
+}
+
+
+.search-dropdown-content {
+    height:200px;
+    position: absolute;
+    overflow:scroll;
+    overflow-x: hidden;
+    background-color: #fafafa;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 46, 77, 0.2);
+}
+
+.search-dropdown-content div {
+    color: #003d66;
+    padding: 0.5%;
+    font-size: 14px;
+}
+
+.checkbox {
+	/*width: 25px;*/
+	position: relative;
+}
+.checkbox label {
+	cursor: pointer;
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	top: 0;
+  	left: 0;
+	background: #fafafa;
+	border:1px solid #ddd;
+}
+.checkbox label:after {
+	opacity: 0;
+	content: '';
+	position: absolute;
+	width: 7px;
+	height: 3px;
+	background: transparent;
+	top: 4px;
+	left: 4px;
+	border: 3px solid #002e4d;
+	border-top: none;
+	border-right: none;
+	transform: rotate(-45deg);
+}
+
+.checkbox label:hover::after {
+	opacity: 0.4;
+}
+
+.checkbox input[type=checkbox]:checked + label:after {
+	opacity: 1;
+}
