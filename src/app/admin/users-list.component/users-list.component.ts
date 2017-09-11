@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { AppService } from 'app/app.service';
 import { AdminService } from 'app/admin/admin.service';
 import { AuthService } from 'app/auth/auth.service';
-import { ScheduleService } from "app/shared/schedule/schedule.service";
+import { ScheduleService } from 'app/shared/schedule/schedule.service';
+import { PatientService } from '../../patient/patient.service';
 
 @Component({
     templateUrl: './users-list.component.html',
@@ -16,48 +17,54 @@ export class UsersListComponent implements OnInit {
     url: string;
     selectedUser: any;
     doctorFilter: string = '';
-    onlyDoctors= true;
-    onlyPatients= true;
+    onlyDoctors = true;
+    onlyPatients = true;
     userRole: string;
 
-    constructor(private appService: AppService, private adminService: AdminService, private authService: AuthService, private scheduleService: ScheduleService, private router: Router) {}
+    constructor(private appService: AppService, private patientService: PatientService, private adminService: AdminService, private authService: AuthService, private scheduleService: ScheduleService, private router: Router) { }
 
     ngOnInit(): void {
         this.getUsers();
-        this.userRole=this.authService.user.role;
+        this.userRole = this.authService.user.role;
     }
 
     getUsers() {
         this.appService.getUsers('')
-        .subscribe(kroliczki => this.users = kroliczki,
-        error => this.errorMessage = <any>error
-        );
+            .subscribe(kroliczki => this.users = kroliczki,
+            error => this.errorMessage = <any>error
+            );
     }
 
     onSelect(users: any): void {
         if (users === this.selectedUser) {
-        this.selectedUser = null;
+            this.selectedUser = null;
         }
         else {
-        this.selectedUser = users;
-            }
+            this.selectedUser = users;
+        }
     }
 
     checkSchedule() {
-        this.scheduleService.doctorLogin=this.selectedUser.login;
-        this.router.navigate(['schedule', this.selectedUser._id]);
+        if (this.selectedUser.role == "doctor") {
+            this.scheduleService.doctorLogin = this.selectedUser.login;
+            this.router.navigate(['schedule', this.selectedUser._id]);
+        }
+        else {
+            this.patientService.patientLogin = this.selectedUser.login;
+            this.router.navigate(['appointments', this.selectedUser._id]);
+        }
     }
 
 
     editUser() {
-            this.router.navigate(['users-list', this.selectedUser._id/*name.replace(/ /g, '').toLowerCase()*/]);
+        this.router.navigate(['users-list', this.selectedUser._id/*name.replace(/ /g, '').toLowerCase()*/]);
     }
 
     deleteUser() {
-            this.adminService.deleteUser( this.selectedUser.login )
-                .subscribe(() => this.getUsers(),
-                error => this.errorMessage = <any>error);
-        }
+        this.adminService.deleteUser(this.selectedUser.login)
+            .subscribe(() => this.getUsers(),
+            error => this.errorMessage = <any>error);
+    }
 
 
 }

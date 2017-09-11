@@ -4,12 +4,9 @@ Obowiązkowe
     DOCTOR - JESTEM GOTOW
 
     PATIENT:
-        -search
-        -dorobic umawianie
+        -search po miastach
 
 Opcjonalnie:
-    DOCTOR, PATIENT: 
-        my comming appts
     Server:
         SESSION
         BCRYPT

@@ -4,6 +4,7 @@ import 'rxjs/add/operator/toPromise';
 import { AppService } from 'app/app.service';
 import { Appointment } from 'app/shared/classes/appointment';
 import { PatientService } from 'app/patient/patient.service';
+import { AuthService } from "app/auth/auth.service";
 
 @Component({
     templateUrl: 'patient-appointments.component.html',
@@ -16,13 +17,14 @@ export class PatientAppointmentsComponent implements OnInit {
     commingButton = true;
     passedButton = false;
 
-    passedAppts = new Array<any>();
-    commingAppts = new Array<any>();
-    constructor(private appService: AppService, private patientService: PatientService) {
+    passedAppts = new Array<CommingAndPassedAppointments>();
+    commingAppts = new Array<CommingAndPassedAppointments>();
+
+    constructor(private appService: AppService, private patientService: PatientService, private authService: AuthService) {
     }
 
     ngOnInit() {
-        this.patientService.getVisits({ "patient.login": 'synJacka' }, '0').toPromise()
+        this.patientService.getVisits({ "patient.login": this.patientService.patientLogin }, '0').toPromise()
             .then(appointments => {
                 const now = JSON.stringify(new Date()).replace(/-|:|T/gi, '').substring(1, 9) + (new Date()).getHours() + (new Date()).getMinutes();
                 appointments.forEach(async (element) => {
@@ -32,8 +34,9 @@ export class PatientAppointmentsComponent implements OnInit {
                         await this.appService.getUserDetails({ login: element.login })
                             .toPromise().then((doctor: any) => {
                                 this.commingAppts[this.commingAppts.indexOf(element)].name = doctor[0].firstName + " " + doctor[0].lastName;
+                                this.commingAppts[this.commingAppts.indexOf(element)].spec = '';
                                 for (let i = 0; i < doctor[0].specializations.length; i++)
-                                    this.commingAppts[this.commingAppts.indexOf(element)].spec += doctor[0].specializations[i].specialization;
+                                    this.commingAppts[this.commingAppts.indexOf(element)].spec += doctor[0].specializations[i].specialization +  " ";
                             })
                     }
                     else {
@@ -41,8 +44,9 @@ export class PatientAppointmentsComponent implements OnInit {
                         await this.appService.getUserDetails({ login: element.login })
                             .toPromise().then((doctor: any) => {
                                 this.passedAppts[this.passedAppts.indexOf(element)].name = doctor[0].firstName + " " + doctor[0].lastName;
+                                this.passedAppts[this.passedAppts.indexOf(element)].spec = '';
                                 for (let i = 0; i < doctor[0].specializations.length; i++)
-                                    this.passedAppts[this.passedAppts.indexOf(element)].spec += doctor[0].specializations[i].specialization;
+                                    this.passedAppts[this.passedAppts.indexOf(element)].spec += doctor[0].specializations[i].specialization +  " ";
                             });
 
                     }
@@ -79,4 +83,15 @@ export class PatientAppointmentsComponent implements OnInit {
             appt.date.hour;
         return rtn.replace(':', '');
     }
+
+}
+
+export class CommingAndPassedAppointments extends Appointment {
+    spec = " ";
+    name = " ";
+
+    // constructor
+
+
+
 }

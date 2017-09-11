@@ -5,9 +5,12 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 
+import { AuthService } from 'app/auth/auth.service';
+
 @Injectable()
 export class PatientService {
-    constructor(private _http: Http) {
+    patientLogin = this.authService.user.login;
+    constructor(private _http: Http, private authService: AuthService) {
     }
 
     getVisits(param, params?): Observable<Array<any>> {
