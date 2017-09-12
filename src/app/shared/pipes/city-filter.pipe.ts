@@ -2,36 +2,35 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe(
     {
-        name: 'cityFilter'
+        name: 'cityFilter',
+        pure: false
     })
 
 export class CityFilter implements PipeTransform {
     transform(value: any, cityArrayBoolean: any, cities): any {
-console.log('dsds');
-let rr=new Array();
-          rr=this.x(cityArrayBoolean,cities);
+        let filteredNames = new Array();
+        filteredNames = this.citiesFilter(cityArrayBoolean, cities);
 
-             return rr ? 
-                    value.filter((filtered: any) => {
-                    return rr.find(element => element!=filtered.address.city);
-  
-                    }
-    ) :value;
-          
+        return filteredNames ?
+            value.filter((user: any) => {
+                return filteredNames.find(element => element === user.address.city);
 
-}
+            }
+            ) : value;
+
+    }
 
 
-x(cityArrayBoolean,cities){
-            let result= new Array();
+    citiesFilter(cityArrayBoolean, cities) {
+        let result = new Array();
 
-       for (let i = 0; i < cityArrayBoolean.length; i++) {
-                if(cityArrayBoolean[i]){
-                    result.push(cities[i]);
-                    console.log(result)
-                }
-             }
- return result;
-}
+        for (let i = 0; i < cityArrayBoolean.length; i++) {
+            if (cityArrayBoolean[i]) {
+                result.push(cities[i]);
+                
+            }
+        }
+        return result;
+    }
 
 }

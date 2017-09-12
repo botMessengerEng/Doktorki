@@ -131,14 +131,17 @@ export class ManageUserComponent implements OnInit {
                 .subscribe((result) => {
                     if (result === 'OK') {
                         {
-                            if (this.authService.user.role != "patient") {
-                                this.router.navigate(['users-list']);
+                            if (this.authService.user != undefined) {
+                                if (this.authService.user.role != "patient") {
+                                    this.router.navigate(['users-list']);
+                                }
                             }
                             else {
                                 this.router.navigate(['login']);
                             }
                         }
                     }
+
                     else {
                         this.invalid = true;
                         window.scrollTo(0, 0);

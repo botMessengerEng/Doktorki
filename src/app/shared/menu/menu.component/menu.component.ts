@@ -38,7 +38,7 @@ export class MenuComponent implements OnInit {
         catch (err) {
             this.router.navigate(['login']);
         }
-     }
+      }
 
     setLogo(i) {
         if (i == 0) {
@@ -47,7 +47,7 @@ export class MenuComponent implements OnInit {
                 "background-repeat": "no-repeat"
             }
         }
-    }
+     }
 
 
 }
